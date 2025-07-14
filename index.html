@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan Travel</title>
+    <!-- 引入 Swiper 的 CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        body { font-family: sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        h2 { text-align: center; }
+        .swiper-container { width: 100%; height: 300px; position: relative; }
+        .swiper-slide {
+            text-align: center;
+            font-size: 25px;
+            background: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .swiper-button-next, .swiper-button-prev {
+            color: #000000;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .swiper-button-next::after, .swiper-button-prev::after {
+            font-weight: bold;
+        }
+        .swiper-pagination {
+            position: relative;
+            bottom: auto;
+            margin-top: 15px;
+            text-align: center;
+        }
+        .swiper-pagination-bullet {
+            background: #aaa;
+            width: 10px;
+            height: 10px;
+            margin: 0 4px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .swiper-pagination-bullet-active {
+            background: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 滑块容器 -->
+    <div id="slider-container">
+        <h2>Featured Topics</h2>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <!-- Slide 1: Tokyo -->
+                <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917" data-zoom="12">
+                    <!-- 改动点：将 https://... 链接改为本地文件名 -->
+                    <img src="tokyo.png" alt="Tokyo">
+                    <div style="position: absolute; color: white; background-color: rgba(0,0,0,0.5); padding: 10px;">Tokyo</div>
+                </div>
+
+                <!-- Slide 2: Osaka -->
+                <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023" data-zoom="12">
+                    <!-- 改动点：将 https://... 链接改为本地文件名 -->
+                    <img src="osaka.png" alt="Osaka">
+                     <div style="position: absolute; color: white; background-color: rgba(0,0,0,0.5); padding: 10px;">Osaka</div>
+                </div>
+
+                <!-- Slide 3: Kyoto -->
+                <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681" data-zoom="12">
+                    <!-- 改动点：将 https://... 链接改为本地文件名 -->
+                    <img src="kyoto.png" alt="Kyoto">
+                     <div style="position: absolute; color: white; background-color: rgba(0,0,0,0.5); padding: 10px;">Kyoto</div>
+                </div>
+                
+                <!-- 同样需要修改复制的滑块 -->
+                
+                <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917" data-zoom="12">
+                    <img src="tokyo.png" alt="Tokyo">
+                    <div style="position: absolute; color: white; background-color: rgba(0,0,0,0.5); padding: 10px;">Tokyo</div>
+                </div>
+                <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023" data-zoom="12">
+                    <img src="osaka.png" alt="Osaka">
+                     <div style="position: absolute; color: white; background-color: rgba(0,0,0,0.5); padding: 10px;">Osaka</div>
+                </div>
+                <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681" data-zoom="12">
+                    <img src="kyoto.png" alt="Kyoto">
+                     <div style="position: absolute; color: white; background-color: rgba(0,0,0,0.5); padding: 10px;">Kyoto</div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+
+    <!-- Swiper 和脚本 -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const paginationEl = document.querySelector('.swiper-pagination');
+
+            const swiper = new Swiper('.swiper-container', {
+                loop: true,
+                loopedSlides: 3, // 告诉 Swiper 有 3 张原始 slide
+                slidesPerView: 1.5,
+                spaceBetween: 10,
+                centeredSlides: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: paginationEl,
+                    clickable: false,
+                    renderBullet: function (index, className) {
+                        if (index < 3) {
+                            return `<span class="${className}" data-index="${index}"></span>`;
+                        }
+                        return '';
+                    },
+                },
+            });
+
+            const updatePagination = () => {
+                const realIndex = swiper.realIndex % 3; // 保证在 0~2 之间
+                paginationEl.querySelectorAll('.swiper-pagination-bullet').forEach((bullet, index) => {
+                    bullet.classList.toggle('swiper-pagination-bullet-active', index === realIndex);
+                });
+            };
+
+            swiper.on('slideChange', updatePagination);
+
+            paginationEl.addEventListener('click', function (event) {
+                if (event.target.matches('.swiper-pagination-bullet')) {
+                    const clickedIndex = parseInt(event.target.dataset.index, 10);
+                    swiper.slideToLoop(clickedIndex);
+                }
+            });
+
+            updatePagination(); // 初始激活分页器
+
+            // 点击跳转到 detail.html，携带城市参数
+            document.querySelectorAll('.swiper-slide').forEach(slide => {
+                slide.addEventListener('click', function () {
+                    const city = this.dataset.city;
+                    const lat = this.dataset.lat;
+                    const lon = this.dataset.lon;
+                    const zoom = this.dataset.zoom;
+                    const url = `detail.html?city=${encodeURIComponent(city)}&lat=${lat}&lon=${lon}&zoom=${zoom}`;
+                    window.location.href = url;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
