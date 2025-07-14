@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Trips</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: sans-serif; margin: 0; padding: 0; background: #f7faff; }
+        .container { max-width: 600px; margin: 0 auto; padding: 24px 16px; }
+        h2 { font-size: 2rem; font-weight: bold; margin-bottom: 18px; }
+        .trip-card {
+            background: #eaf4ff;
+            border-radius: 18px;
+            padding: 20px 18px 18px 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .trip-info { flex: 1; }
+        .trip-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; }
+        .trip-date { color: #555; margin-bottom: 6px; }
+        .hot-list {
+            margin: 0 0 18px 0;
+            display: flex;
+            gap: 10px;
+        }
+        .hot-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            transition: background 0.2s;
+        }
+        .hot-item:hover { background: #e0eaff; }
+        .search-box {
+            position: relative;
+            margin-bottom: 18px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px 40px 12px 40px;
+            border-radius: 24px;
+            border: 1px solid #ddd;
+            font-size: 1.1rem;
+            background: #fff;
+        }
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3rem;
+            color: #888;
+        }
+        .suggest-list {
+            position: absolute;
+            left: 0; right: 0; top: 100%;
+            background: #fff;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            z-index: 3000;
+        }
+        .suggest-item {
+            padding: 12px 18px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .suggest-item:hover { background: #e0eaff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>My Trips</h2>
+        <div style="font-size:1.1rem;font-weight:500;margin-bottom:8px;">Where do you want to go?</div>
+        <div class="search-box">
+            <span class="search-icon">&#128269;</span>
+            <input id="city-input" class="search-input" type="text" placeholder="Enter city">
+            <div id="suggest-list" class="suggest-list" style="display:none;"></div>
+        </div>
+        <div class="hot-list">
+            <div class="hot-item" data-city="Osaka">Osaka</div>
+            <div class="hot-item" data-city="Kyoto">Kyoto</div>
+            <div class="hot-item" data-city="Tokyo">Tokyo</div>
+        </div>
+        <div id="trip-cards"></div>
+    </div>
+    <script>
+        // 热门目的地
+        const hotCities = ["Osaka", "Kyoto", "Tokyo"];
+        const cityInput = document.getElementById('city-input');
+        const suggestList = document.getElementById('suggest-list');
+        const tripCards = document.getElementById('trip-cards');
+
+        // 自动补全
+        cityInput.addEventListener('input', function() {
+            const val = this.value.trim().toLowerCase();
+            let filtered = hotCities.filter(c => c.toLowerCase().startsWith(val));
+            if (!val) filtered = hotCities;
+            if (filtered.length === 0) {
+                suggestList.style.display = "none";
+                return;
+            }
+            suggestList.innerHTML = filtered.map(c =>
+                `<div class="suggest-item" data-city="${c}">${c}</div>`
+            ).join('');
+            suggestList.style.display = "block";
+        });
+        cityInput.addEventListener('focus', function() {
+            this.dispatchEvent(new Event('input'));
+        });
+        document.addEventListener('click', function(e) {
+            if (e.target === cityInput) return;
+            if (e.target.parentNode === suggestList) return;
+            suggestList.style.display = "none";
+        });
+        suggestList.addEventListener('mousedown', function(e) {
+            if (e.target.dataset.city) {
+                cityInput.value = e.target.dataset.city;
+                suggestList.style.display = "none";
+            }
+        });
+        // 热门点击
+        document.querySelectorAll('.hot-item').forEach(item => {
+            item.onclick = () => {
+                cityInput.value = item.dataset.city;
+                cityInput.focus();
+                cityInput.dispatchEvent(new Event('input'));
+            };
+        });
+
+        // 展示刚刚添加的行程
+        function getQuery(name) {
+            const url = new URL(window.location.href);
+            return url.searchParams.get(name) || '';
+        }
+        function renderTripCard() {
+            const city = getQuery('city');
+            const from = getQuery('from');
+            const to = getQuery('to');
+            if (!city || !from || !to) return;
+            // 计算天数
+            const d1 = new Date(from), d2 = new Date(to);
+            const days = Math.max(1, Math.round((d2-d1)/86400000)+1);
+            const nights = Math.max(0, days-1);
+            tripCards.innerHTML = `
+                <div class="trip-card">
+                    <div class="trip-info">
+                        <div class="trip-title">${city} ${days} Days Trip</div>
+                        <div class="trip-date">${from} ~ ${to} &nbsp; ${days} days ${nights} nights</div>
+                        <div style="color:#888;font-size:0.95rem;">0 spots</div>
+                    </div>
+                    <img src="images/${city.toLowerCase()}.png" alt="${city}" style="width:90px;height:70px;object-fit:cover;border-radius:12px;">
+                </div>
+            `;
+        }
+        renderTripCard();
+    </script>
+</body>
+</html>
