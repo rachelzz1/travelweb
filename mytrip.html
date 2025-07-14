@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit My Trip</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <style>
+        body { font-family: sans-serif; margin: 0; padding: 0; background: #f7faff; }
+        .container { max-width: 700px; margin: 0 auto; padding: 0 0 32px 0; }
+        #map { width: 100vw; max-width: 700px; height: 260px; margin: 0 auto; border-radius: 0 0 18px 18px; }
+        .trip-overview { background: #fff; border-radius: 18px; margin: -24px 12px 0 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 18px 12px 12px 12px; }
+        .days-tabs { display: flex; gap: 8px; margin-bottom: 10px; overflow-x: auto; }
+        .day-tab {
+            background: #f3f6fa; border-radius: 12px; padding: 8px 16px; font-size: 1rem; cursor: pointer;
+            border: 2px solid transparent; transition: border 0.2s;
+        }
+        .day-tab.active { border: 2px solid #4a90e2; background: #eaf4ff; }
+        .day-content { margin-top: 10px; }
+        .poi-list { margin: 0; padding: 0; list-style: none; }
+        .poi-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .poi-icon { width: 28px; height: 28px; border-radius: 8px; background: #eaf4ff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .poi-name { flex: 1; font-size: 1rem; }
+        .remove-poi { color: #e74c3c; cursor: pointer; font-size: 1.1rem; }
+        .add-poi-btn { margin: 12px 0 0 0; background: #4a90e2; color: #fff; border: none; border-radius: 8px; padding: 8px 18px; font-size: 1rem; cursor: pointer; }
+        .remark-box { margin-top: 10px; }
+        .remark-input { width: 100%; border-radius: 8px; border: 1px solid #ddd; padding: 8px; font-size: 1rem; }
+        .save-remark-btn { margin-top: 6px; background: #eee; border: none; border-radius: 8px; padding: 6px 14px; font-size: 0.95rem; cursor: pointer; }
+        .search-modal-bg {
+            display: none; position: fixed; left: 0; top: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.18); z-index: 3000; align-items: center; justify-content: center;
+        }
+        .search-modal {
+            background: #fff; border-radius: 18px; width: 90vw; max-width: 340px; padding: 22px 18px 18px 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+        }
+        .search-bar { display: flex; align-items: center; gap: 8px; background: #f7f7f7; border-radius: 12px; padding: 8px 12px; }
+        .search-bar input { border: none; background: transparent; outline: none; font-size: 1rem; flex: 1; }
+        .search-results { margin-top: 12px; max-height: 180px; overflow-y: auto; }
+        .search-result-item { padding: 10px 0; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
+        .search-result-item:last-child { border-bottom: none; }
+        .search-result-title { font-weight: bold; }
+        .search-result-desc { color: #888; font-size: 0.95rem; }
+        .close-modal { position: absolute; right: 16px; top: 12px; font-size: 1.3rem; color: #aaa; cursor: pointer; }
+        @media (max-width: 700px) {
+            #map { width: 100vw; }
+            .container { max-width: 100vw; }
+        }
+        /* Trip Card Styles */
+        #trip-list { margin-top: 20px; }
+        .trip-card {
+            background: #fff7ee;
+            border-radius: 22px;
+            padding: 20px 18px 18px 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            position: relative;
+        }
+        .trip-card .status-badge {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            background: #e6ffe6;
+            color: #1abc9c;
+            font-size: 0.92rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+        }
+        .trip-card .trip-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-top: 18px;
+        }
+        .trip-card .date-range {
+            color: #888;
+            margin: 8px 0 2px 0;
+        }
+        .trip-card .days-nights {
+            color: #888;
+            font-size: 0.98rem;
+        }
+        .trip-card .poi-count {
+            color: #888;
+            font-size: 0.98rem;
+        }
+        .trip-card .user-image {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 1px 4px #eee;
+        }
+        .trip-card .add-trip-btn {
+            margin-left: 8px;
+            background: #fff;
+            border-radius: 50%;
+            border: 1px solid #eee;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .trip-card .trip-image {
+            position: absolute;
+            bottom: 18px;
+            right: 18px;
+            width: 90px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 14px;
+        }
+    </style>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Trip List Section -->
+        <div id="trip-list">
+            <!-- Example trip card, repeat for each trip -->
+            <div class="trip-card" style="background:#fff7ee;border-radius:22px;padding:20px 18px 18px 18px;margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);position:relative;">
+                <div style="position:absolute;top:18px;left:18px;">
+                    <span style="background:#e6ffe6;color:#1abc9c;font-size:0.92rem;padding:3px 10px;border-radius:12px;">Ongoing</span>
+                </div>
+                <div style="font-size:1.25rem;font-weight:700;margin-top:18px;">London 9-day Tour</div>
+                <div style="color:#888;margin:8px 0 2px 0;">
+                    07.09 to 07.17 &nbsp; 9 days 8 nights
+                </div>
+                <div style="color:#888;font-size:0.98rem;">
+                    1 place
+                </div>
+                <div style="display:flex;align-items:center;margin-top:12px;">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" style="width:36px;height:36px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px #eee;">
+                    <button style="margin-left:8px;background:#fff;border-radius:50%;border:1px solid #eee;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;">+</button>
+                </div>
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" style="position:absolute;bottom:18px;right:18px;width:90px;height:60px;object-fit:cover;border-radius:14px;">
+            </div>
+            <!-- ...repeat .trip-card for each trip... -->
+        </div>
+        <div id="map"></div>
+        <div class="trip-overview">
+            <div style="font-size:1.2rem;font-weight:600;margin-bottom:8px;">Trip Overview</div>
+            <div id="trip-summary" style="color:#555;font-size:1rem;margin-bottom:8px;"></div>
+            <!-- Itinerary Overview Section -->
+            <div id="itinerary-overview" style="margin-bottom:12px;"></div>
+            <div class="days-tabs" id="days-tabs"></div>
+            <div class="day-content" id="day-content"></div>
+        </div>
+    </div>
+    <!-- 搜索地点弹窗 -->
+    <div class="search-modal-bg" id="search-modal-bg">
+        <div class="search-modal">
+            <span class="close-modal" id="close-search-modal">&times;</span>
+            <div class="search-bar">
+                <span style="font-size:1.2rem;color:#888;">&#128269;</span>
+                <input id="search-input" type="text" placeholder="Search place">
+            </div>
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+    <script>
+    // --------- Utility Functions ---------
+    function getQuery(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name) || '';
+    }
+    function formatDate(dateStr) {
+        const d = new Date(dateStr);
+        if (isNaN(d)) return '';
+        return `${d.getMonth()+1}.${('0'+d.getDate()).slice(-2)}`;
+    }
+    function getWeekday(dateStr) {
+        const d = new Date(dateStr);
+        return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
+    }
+    function getDaysArr(from, to) {
+        const arr = [];
+        let d = new Date(from);
+        const end = new Date(to);
+        while (d <= end) {
+            arr.push(d.toISOString().slice(0,10));
+            d.setDate(d.getDate()+1);
+        }
+        return arr;
+    }
+    // --------- Data Structure ---------
+    const city = getQuery('city');
+    const from = getQuery('from');
+    const to = getQuery('to');
+    const daysArr = getDaysArr(from, to);
+    // 本地存储key
+    const storageKey = `trip_${city}_${from}_${to}`;
+    // 默认结构
+    function getDefaultData() {
+        const obj = {};
+        daysArr.forEach(date => {
+            obj[date] = { pois: [], remark: "" };
+        });
+        return obj;
+    }
+    // 读取/保存
+    function loadTripData() {
+        const raw = localStorage.getItem(storageKey);
+        if (!raw) return getDefaultData();
+        try { return JSON.parse(raw); } catch { return getDefaultData(); }
+    }
+    function saveTripData(data) {
+        localStorage.setItem(storageKey, JSON.stringify(data));
+    }
+    let tripData = loadTripData();
+
+    // --------- 地图 ---------
+    let map = L.map('map', { zoomControl: false });
+    let markers = [];
+    let polyline = null;
+
+    function fitMapToPOIs(pois) {
+        if (!pois.length) {
+            // 定位到城市
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}`)
+            .then(r=>r.json()).then(res=>{
+                if(res[0]) map.setView([res[0].lat, res[0].lon], 12);
+                else map.setView([35.6895,139.6917], 5); // fallback: Japan
+            });
+        } else {
+            const group = L.featureGroup(markers);
+            map.fitBounds(group.getBounds().pad(0.2));
+        }
+    }
+
+    function updateMap(pois) {
+        // 清除旧标记和线
+        markers.forEach(m=>map.removeLayer(m));
+        markers = [];
+        if (polyline) { map.removeLayer(polyline); polyline = null; }
+        if (!pois.length) {
+            fitMapToPOIs([]);
+            return;
+        }
+        let latlngs = [];
+        pois.forEach((poi, idx) => {
+            const marker = L.marker([poi.lat, poi.lon], {
+                icon: L.icon({
+                    iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+                    iconSize: [25,41], iconAnchor: [12,41]
+                })
+            }).addTo(map);
+            marker.bindPopup(`<b>${poi.name}</b>`);
+            markers.push(marker);
+            latlngs.push([poi.lat, poi.lon]);
+        });
+        if (latlngs.length > 1) {
+            polyline = L.polyline(latlngs, {color: "#4a90e2", weight: 4}).addTo(map);
+        }
+        fitMapToPOIs(pois);
+    }
+
+    // --------- Trip Overview & Day Tabs ---------
+    const tripSummary = document.getElementById('trip-summary');
+    const daysTabs = document.getElementById('days-tabs');
+    const dayContent = document.getElementById('day-content');
+    let currentDay = daysArr[0];
+
+    function renderTabs() {
+        daysTabs.innerHTML = '';
+        daysArr.forEach(date => {
+            const tab = document.createElement('div');
+            tab.className = 'day-tab' + (date===currentDay?' active':'');
+            tab.innerHTML = `<b>${formatDate(date)}</b> <span style="color:#888;">${getWeekday(date)}</span>`;
+            tab.onclick = () => {
+                currentDay = date;
+                renderTabs();
+                renderDayContent();
+            };
+            daysTabs.appendChild(tab);
+        });
+    }
+
+    function renderSummary() {
+        const d1 = new Date(from), d2 = new Date(to);
+        const days = Math.max(1, Math.round((d2-d1)/86400000)+1);
+        const nights = Math.max(0, days-1);
+        tripSummary.innerHTML = `${formatDate(from)} ~ ${formatDate(to)} &nbsp; ${days} days ${nights} nights &nbsp; <span style="color:#4a90e2;">${city}</span>`;
+    }
+
+    // --------- Itinerary Overview ---------
+    function renderItineraryOverview() {
+        const container = document.getElementById('itinerary-overview');
+        let html = '<div style="font-weight:600;font-size:1.05rem;margin-bottom:4px;">Itinerary Overview</div>';
+        html += '<div style="background:#f7f7fa;border-radius:12px;padding:10px 10px 6px 10px;">';
+        daysArr.forEach(date=>{
+            const pois = tripData[date]?.pois||[];
+            const weekdayArr = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+            const dateStr = `<b>${formatDate(date)}</b> ${weekdayArr[new Date(date).getDay()]}`;
+            const poiNames = pois.length ? pois.map(p=>p.name.split(',')[0]).join(' → ') : '<span style="color:#bbb;">No itinerary</span>';
+            html += `<div style="margin-bottom:7px;"><span style="color:#4a90e2;">${dateStr}</span> &nbsp; ${poiNames}</div>`;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+    }
+
+    // --------- 每天内容 ---------
+    function renderDayContent() {
+        const data = tripData[currentDay];
+        dayContent.innerHTML = `
+            <ul class="poi-list" id="poi-list"></ul>
+            <button class="add-poi-btn" id="add-poi-btn">+ Add Place/Activity</button>
+            <div class="remark-box">
+                <textarea class="remark-input" id="remark-input" placeholder="Add remark...">${data.remark||''}</textarea>
+                <button class="save-remark-btn" id="save-remark-btn">Save Remark</button>
+            </div>
+        `;
+        // 渲染POI
+        const poiList = document.getElementById('poi-list');
+        data.pois.forEach((poi, idx) => {
+            const li = document.createElement('li');
+            li.className = 'poi-item';
+            li.innerHTML = `
+                <span class="poi-icon">&#128205;</span>
+                <span class="poi-name">${poi.name}</span>
+                <span class="remove-poi" title="Remove" data-idx="${idx}">&#10006;</span>
+            `;
+            poiList.appendChild(li);
+        });
+        // 删除POI
+        poiList.querySelectorAll('.remove-poi').forEach(btn=>{
+            btn.onclick = function() {
+                data.pois.splice(this.dataset.idx,1);
+                saveTripData(tripData);
+                renderDayContent();
+                if(currentDay===daysArr[0]) updateMap(data.pois);
+            };
+        });
+        // 添加POI
+        document.getElementById('add-poi-btn').onclick = function() {
+            openSearchModal();
+        };
+        // 备注
+        document.getElementById('save-remark-btn').onclick = function() {
+            data.remark = document.getElementById('remark-input').value;
+            saveTripData(tripData);
+            alert('Remark saved!');
+        };
+        // 更新地图
+        if(currentDay===daysArr[0]) updateMap(data.pois);
+        // Sync itinerary overview
+        renderItineraryOverview();
+    }
+
+    // --------- 搜索地点弹窗 ---------
+    const searchModalBg = document.getElementById('search-modal-bg');
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    const closeSearchModal = document.getElementById('close-search-modal');
+
+    function openSearchModal() {
+        searchModalBg.style.display = 'flex';
+        searchInput.value = '';
+        searchResults.innerHTML = '';
+        searchInput.focus();
+    }
+    closeSearchModal.onclick = ()=>{ searchModalBg.style.display='none'; };
+    searchModalBg.onclick = (e)=>{ if(e.target===searchModalBg) searchModalBg.style.display='none'; };
+
+    searchInput.oninput = function() {
+        const q = this.value.trim();
+        if(!q) { searchResults.innerHTML=''; return; }
+        searchResults.innerHTML = '<div style="color:#888;padding:10px;">Searching...</div>';
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`)
+        .then(r=>r.json()).then(res=>{
+            if(!res.length) {
+                searchResults.innerHTML = '<div style="color:#888;padding:10px;">No results</div>';
+                return;
+            }
+            searchResults.innerHTML = res.slice(0,8).map(item=>`
+                <div class="search-result-item" data-lat="${item.lat}" data-lon="${item.lon}" data-name="${item.display_name.replace(/"/g,'&quot;')}">
+                    <div class="search-result-title">${item.display_name.split(',')[0]}</div>
+                    <div class="search-result-desc">${item.display_name}</div>
+                </div>
+            `).join('');
+            // Select POI
+            searchResults.querySelectorAll('.search-result-item').forEach(item=>{
+                item.onclick = function() {
+                    const name = this.dataset.name;
+                    const lat = parseFloat(this.dataset.lat);
+                    const lon = parseFloat(this.dataset.lon);
+                    tripData[currentDay].pois.push({ name, lat, lon });
+                    saveTripData(tripData);
+                    renderDayContent();
+                    searchModalBg.style.display = 'none';
+                };
+            });
+        });
+    };
+
+    // --------- 初始化 ---------
+    window.onload = function() {
+        map.setView([35.6895,139.6917], 5); // Default: Japan
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+        // Geolocation
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(pos){
+                map.setView([pos.coords.latitude, pos.coords.longitude], 12);
+            });
+        }
+        renderSummary();
+        renderTabs();
+        renderDayContent();
+        renderItineraryOverview();
+    };
+    </script>
+</body>
+</html>
