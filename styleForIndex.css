@@ -1,0 +1,305 @@
+/* ======== 通用和基础样式 ======== */
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    overflow-x: hidden;
+    background-color: #f8f8f8;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h2 { 
+    text-align: left;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+main {
+    padding-top: 80px; /* 为固定的导航栏留出空间 */
+}
+
+/* ======== 导航栏样式 ======== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+    padding: 15px 0;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #007aff;
+    text-decoration: none;
+}
+
+.nav-links a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.nav-auth a {
+    margin-left: 15px;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    color: #fff;
+}
+
+.login { background-color: #007aff; }
+.register { background-color: #34c759; }
+
+.hamburger-menu { display: none; cursor: pointer; }
+.hamburger-menu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 5px 0;
+}
+
+/* ======== Swiper (精选专题) 样式 ======== */
+#slider-container {
+    padding-bottom: 20px;
+}
+
+.swiper-container { 
+    width: 100%; 
+    height: 300px; 
+    position: relative; 
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 25px;
+    background: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slide-caption {
+    position: absolute; 
+    color: white; 
+    background-color: rgba(0,0,0,0.5); 
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: #ffffff;
+}
+
+.swiper-button-next::after, .swiper-button-prev::after {
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+}
+
+.swiper-pagination {
+    position: relative;
+    bottom: auto;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.swiper-pagination-bullet {
+    background: #aaa;
+}
+
+.swiper-pagination-bullet-active {
+    background: #333;
+}
+
+/* ======== My Trips 样式 ======== */
+#my-trips {
+    padding-top: 20px;
+    padding-bottom: 100px; /* 为悬浮按钮留出空间 */
+    text-align: center;
+}
+
+#my-trips-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    justify-content: center;
+}
+
+/* ======== +号按钮样式 ======== */
+#add-trip-btn {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 32px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #000;
+    color: #fff;
+    font-size: 36px;
+    line-height: 56px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+#add-trip-btn:hover {
+    transform: translateX(-50%) scale(1.1);
+}
+
+/* ======== 弹窗 (Modal) 样式 ======== */
+#trip-modal {
+    display: none;
+    position: fixed;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 18px;
+    max-width: 90vw;
+    width: 380px;
+    margin: auto;
+    padding: 28px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    position: relative;
+}
+
+.modal-title {
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-bottom: 18px;
+}
+
+.modal-content label {
+    font-size: 16px;
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 8px;
+}
+
+.modal-content input {
+    width: 100%; 
+    box-sizing: border-box;
+    padding: 10px; 
+    border-radius: 8px; 
+    border: 1px solid #ddd; 
+    font-size: 16px;
+}
+
+.date-picker-group {
+    display: flex; 
+    gap: 10px; 
+    margin-top: 8px;
+}
+.date-picker-item {
+    flex: 1;
+}
+.date-label {
+    font-size:14px;
+    margin-bottom:4px;
+    color: #555;
+}
+
+.modal-actions {
+    display: flex; 
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+#trip-cancel {
+    margin-right: 12px; 
+    background: none; 
+    border: none; 
+    color: #888; 
+    font-size: 16px;
+    cursor: pointer;
+}
+#trip-confirm {
+    background: #000; 
+    color: #fff; 
+    border: none; 
+    border-radius: 8px; 
+    padding: 10px 20px; 
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+/* ======== 响应式设计 ======== */
+@media (max-width: 768px) {
+    .nav-links, .nav-auth {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 68px; /* 导航栏高度 */
+        left: 0;
+        background-color: white;
+    }
+    
+    .nav-links.active, .nav-auth.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #f2f2f2;
+    }
+    .nav-auth {
+        top: auto;
+        position: relative;
+        box-shadow: none;
+        padding: 10px 0;
+    }
+     .nav-auth.active {
+        position: absolute;
+        top: 162px; /* 需要根据导航链接数量调整 */
+    }
+    .nav-auth a {
+        margin: 5px 15px;
+        text-align: center;
+        display: block;
+    }
+
+    .hamburger-menu { display: block; }
+    .hamburger-menu.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger-menu.active span:nth-child(2) { opacity: 0; }
+    .hamburger-menu.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+}
