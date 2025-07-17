@@ -84,8 +84,8 @@ main {
     transition: all 0.3s ease-in-out;
 }
 
-/* ======== 英雄展示区样式 ======== */
-.hero-section {
+/* ======== 展示区样式 ======== */
+.exhibition-section {
     height: 100vh;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1473625247510-8ceb1760943f?q=80&w=2070');
     background-size: cover;
@@ -97,14 +97,14 @@ main {
     color: #fff;
 }
 
-.hero-content h1 {
+.exhibition-content h1 {
     font-size: 3.5rem;
     font-weight: bold;
     margin-bottom: 20px;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
 }
 
-.hero-content p {
+.exhibition-content p {
     font-size: 1.2rem;
     max-width: 600px;
     margin: 0 auto 30px auto;
@@ -479,8 +479,8 @@ main {
 
 /* ======== 响应式设计 ======== */
 @media (max-width: 768px) {
-    .hero-content h1 { font-size: 2.5rem; }
-    .hero-content p { font-size: 1rem; }
+    .exhibition-content h1 { font-size: 2.5rem; }
+    .exhibition-content p { font-size: 1rem; }
     
     .section-header-interactive {
         flex-direction: column;

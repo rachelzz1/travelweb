@@ -93,13 +93,14 @@
     <!-- ======== 导航栏 (HTML Unchanged) ======== -->
     <header class="navbar">
         <div class="container">
-            <a href="#" class="logo">圆周旅迹</a>
+            <a href="#" class="logo">Roamark</a>
             <div class="hamburger-menu"><span></span><span></span><span></span></div>
             <nav class="nav-links">
-                <a href="#hero">首页</a>
-                <a href="#slider-container">目的地</a>
-                <a href="#my-trips">我的行程</a>
-                <a href="#site-footer">联系我们</a>
+                <a href="#exhibition">Home</a>
+                <a href="#slider-container">Featured Topics</a>
+                <a href="#my-trips">My Trips</a>
+                </a>
+                <a href="#site-footer">Contact Us</a>
             </nav>
             <div class="nav-auth">
                 <a href="login.html" class="login" id="nav-login-btn">Log in</a>
@@ -112,11 +113,13 @@
     </header>
 
     <!-- ======== 展示区 (HTML Unchanged) ======== -->
-    <section id="hero" class="hero-section">
-        <div class="hero-content">
-            <h1>发现世界的美丽</h1>
-            <p>探索全球最令人惊叹的目的地，体验独特的文化，创造难忘的回忆。我们为您提供最优质的旅行服务。</p>
-            <a href="#slider-container" class="btn-explore">开始探索</a>
+    <section id="exhibition" class="exhibition-section">
+        <div class="exhibition-content">
+            <h1>Explore the Beauty of the World with Roamark</h1>
+            <p>Roamark is your personal travel curator — 
+                    helping you plan unforgettable journeys while leaving your mark on the world. From iconic landmarks to hidden gems, 
+                    we empower explorers to map, save, and share every step of their adventures.</p>
+            <a href="#slider-container" class="btn-explore">Start Exploring</a>
         </div>
     </section>
 
@@ -158,11 +161,24 @@
     <footer id="site-footer" class="site-footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-column about-us"><h3>关于我们</h3><p>探索世界旅行社致力于为寻求终极优选的旅行体验、让每一次旅程都成为难忘的回忆。</p></div>
-                <div class="footer-column quick-links"><h3>快速链接</h3><ul><li><a href="#hero">首页</a></li><li><a href="#slider-container">目的地</a></li><li><a href="#">旅行套餐</a></li><li><a href="#">旅行博客</a></li><li><a href="#">常见问题</a></li></ul></div>
-                <div class="footer-column contact-us"><h3>联系我们</h3><ul><li>电话：400-123-4567</li><li>邮箱：info@exploreworld.com</li><li>地址：北京市朝阳区建国大道18号</li></ul></div>
+                <div class="footer-column about-us">
+                    <h3>About us</h3>
+                    <p>Roamark is your personal travel curator — 
+                    helping you plan unforgettable journeys while leaving your mark on the world. From iconic landmarks to hidden gems, we empower explorers to map, save, and share every step of their adventures.</p></div>
+                <div class="footer-column quick-links">
+                    <h3>Quick links</h3>
+                    <ul>
+                        <li><a href="#exhibition">Home</a></li>
+                        <li><a href="#slider-container">Featured Topics</a></li>
+                        <li><a href="#">FAQs</a></li></ul></div>
+                <div class="footer-column contact-us">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Tel:400-123-4567</li>
+                        <li>Email:rqztian041007@gmai.com, alicestar1218@gmail.com, tcm2109570@gmail.com, yyu973542@gmail.com</li>
+                        <li>Address: XMUM, 43900 Dengkil Selangor</li></ul></div>
             </div>
-            <div class="footer-bottom"><p>© 2025 探索世界旅行社. 保留所有权利.</p></div>
+            <div class="footer-bottom"><p>© 2025 Roamark Travel Agency. All rights reserved.</p></div>
         </div>
     </footer>
 
@@ -222,9 +238,9 @@
             today.setHours(0, 0, 0, 0);
             const from = new Date(dateFrom);
             const to = new Date(dateTo);
-            if (to < today) return '行程已结束';
-            if (from > today) return '行程未开始';
-            return '进行中';
+            if (to < today) return 'Trip ended.';
+            if (from > today) return 'Trip not started.';
+            return 'Trip in progress.';
         }
         
         // --- MODIFIED: Renders all trips from FIRESTORE ---
@@ -275,10 +291,10 @@
                         
                         card.innerHTML = `
                             <div class="trip-card-status"> ● ${status}</div>
-                            <h3 class="trip-card-title">${trip.city} ${days}日游</h3>
+                            <h3 class="trip-card-title">${trip.city} ${days} Days Trip</h3>
                             <div class="trip-card-details">
-                                ${String(fromDate.getMonth() + 1).padStart(2, '0')}.${String(fromDate.getDate()).padStart(2, '0')}至${String(toDate.getMonth() + 1).padStart(2, '0')}.${String(toDate.getDate()).padStart(2, '0')} ${days}天${nights}晚 <br>
-                                ${poiCount}个地点
+                                ${String(fromDate.getMonth() + 1).padStart(2, '0')}.${String(fromDate.getDate()).padStart(2, '0')} to ${String(toDate.getMonth() + 1).padStart(2, '0')}.${String(toDate.getDate()).padStart(2, '0')} ${days} days ${nights} nights <br>
+                                ${poiCount} places
                             </div>
                             <div class="trip-card-footer">
                                 <div class="trip-card-add-user">+</div>
