@@ -13,7 +13,8 @@
         <div class="form-box">
             <h1>Log in to TripTrace</h1>
             
-            <form action="#" method="post">
+            <!--  为表单添加 ID  -->
+            <form id="login-form">
                 <label for="email">Email address</label>
                 <input type="email" id="email" name="email" required>
 
@@ -59,5 +60,93 @@
             </div>
         </div>
     </div>
+
+    <!--  Firebase 连接和登录验证脚本 -->
+    <script type="module">
+        // 步骤 1: 导入 Firebase SDK 中我们需要的功能
+        // 除了初始化，我们还需要 query, where, getDocs 来查询数据
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // 步骤 2: 您的 Firebase 项目配置 (请确保与 signup.html 中的一致)
+        const firebaseConfig = {
+          apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
+          authDomain: "roamark-web.firebaseapp.com",
+          projectId: "roamark-web",
+          storageBucket: "roamark-web.appspot.com",
+          messagingSenderId: "226236070878",
+          appId: "1:226236070878:web:f551ac673b1749e72e3b4f"
+        };
+
+        // 步骤 3: 初始化 Firebase 服务
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 步骤 4: 获取表单元素并监听提交事件
+        const loginForm = document.getElementById('login-form');
+
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // 阻止页面刷新
+
+            // 获取用户输入的邮箱和密码
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // 简单的客户端验证
+            if (!email || !password) {
+                alert("Please enter both email and password.");
+                return;
+            }
+
+            try {
+                // 步骤 5: 查询 Firestore 数据库
+                // 1. 创建一个指向 "users" 集合的引用
+                const usersRef = collection(db, "users");
+                // 2. 创建一个查询，条件是：在 users 集合中，寻找 'email' 字段 等于 用户输入的email 的文档
+                const q = query(usersRef, where("email", "==", email));
+                // 3. 执行查询并等待结果
+                const querySnapshot = await getDocs(q);
+
+                // 步骤 6: 验证查询结果
+                if (querySnapshot.empty) {
+                    // 如果查询结果为空，说明没有找到该邮箱
+                    alert("Invalid email or password.");
+                    return;
+                }
+
+                let loginSuccess = false;
+                // 遍历查询到的结果（虽然我们预计只有一个）
+                querySnapshot.forEach((doc) => {
+                    const userData = doc.data();
+                    // 检查数据库中存储的密码是否与用户输入的密码匹配
+                    if (userData.password === password) {
+                        loginSuccess = true;
+                        
+                        // (可选) 登录成功后，可以将用户信息存储在浏览器的 localStorage 中
+                        // 这样在其他页面就可以知道用户是谁了
+                        localStorage.setItem('loggedInUser', JSON.stringify({
+                            fullName: userData.fullName,
+                            email: userData.email,
+                            uid: doc.id // 存储文档ID作为用户的唯一标识
+                        }));
+
+                        alert("Login successful! Welcome back, " + userData.fullName + "!");
+                        // 跳转到主页
+                        window.location.href = 'index.html';
+                    }
+                });
+
+                // 如果遍历完所有匹配的邮箱后，密码都不对
+                if (!loginSuccess) {
+                    alert("Invalid email or password.");
+                }
+
+            } catch (error) {
+                console.error("Error during login: ", error);
+                alert("An error occurred during login. Please try again.");
+            }
+        });
+    </script>
+
 </body>
 </html>

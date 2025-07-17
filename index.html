@@ -22,22 +22,43 @@
                 <span></span>
             </div>
             <nav class="nav-links">
-                <a href="#slider-container">Featured Topics</a>
-                <a href="#my-trips">My Trips</a>
+                <a href="#hero">首页</a>
+                <a href="#slider-container">目的地</a>
+                <a href="#my-trips">我的行程</a>
+                <a href="#site-footer">联系我们</a>
             </nav>
             
             <div class="nav-auth">
-                <a href="login.html" class="login">Log in</a>
-                <!-- “注册”按钮已被移除 -->
+                <a href="login.html" class="login" id="nav-login-btn">Log in</a>
+                <div id="nav-user-info" style="display:none;">
+                    <span id="nav-user-name"></span>
+                    <a href="#" id="logout-btn" style="margin-left:10px;">Log out</a>
+                </div>
             </div>
         </div>
     </header>
 
+    <!-- 英雄展示区 -->
+    <section id="hero" class="hero-section">
+        <div class="hero-content">
+            <h1>发现世界的美丽</h1>
+            <p>探索全球最令人惊叹的目的地，体验独特的文化，创造难忘的回忆。我们为您提供最优质的旅行服务。</p>
+            <a href="#slider-container" class="btn-explore">开始探索</a>
+        </div>
+    </section>
+
     <!-- 主内容区 -->
     <main>
-        <!-- 滑块容器 -->
+        <!-- 滑块容器 (即特色目的地) -->
         <div id="slider-container" class="container">
-            <h2>Featured Topics</h2>
+            <div class="section-header-interactive">
+                <h2>Featured Topics</h2>
+                <div class="search-container">
+                    <input type="search" id="city-search-input" placeholder="Search for a city...">
+                    <button id="city-search-btn" aria-label="Search">🔍</button>
+                </div>
+            </div>
+
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <!-- Slide 1: Tokyo -->
@@ -77,17 +98,51 @@
 
         <!-- 我的行程展示区 -->
         <div id="my-trips" class="container">
-            <h2>My Trips</h2>
+            <div class="my-trips-header">
+                <h2>My Trips</h2>
+                <button id="add-trip-btn" title="Create a new trip">+</button>
+            </div>
             <div id="my-trips-list">
                 <!-- 由JavaScript创建的卡片式行程将插入这里 -->
+                <p class="empty-trips-message" id="trips-empty-message">You have no trips yet. Click the '+' to add one!</p>
             </div>
         </div>
     </main>
 
-    <!-- +号按钮 -->
-    <button id="add-trip-btn">+</button>
+    <!-- 页脚 -->
+    <footer id="site-footer" class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column about-us">
+                    <h3>关于我们</h3>
+                    <p>探索世界旅行社致力于为寻求终极优选的旅行体验、让每一次旅程都成为难忘的回忆。</p>
+                </div>
+                <div class="footer-column quick-links">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="#hero">首页</a></li>
+                        <li><a href="#slider-container">目的地</a></li>
+                        <li><a href="#">旅行套餐</a></li>
+                        <li><a href="#">旅行博客</a></li>
+                        <li><a href="#">常见问题</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column contact-us">
+                    <h3>联系我们</h3>
+                    <ul>
+                        <li>电话：400-123-4567</li>
+                        <li>邮箱：info@exploreworld.com</li>
+                        <li>地址：北京市朝阳区建国大道18号</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 探索世界旅行社. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
 
-    <!-- 创建我的行程弹窗 -->
+    <!-- 创建我的行程弹窗 (这是它应该在的位置) -->
     <div id="trip-modal">
         <div class="modal-content">
             <div class="modal-title">Create My Trip</div>
@@ -124,7 +179,36 @@
                 navLinks.classList.toggle('active');
                 navAuth.classList.toggle('active');
             });
-            
+
+            // --- 登录状态检测与切换 ---
+            const loginBtn = document.getElementById('nav-login-btn');
+            const userInfoDiv = document.getElementById('nav-user-info');
+            const userNameSpan = document.getElementById('nav-user-name');
+            const logoutBtn = document.getElementById('logout-btn');
+            const tripsEmptyMsg = document.getElementById('trips-empty-message');
+
+            function updateAuthAndTrips() {
+                const user = localStorage.getItem('loggedInUser');
+                if (user) {
+                    const userObj = JSON.parse(user);
+                    loginBtn.style.display = 'none';
+                    userInfoDiv.style.display = 'inline-block';
+                    userNameSpan.textContent = userObj.fullName || userObj.email;
+                    tripsEmptyMsg.textContent = "You have no trips yet. Click the '+' to add one!";
+                } else {
+                    loginBtn.style.display = 'inline-block';
+                    userInfoDiv.style.display = 'none';
+                    tripsEmptyMsg.textContent = "You haven't logged in yet. Please log in to create and view your trips.";
+                }
+            }
+            updateAuthAndTrips();
+
+            logoutBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                localStorage.removeItem('loggedInUser');
+                updateAuthAndTrips(); // 更新导航栏和提示信息
+            });
+
             // --- Swiper 逻辑 ---
             const swiper = new Swiper('.swiper-container', {
                 loop: true,
@@ -138,7 +222,7 @@
                 },
                 pagination: {
                     el: '.swiper-pagination',
-                    clickable: true, // 允许点击分页器切换
+                    clickable: true,
                 },
                  breakpoints: {
                     768: {
@@ -158,7 +242,7 @@
                     window.location.href = url;
                 });
             });
-
+            
             // --- 弹窗和行程创建逻辑 ---
             const addTripBtn = document.getElementById('add-trip-btn');
             const tripModal = document.getElementById('trip-modal');
@@ -169,6 +253,11 @@
             const tripDateTo = document.getElementById('trip-date-to');
             
             addTripBtn.onclick = () => {
+                const user = localStorage.getItem('loggedInUser');
+                if (!user) {
+                    alert('You must log in to create your own trip.');
+                    return;
+                }
                 tripModal.style.display = 'flex';
                 tripCity.value = '';
                 tripDateFrom.value = '';
@@ -197,6 +286,42 @@
                     tripModal.style.display = 'none';
                 }
             };
+
+            // ---  搜索功能逻辑  ---
+            const searchInput = document.getElementById('city-search-input');
+            const searchBtn = document.getElementById('city-search-btn');
+
+            const performSearch = () => {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                if (!searchTerm) return; 
+
+                let foundSlide = false;
+                const slides = swiper.slides;
+                for (let i = 0; i < slides.length; i++) {
+                    const slide = slides[i];
+                    const city = slide.dataset.city;
+
+                    if (city && city.toLowerCase() === searchTerm) {
+                        const realIndex = parseInt(slide.dataset.swiperSlideIndex, 10);
+                        swiper.slideToLoop(realIndex);
+                        foundSlide = true;
+                        break; 
+                    }
+                }
+
+                if (!foundSlide) {
+                    alert('City not found in featured topics.');
+                }
+            };
+
+            searchBtn.addEventListener('click', performSearch);
+
+            searchInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); 
+                    performSearch();
+                }
+            });
         });
     </script>
 </body>
