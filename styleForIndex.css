@@ -405,6 +405,78 @@ main {
 }
 
 
+/* ======== Trip card styles from index.html ======== */
+.trip-card-container {
+    background-color: #f6f0ff; /* Light purple background */
+    border-radius: 22px;
+    padding: 20px;
+    margin-bottom: 16px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    color: #333;
+    border: 1px solid #eadeff;
+}
+.trip-card-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: rgba(128, 128, 128, 0.1);
+    color: #555;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+}
+.trip-card-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.trip-card-details {
+    font-size: 1rem;
+    color: #5c5c5c;
+    line-height: 1.5;
+}
+.trip-card-footer {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+.trip-card-add-user {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: #aaa;
+    cursor: pointer;
+    border: 1px solid #e0e0e0;
+}
+.trip-card-image-placeholder {
+    position: absolute;
+    right: 25px;
+    bottom: 25px;
+    width: 90px;
+    height: 70px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+}
+/* Simple SVG for the placeholder */
+.trip-card-image-placeholder svg {
+    width: 80%;
+    height: 80%;
+    stroke: #d1d1d1;
+    stroke-width: 0.5;
+    fill: none;
+}
+
+
 /* ======== 响应式设计 ======== */
 @media (max-width: 768px) {
     .hero-content h1 { font-size: 2.5rem; }

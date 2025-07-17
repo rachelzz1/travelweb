@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,28 +7,100 @@
     <title>Japan Travel</title>
     <!-- 引入 Swiper 的 CSS -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    
     <!-- 引用我们自己的外部样式表 -->
     <link rel="stylesheet" href="styleForIndex.css">
+    <style>
+        /* ADDED: Basic styling for the trip card to match the screenshot */
+        .trip-card-container {
+            background-color: #f6f0ff; /* Light purple background */
+            border-radius: 22px;
+            padding: 20px;
+            margin-bottom: 16px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            color: #333;
+            border: 1px solid #eadeff;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+        .trip-card-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        }
+        .trip-card-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: rgba(128, 128, 128, 0.1);
+            color: #555;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+        .trip-card-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .trip-card-details {
+            font-size: 1rem;
+            color: #5c5c5c;
+            line-height: 1.5;
+        }
+        .trip-card-footer {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        .trip-card-add-user {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #aaa;
+            cursor: pointer;
+            border: 1px solid #e0e0e0;
+        }
+        .trip-card-image-placeholder {
+            position: absolute;
+            right: 25px;
+            bottom: 25px;
+            width: 90px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+        }
+         /* Simple SVG for the placeholder */
+        .trip-card-image-placeholder svg {
+            width: 80%;
+            height: 80%;
+            stroke: #d1d1d1;
+            stroke-width: 0.5;
+            fill: none;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- ======== 导航栏 ======== -->
+    <!-- ======== 导航栏 (HTML Unchanged) ======== -->
     <header class="navbar">
         <div class="container">
             <a href="#" class="logo">圆周旅迹</a>
-            <div class="hamburger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="hamburger-menu"><span></span><span></span><span></span></div>
             <nav class="nav-links">
                 <a href="#hero">首页</a>
                 <a href="#slider-container">目的地</a>
                 <a href="#my-trips">我的行程</a>
                 <a href="#site-footer">联系我们</a>
             </nav>
-            
             <div class="nav-auth">
                 <a href="login.html" class="login" id="nav-login-btn">Log in</a>
                 <div id="nav-user-info" style="display:none;">
@@ -38,7 +111,7 @@
         </div>
     </header>
 
-    <!-- 英雄展示区 -->
+    <!-- ======== 展示区 (HTML Unchanged) ======== -->
     <section id="hero" class="hero-section">
         <div class="hero-content">
             <h1>发现世界的美丽</h1>
@@ -47,102 +120,53 @@
         </div>
     </section>
 
-    <!-- 主内容区 -->
+    <!-- ======== 主内容区 (HTML Unchanged) ======== -->
     <main>
-        <!-- 滑块容器 (即特色目的地) -->
         <div id="slider-container" class="container">
             <div class="section-header-interactive">
                 <h2>Featured Topics</h2>
                 <div class="search-container">
-                    <input type="search" id="city-search-input" placeholder="Search for a city...">
-                    <button id="city-search-btn" aria-label="Search">🔍</button>
+                    <input type="search" id="city-search-input" placeholder="Search for a city..."><button id="city-search-btn" aria-label="Search">🔍</button>
                 </div>
             </div>
-
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <!-- Slide 1: Tokyo -->
-                    <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917" data-zoom="12">
-                        <img src="images/tokyo.png" alt="Tokyo">
-                        <div class="slide-caption">Tokyo</div>
-                    </div>
-                    <!-- Slide 2: Osaka -->
-                    <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023" data-zoom="12">
-                        <img src="images/osaka.png" alt="Osaka">
-                         <div class="slide-caption">Osaka</div>
-                    </div>
-                    <!-- Slide 3: Kyoto -->
-                    <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681" data-zoom="12">
-                        <img src="images/kyoto.png" alt="Kyoto">
-                         <div class="slide-caption">Kyoto</div>
-                    </div>
-                    <!-- 复制的滑块 -->
-                    <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917" data-zoom="12">
-                        <img src="images/tokyo.png" alt="Tokyo">
-                        <div class="slide-caption">Tokyo</div>
-                    </div>
-                    <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023" data-zoom="12">
-                        <img src="images/osaka.png" alt="Osaka">
-                         <div class="slide-caption">Osaka</div>
-                    </div>
-                    <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681" data-zoom="12">
-                        <img src="images/kyoto.png" alt="Kyoto">
-                         <div class="slide-caption">Kyoto</div>
-                    </div>
+                    <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917" data-zoom="12"><img src="images/tokyo.png" alt="Tokyo"><div class="slide-caption">Tokyo</div></div>
+                    <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023" data-zoom="12"><img src="images/osaka.png" alt="Osaka"><div class="slide-caption">Osaka</div></div>
+                    <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681" data-zoom="12"><img src="images/kyoto.png" alt="Kyoto"><div class="slide-caption">Kyoto</div></div>
+                    <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917" data-zoom="12"><img src="images/tokyo.png" alt="Tokyo"><div class="slide-caption">Tokyo</div></div>
+                    <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023" data-zoom="12"><img src="images/osaka.png" alt="Osaka"><div class="slide-caption">Osaka</div></div>
+                    <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681" data-zoom="12"><img src="images/kyoto.png" alt="Kyoto"><div class="slide-caption">Kyoto</div></div>
                 </div>
                 <div class="swiper-pagination"></div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
         </div>
-
-        <!-- 我的行程展示区 -->
         <div id="my-trips" class="container">
             <div class="my-trips-header">
                 <h2>My Trips</h2>
                 <button id="add-trip-btn" title="Create a new trip">+</button>
             </div>
             <div id="my-trips-list">
-                <!-- 由JavaScript创建的卡片式行程将插入这里 -->
                 <p class="empty-trips-message" id="trips-empty-message">You have no trips yet. Click the '+' to add one!</p>
             </div>
         </div>
     </main>
 
-    <!-- 页脚 -->
+    <!-- ======== 页脚 (HTML Unchanged) ======== -->
     <footer id="site-footer" class="site-footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-column about-us">
-                    <h3>关于我们</h3>
-                    <p>探索世界旅行社致力于为寻求终极优选的旅行体验、让每一次旅程都成为难忘的回忆。</p>
-                </div>
-                <div class="footer-column quick-links">
-                    <h3>快速链接</h3>
-                    <ul>
-                        <li><a href="#hero">首页</a></li>
-                        <li><a href="#slider-container">目的地</a></li>
-                        <li><a href="#">旅行套餐</a></li>
-                        <li><a href="#">旅行博客</a></li>
-                        <li><a href="#">常见问题</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column contact-us">
-                    <h3>联系我们</h3>
-                    <ul>
-                        <li>电话：400-123-4567</li>
-                        <li>邮箱：info@exploreworld.com</li>
-                        <li>地址：北京市朝阳区建国大道18号</li>
-                    </ul>
-                </div>
+                <div class="footer-column about-us"><h3>关于我们</h3><p>探索世界旅行社致力于为寻求终极优选的旅行体验、让每一次旅程都成为难忘的回忆。</p></div>
+                <div class="footer-column quick-links"><h3>快速链接</h3><ul><li><a href="#hero">首页</a></li><li><a href="#slider-container">目的地</a></li><li><a href="#">旅行套餐</a></li><li><a href="#">旅行博客</a></li><li><a href="#">常见问题</a></li></ul></div>
+                <div class="footer-column contact-us"><h3>联系我们</h3><ul><li>电话：400-123-4567</li><li>邮箱：info@exploreworld.com</li><li>地址：北京市朝阳区建国大道18号</li></ul></div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2025 探索世界旅行社. 保留所有权利.</p>
-            </div>
+            <div class="footer-bottom"><p>© 2025 探索世界旅行社. 保留所有权利.</p></div>
         </div>
     </footer>
 
-    <!-- 创建我的行程弹窗 (这是它应该在的位置) -->
+    <!-- ======== 行程弹窗 (HTML Unchanged) ======== -->
     <div id="trip-modal">
         <div class="modal-content">
             <div class="modal-title">Create My Trip</div>
@@ -150,14 +174,8 @@
             <input id="trip-city" type="text" placeholder="Enter city">
             <label>How long do you want to go?</label>
             <div class="date-picker-group">
-                <div class="date-picker-item">
-                    <div class="date-label">Departure date</div>
-                    <input id="trip-date-from" type="date">
-                </div>
-                <div class="date-picker-item">
-                    <div class="date-label">Return date</div>
-                    <input id="trip-date-to" type="date">
-                </div>
+                <div class="date-picker-item"><div class="date-label">Departure date</div><input id="trip-date-from" type="date"></div>
+                <div class="date-picker-item"><div class="date-label">Return date</div><input id="trip-date-to" type="date"></div>
             </div>
             <div class="modal-actions">
                 <button id="trip-cancel">Cancel</button>
@@ -166,11 +184,127 @@
         </div>
     </div>
 
-    <!-- Swiper 和脚本 -->
+    <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script>
+
+    <!-- ALL JAVASCRIPT IS NOW IN THIS SINGLE MODULE SCRIPT -->
+    <script type="module">
+        // Step 1: Import all necessary functions from the Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // Step 2: Your Firebase project configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
+          authDomain: "roamark-web.firebaseapp.com",
+          projectId: "roamark-web",
+          storageBucket: "roamark-web.appspot.com",
+          messagingSenderId: "226236070878",
+          appId: "1:226236070878:web:f551ac673b1749e72e3b4f"
+        };
+
+        // Step 3: Initialize Firebase and Firestore
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- Trip Management Helper Functions (Unchanged) ---
+        function calculateDateDifference(dateFrom, dateTo) {
+            const from = new Date(dateFrom);
+            const to = new Date(dateTo);
+            if (isNaN(from) || isNaN(to) || to < from) return { days: 0, nights: 0 };
+            const diffTime = to - from;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            return { days: diffDays, nights: diffDays > 0 ? diffDays - 1 : 0 };
+        }
+
+        function getTripStatus(dateFrom, dateTo) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const from = new Date(dateFrom);
+            const to = new Date(dateTo);
+            if (to < today) return '行程已结束';
+            if (from > today) return '行程未开始';
+            return '进行中';
+        }
+        
+        // --- MODIFIED: Renders all trips from FIRESTORE ---
+        async function loadAndRenderTrips() {
+            const tripsListContainer = document.getElementById('my-trips-list');
+            const emptyMsg = document.getElementById('trips-empty-message');
+            tripsListContainer.innerHTML = ''; // Clear previous list
+
+            const userStr = localStorage.getItem('loggedInUser');
+            if (!userStr) {
+                tripsListContainer.appendChild(emptyMsg);
+                emptyMsg.style.display = 'block';
+                return;
+            }
+            const user = JSON.parse(userStr);
+
+            try {
+                // Create a query to get trips where 'userEmail' matches the logged-in user's email
+                const tripsRef = collection(db, "trips");
+                const q = query(tripsRef, where("userEmail", "==", user.email));
+                
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    tripsListContainer.appendChild(emptyMsg);
+                    emptyMsg.style.display = 'block';
+                } else {
+                    emptyMsg.style.display = 'none';
+                    querySnapshot.forEach((doc) => {
+                        const trip = doc.data();
+                        const tripId = doc.id; // Get the unique Firestore document ID
+                        const { days, nights } = calculateDateDifference(trip.dateFrom, trip.dateTo);
+                        const status = getTripStatus(trip.dateFrom, trip.dateTo);
+                        const fromDate = new Date(trip.dateFrom);
+                        const toDate = new Date(trip.dateTo);
+                        
+                        const card = document.createElement('div');
+                        card.className = 'trip-card-container';
+                        card.setAttribute('data-trip-id', tripId); // Store the ID on the element
+
+                        // Calculate total POIs if available
+                        let poiCount = 0;
+                        if (trip.dailyDetails) {
+                            Object.values(trip.dailyDetails).forEach(day => {
+                                poiCount += day.pois.length;
+                            });
+                        }
+                        
+                        card.innerHTML = `
+                            <div class="trip-card-status"> ● ${status}</div>
+                            <h3 class="trip-card-title">${trip.city} ${days}日游</h3>
+                            <div class="trip-card-details">
+                                ${String(fromDate.getMonth() + 1).padStart(2, '0')}.${String(fromDate.getDate()).padStart(2, '0')}至${String(toDate.getMonth() + 1).padStart(2, '0')}.${String(toDate.getDate()).padStart(2, '0')} ${days}天${nights}晚 <br>
+                                ${poiCount}个地点
+                            </div>
+                            <div class="trip-card-footer">
+                                <div class="trip-card-add-user">+</div>
+                            </div>
+                            <div class="trip-card-image-placeholder">
+                               <svg viewBox="0 0 100 80"><circle cx="75" cy="20" r="10" /><path d="M 0 70 L 30 40 L 50 60 L 80 30 L 100 50 L 100 80 L 0 80 Z" /></svg>
+                            </div>
+                        `;
+
+                        // Add a click event to the entire card to navigate to the trip details page
+                        card.addEventListener('click', () => {
+                            window.location.href = `mytrip.html?tripId=${tripId}`;
+                        });
+
+                        tripsListContainer.appendChild(card);
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching trips from Firestore: ", error);
+                tripsListContainer.innerHTML = '<p>Could not load trips. Please try again later.</p>';
+            }
+        }
+
+        // --- All remaining code runs after the DOM is loaded ---
         document.addEventListener('DOMContentLoaded', function () {
-            // --- 导航栏逻辑 ---
+            // --- Navigation bar logic (Unchanged) ---
             const hamburger = document.querySelector('.hamburger-menu');
             const navLinks = document.querySelector('.nav-links');
             const navAuth = document.querySelector('.nav-auth');
@@ -180,7 +314,7 @@
                 navAuth.classList.toggle('active');
             });
 
-            // --- 登录状态检测与切换 ---
+            // --- Login status check and UI update (Unchanged) ---
             const loginBtn = document.getElementById('nav-login-btn');
             const userInfoDiv = document.getElementById('nav-user-info');
             const userNameSpan = document.getElementById('nav-user-name');
@@ -200,50 +334,31 @@
                     userInfoDiv.style.display = 'none';
                     tripsEmptyMsg.textContent = "You haven't logged in yet. Please log in to create and view your trips.";
                 }
+                loadAndRenderTrips(); // THIS NOW LOADS FROM FIRESTORE
             }
             updateAuthAndTrips();
 
             logoutBtn.addEventListener('click', function (e) {
                 e.preventDefault();
                 localStorage.removeItem('loggedInUser');
-                updateAuthAndTrips(); // 更新导航栏和提示信息
+                updateAuthAndTrips();
             });
 
-            // --- Swiper 逻辑 ---
+            // --- Swiper logic (Unchanged) ---
             const swiper = new Swiper('.swiper-container', {
-                loop: true,
-                loopedSlides: 3,
-                slidesPerView: 1.5,
-                spaceBetween: 10,
-                centeredSlides: true,
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                 breakpoints: {
-                    768: {
-                        slidesPerView: 3,
-                        spaceBetween: 30
-                    }
-                }
+                loop: true, loopedSlides: 3, slidesPerView: 1.5, spaceBetween: 10, centeredSlides: true,
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                pagination: { el: '.swiper-pagination', clickable: true },
+                breakpoints: { 768: { slidesPerView: 3, spaceBetween: 30 } }
             });
 
             document.querySelectorAll('.swiper-slide').forEach(slide => {
                 slide.addEventListener('click', function () {
-                    const city = this.dataset.city;
-                    const lat = this.dataset.lat;
-                    const lon = this.dataset.lon;
-                    const zoom = this.dataset.zoom;
-                    const url = `detail.html?city=${encodeURIComponent(city)}&lat=${lat}&lon=${lon}&zoom=${zoom}`;
-                    window.location.href = url;
+                    window.location.href = `detail.html?city=${encodeURIComponent(this.dataset.city)}&lat=${this.dataset.lat}&lon=${this.dataset.lon}&zoom=${this.dataset.zoom}`;
                 });
             });
             
-            // --- 弹窗和行程创建逻辑 ---
+            // --- MODIFIED: Trip Creation Modal Logic to use FIRESTORE ---
             const addTripBtn = document.getElementById('add-trip-btn');
             const tripModal = document.getElementById('trip-modal');
             const tripCancel = document.getElementById('trip-cancel');
@@ -259,69 +374,64 @@
                     return;
                 }
                 tripModal.style.display = 'flex';
-                tripCity.value = '';
-                tripDateFrom.value = '';
-                tripDateTo.value = '';
+                tripCity.value = ''; tripDateFrom.value = ''; tripDateTo.value = '';
             };
-            tripCancel.onclick = () => {
-                tripModal.style.display = 'none';
-            };
-            tripConfirm.onclick = () => {
+            tripCancel.onclick = () => { tripModal.style.display = 'none'; };
+            
+            // This function is now ASYNC to handle the database operation
+            tripConfirm.onclick = async () => {
                 const city = tripCity.value.trim();
                 const dateFrom = tripDateFrom.value;
                 const dateTo = tripDateTo.value;
-                if (!city || !dateFrom || !dateTo) {
-                    alert('Please fill in all fields');
-                    return;
-                }
-                if (new Date(dateFrom) > new Date(dateTo)) {
-                    alert('Return date must be after departure date');
-                    return;
-                }
-                const url = `mytrip.html?city=${encodeURIComponent(city)}&from=${dateFrom}&to=${dateTo}`;
-                window.location.href = url;
-            };
-            tripModal.onclick = (e) => {
-                if (e.target === tripModal) {
-                    tripModal.style.display = 'none';
-                }
-            };
+                if (!city || !dateFrom || !dateTo) { alert('Please fill in all fields'); return; }
+                if (new Date(dateFrom) > new Date(dateTo)) { alert('Return date must be after departure date'); return; }
 
-            // ---  搜索功能逻辑  ---
+                const user = JSON.parse(localStorage.getItem('loggedInUser'));
+                if (!user) { alert('Authentication error. Please log in again.'); return; }
+
+                try {
+                    // Create a new trip document in the "trips" collection
+                    const docRef = await addDoc(collection(db, "trips"), {
+                        userEmail: user.email, // Link the trip to the logged-in user
+                        city: city,
+                        dateFrom: dateFrom,
+                        dateTo: dateTo,
+                        createdAt: new Date() // Add a timestamp for when it was created
+                    });
+
+                    console.log("Trip created with Firestore ID: ", docRef.id);
+
+                    // Redirect to the mytrip page, passing the NEW unique trip ID from Firestore
+                    window.location.href = `mytrip.html?tripId=${docRef.id}`;
+
+                } catch (error) {
+                    console.error("Error adding document to Firestore: ", error);
+                    alert("Failed to create the trip. Please check your connection and try again.");
+                }
+            };
+            
+            tripModal.onclick = (e) => { if (e.target === tripModal) tripModal.style.display = 'none'; };
+
+            // --- Search logic (Unchanged) ---
             const searchInput = document.getElementById('city-search-input');
             const searchBtn = document.getElementById('city-search-btn');
-
             const performSearch = () => {
                 const searchTerm = searchInput.value.trim().toLowerCase();
-                if (!searchTerm) return; 
-
+                if (!searchTerm) return;
                 let foundSlide = false;
-                const slides = swiper.slides;
-                for (let i = 0; i < slides.length; i++) {
-                    const slide = slides[i];
+                for (let i = 0; i < swiper.slides.length; i++) {
+                    const slide = swiper.slides[i];
                     const city = slide.dataset.city;
-
                     if (city && city.toLowerCase() === searchTerm) {
-                        const realIndex = parseInt(slide.dataset.swiperSlideIndex, 10);
-                        swiper.slideToLoop(realIndex);
+                        swiper.slideToLoop(parseInt(slide.dataset.swiperSlideIndex, 10));
                         foundSlide = true;
                         break; 
                     }
                 }
-
-                if (!foundSlide) {
-                    alert('City not found in featured topics.');
-                }
+                if (!foundSlide) alert('City not found in featured topics.');
             };
-
             searchBtn.addEventListener('click', performSearch);
-
-            searchInput.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    event.preventDefault(); 
-                    performSearch();
-                }
-            });
+            searchInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); performSearch(); } });
         });
     </script>
 </body>
