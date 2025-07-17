@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Support - Roamark</title>
+    <!-- 复用和登录/注册页面相同的样式表，并添加一些内联样式 -->
+    <link rel="stylesheet" href="login-style.css">
+    <style>
+        /* 为帮助中心添加一些特定样式 */
+        .help-section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 20px;
+        }
+        .help-section:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .help-section h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .faq-item {
+            margin-bottom: 15px;
+        }
+        .faq-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #444;
+        }
+        .contact-info p {
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-box">
+            <h1>Help & Support Center</h1>
+            
+            <!-- FAQ Section -->
+            <div class="help-section">
+                <h2>Frequently Asked Questions (FAQ)</h2>
+                <div class="faq-item">
+                    <h3>How do I create a new trip?</h3>
+                    <p>After logging in, go to the "My Trips" section on the homepage and click the '+' button. A pop-up will appear where you can enter your destination and travel dates.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I edit a trip after creating it?</h3>
+                    <p>Yes! Simply click on any trip card in the "My Trips" section, and you will be taken to the trip details page where you can add places of interest and remarks for each day.</p>
+                </div>
+                 <div class="faq-item">
+                    <h3>I forgot my password. What should I do?</h3>
+                    <p>On the login page, click the "Forgotten your password?" link. You will be guided through the steps to reset it.</p>
+                </div>
+            </div>
+
+            <!-- Account Issues Section -->
+            <div class="help-section">
+                <h2>Account Issues</h2>
+                 <div class="faq-item">
+                    <h3>How do I change my password?</h3>
+                    <p>Currently, password changes must be requested through our support team. Please contact us at the email below.</p>
+                </div>
+                 <div class="faq-item">
+                    <h3>How do I delete my account?</h3>
+                    <p>Account deletion is permanent. If you wish to proceed, please send a request to our support team with your registered email address.</p>
+                </div>
+            </div>
+
+            <!-- Contact Us Section -->
+            <div class="help-section">
+                <h2>Contact Us</h2>
+                <div class="contact-info">
+                    <p>If you can't find the answer you're looking for, feel free to reach out to our support team.</p>
+                    <p>
+                        <strong>Email:</strong> support@roamark.com<br>
+                        <strong>Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-links" style="margin-top: 30px;">
+                <p><a href="login.html">← Back to Log in</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
