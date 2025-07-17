@@ -6,10 +6,29 @@
     <title>Map Detail</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
+        /* CSS styles remain the same and are correct */
         html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; overflow: hidden; height: 100%; }
         #page-container { display: flex; width: 100%; height: 100%; }
-        #panel-container { width: 400px; height: 100vh; background-color: #f8f9fa; box-shadow: 2px 0 8px rgba(0,0,0,0.1); z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; transform: translateX(0); transition: transform 0.3s ease-in-out; }
-        #page-container.panel-collapsed #panel-container { transform: translateX(-100%); }
+        #panel-container { 
+            width: 400px; 
+            height: 100vh; 
+            background-color: #f8f9fa; 
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1); 
+            z-index: 1000; 
+            display: flex; 
+            flex-direction: column; 
+            flex-shrink: 0; 
+            transform: translateX(0); 
+            transition: transform 0.3s ease-in-out, width 0.3s;
+        }
+        #page-container.panel-collapsed #panel-container { 
+            transform: translateX(-100%);
+            width: 0 !important;
+            overflow: hidden;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+        }
         #map-wrapper { flex-grow: 1; height: 100vh; position: relative; }
         #map { height: 100%; width: 100%; background-color: #f0f0f0; }
         #panel-toggle-button { position: absolute; top: 10px; left: 10px; z-index: 1001; background-color: white; border: 1px solid #ccc; border-radius: 4px; width: 30px; height: 30px; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; }
@@ -59,27 +78,15 @@
             const poiData = {
                 "Tokyo": {
                     title: "Tokyo: Modern Meets Traditional",
-                    itinerary: {
-                        "Overview": [ { day: "DAY 1", title: "Culture & Views", route: "Sensō-ji Temple → Tokyo Skytree → Ginza Crossing → Tokyo Tower" }, { day: "DAY 2", title: "Serenity & Style", route: "Meiji Jingu Shrine → Harajuku" } ],
-                        "DAY 1": { title: "Culture & Views", stops: [ { lat: 35.7148, lon: 139.7967, category: "Temple", name: "Sensō-ji Temple", description: "Tokyo's oldest temple, offering a glimpse into the city's rich past.", image: "images/sensoji.jpg", travel_from_previous: null, detailContent: { video: "videos/Sensoji Video.mp4", text: "Sensō-ji is one of Tokyo's oldest and most famous temples. Its iconic large red lantern, the 'Kaminarimon' (Thunder Gate), is a must-see photo spot for visitors." } }, { lat: 35.7101, lon: 139.8107, category: "Observation", name: "Tokyo Skytree", description: "Enjoy breathtaking panoramic views of the entire city from this modern marvel.", image: "images/skytree.png", travel_from_previous: "Approx. 1.5km · 20 min walk", detailContent: { video: "videos/SkyTree Video.mp4", text: "A television broadcasting tower and landmark of Tokyo. It is the tallest structure in Japan." } }, { lat: 35.6699, lon: 139.7700, category: "Shopping", name: "Ginza Crossing", description: "Experience the heart of high-end shopping, dining, and entertainment.", image: "images/Ginza.jpg", travel_from_previous: "Approx. 7km · 25 min subway" }, { lat: 35.6586, lon: 139.7454, category: "Observation", name: "Tokyo Tower", description: "The iconic, Eiffel-inspired tower that has symbolized Tokyo for decades.", image: "images/tower.jpg", travel_from_previous: "Approx. 2km · 10 min subway" } ] },
-                        "DAY 2": { title: "Serenity & Style", stops: [ { lat: 35.6709, lon: 139.6996, category: "Shrine", name: "Meiji Jingu Shrine", description: "A peaceful oasis dedicated to Emperor Meiji and Empress Shoken.", image: "images/meiji.jpg", travel_from_previous: null, detailContent: { video: "videos/Meiji Jingu Video.mp4", text: "This Shinto shrine is dedicated to the deified spirits of Emperor Meiji and his wife, Empress Shōken." } }, { lat: 35.6764, lon: 139.7032, category: "Shopping", name: "Harajuku", description: "Dive into the world of youth culture, quirky fashion, and delicious street food.", image: "images/harajuku.jpg", travel_from_previous: "Approx. 1km · 10 min walk" } ] }
-                    }
+                    itinerary: { "Overview": [ { day: "DAY 1", title: "Culture & Views", route: "Sensō-ji Temple → Tokyo Skytree → Ginza Crossing → Tokyo Tower" }, { day: "DAY 2", title: "Serenity & Style", route: "Meiji Jingu Shrine → Harajuku" } ], "DAY 1": { title: "Culture & Views", stops: [ { lat: 35.7148, lon: 139.7967, category: "Temple", name: "Sensō-ji Temple", description: "Tokyo's oldest temple, offering a glimpse into the city's rich past.", image: "images/sensoji.jpg", travel_from_previous: null, detailContent: { video: "videos/Sensoji Video.mp4", text: "Sensō-ji is one of Tokyo's oldest and most famous temples. Its iconic large red lantern, the 'Kaminarimon' (Thunder Gate), is a must-see photo spot for visitors." } }, { lat: 35.7101, lon: 139.8107, category: "Observation", name: "Tokyo Skytree", description: "Enjoy breathtaking panoramic views of the entire city from this modern marvel.", image: "images/skytree.png", travel_from_previous: "Approx. 1.5km · 20 min walk", detailContent: { video: "videos/SkyTree Video.mp4", text: "A television broadcasting tower and landmark of Tokyo. It is the tallest structure in Japan." } }, { lat: 35.6699, lon: 139.7700, category: "Shopping", name: "Ginza Crossing", description: "Experience the heart of high-end shopping, dining, and entertainment.", image: "images/Ginza.jpg", travel_from_previous: "Approx. 7km · 25 min subway" }, { lat: 35.6586, lon: 139.7454, category: "Observation", name: "Tokyo Tower", description: "The iconic, Eiffel-inspired tower that has symbolized Tokyo for decades.", image: "images/tower.jpg", travel_from_previous: "Approx. 2km · 10 min subway" } ] }, "DAY 2": { title: "Serenity & Style", stops: [ { lat: 35.6709, lon: 139.6996, category: "Shrine", name: "Meiji Jingu Shrine", description: "A peaceful oasis dedicated to Emperor Meiji and Empress Shoken.", image: "images/meiji.jpg", travel_from_previous: null, detailContent: { video: "videos/Meiji Jingu Video.mp4", text: "This Shinto shrine is dedicated to the deified spirits of Emperor Meiji and his wife, Empress Shōken." } }, { lat: 35.6764, lon: 139.7032, category: "Shopping", name: "Harajuku", description: "Dive into the world of youth culture, quirky fashion, and delicious street food.", image: "images/harajuku.jpg", travel_from_previous: "Approx. 1km · 10 min walk" } ] } }
                 },
                 "Osaka": {
                     title: "Osaka: The Nation's Kitchen",
-                    itinerary: {
-                        "Overview": [ { day: "DAY 1", title: "History and Heights", route: "Osaka Castle → Umeda Sky Building → Dōtonbori" }, { day: "DAY 2", title: "Entertainment", route: "Universal Studios Japan → Tsūtenkaku Tower" } ],
-                        "DAY 1": { title: "History and Heights", stops: [ { lat: 34.6873, lon: 135.5259, category: "Castle", name: "Osaka Castle", description: "A symbol of Osaka's history and one of Japan's most famous landmarks.", image: "images/Osaka-Castle.jpg", travel_from_previous: null, detailContent: { video: "videos/Osaka Castle Video.mp4", text: "Osaka Castle is one of Japan's most famous landmarks and it played a major role in the unification of Japan." } }, { lat: 34.7025, lon: 135.4959, category: "Observation", name: "Umeda Sky Building", description: "A spectacular high-rise building with a 'Floating Garden Observatory' on top.", image: "images/umeda.jpeg", travel_from_previous: "Approx. 4km · 20 min subway" }, { lat: 34.6684, lon: 135.5016, category: "Entertainment", name: "Dōtonbori", description: "The lively entertainment area famous for its extravagant signage and food stalls.", image: "images/Dotonbori.jpg", travel_from_previous: "Approx. 4km · 15 min subway" } ] },
-                        "DAY 2": { title: "Entertainment", stops: [ { lat: 34.6654, lon: 135.4330, category: "Theme Park", name: "Universal Studios Japan", description: "A world-class theme park with attractions based on popular movies.", image: "images/universal.jpg", travel_from_previous: null }, { lat: 34.6525, lon: 135.5063, category: "Observation", name: "Tsūtenkaku Tower", description: "A well-known landmark of Osaka in the nostalgic Shinsekai district.", image: "images/tsutenkaku.jpg", travel_from_previous: "Approx. 6km · 30 min train", detailContent: { video: "videos/Tsūtenkaku Video.mp4", text: "Located in the Shinsekai district, this tower is a well-known symbol of Osaka." } } ] }
-                    }
+                    itinerary: { "Overview": [ { day: "DAY 1", title: "History and Heights", route: "Osaka Castle → Umeda Sky Building → Dōtonbori" }, { day: "DAY 2", title: "Entertainment", route: "Universal Studios Japan → Tsūtenkaku Tower" } ], "DAY 1": { title: "History and Heights", stops: [ { lat: 34.6873, lon: 135.5259, category: "Castle", name: "Osaka Castle", description: "A symbol of Osaka's history and one of Japan's most famous landmarks.", image: "images/Osaka-Castle.jpg", travel_from_previous: null, detailContent: { video: "videos/Osaka Castle Video.mp4", text: "Osaka Castle is one of Japan's most famous landmarks and it played a major role in the unification of Japan." } }, { lat: 34.7025, lon: 135.4959, category: "Observation", name: "Umeda Sky Building", description: "A spectacular high-rise building with a 'Floating Garden Observatory' on top.", image: "images/umeda.jpeg", travel_from_previous: "Approx. 4km · 20 min subway" }, { lat: 34.6684, lon: 135.5016, category: "Entertainment", name: "Dōtonbori", description: "The lively entertainment area famous for its extravagant signage and food stalls.", image: "images/Dotonbori.jpg", travel_from_previous: "Approx. 4km · 15 min subway" } ] }, "DAY 2": { title: "Entertainment", stops: [ { lat: 34.6654, lon: 135.4330, category: "Theme Park", name: "Universal Studios Japan", description: "A world-class theme park with attractions based on popular movies.", image: "images/universal.jpg", travel_from_previous: null }, { lat: 34.6525, lon: 135.5063, category: "Observation", name: "Tsūtenkaku Tower", description: "A well-known landmark of Osaka in the nostalgic Shinsekai district.", image: "images/tsutenkaku.jpg", travel_from_previous: "Approx. 6km · 30 min train", detailContent: { video: "videos/Tsūtenkaku Video.mp4", text: "Located in the Shinsekai district, this tower is a well-known symbol of Osaka." } } ] } }
                 },
                 "Kyoto": {
                     title: "Kyoto: The Heart of Old Japan",
-                    itinerary: {
-                        "Overview": [ { day: "DAY 1", title: "Eastern Kyoto Wonders", route: "Fushimi Inari Shrine → Kiyomizu-dera → Gion District" }, { day: "DAY 2", title: "Iconic Sights", route: "Kinkaku-ji → Arashiyama Bamboo Grove" } ],
-                        "DAY 1": { title: "Eastern Kyoto Wonders", stops: [ { lat: 34.9671, lon: 135.7727, category: "Shrine", name: "Fushimi Inari Shrine", description: "Famous for its thousands of vibrant orange torii gates winding through the hills.", image: "images/Fushimi.jpg", travel_from_previous: null }, { lat: 34.9949, lon: 135.7850, category: "Temple", name: "Kiyomizu-dera", description: "A historic temple best known for its wooden stage that juts out from its main hall.", image: "images/kiyomizu-dera.jpg", travel_from_previous: "Approx. 2.5km · 20 min bus" }, { lat: 35.0037, lon: 135.7784, category: "Historic", name: "Gion District", description: "Kyoto's most famous geisha district, known for its traditional wooden machiya houses.", image: "images/gion.jpg", travel_from_previous: "Approx. 1.5km · 15 min walk" } ] },
-                        "DAY 2": { title: "Iconic Sights", stops: [ { lat: 35.0394, lon: 135.7292, category: "Temple", name: "Kinkaku-ji (Golden Pavilion)", description: "A stunning Zen Buddhist temple completely covered in gold leaf.", image: "images/kinkakuji.jpg", travel_from_previous: null, detailContent: { video: "videos/Kinkaku-ji Video.mp4", text: "Literally 'Temple of the Golden Pavilion,' this Zen Buddhist temple is one of the most popular buildings in Japan." } }, { lat: 35.0173, lon: 135.6737, category: "Nature", name: "Arashiyama Bamboo Grove", description: "Walk through the otherworldly, towering stalks of the bamboo forest.", image: "images/arashiyama.jpg", travel_from_previous: "Approx. 8km · 40 min bus" } ] }
-                    }
+                    itinerary: { "Overview": [ { day: "DAY 1", title: "Eastern Kyoto Wonders", route: "Fushimi Inari Shrine → Kiyomizu-dera → Gion District" }, { day: "DAY 2", title: "Iconic Sights", route: "Kinkaku-ji → Arashiyama Bamboo Grove" } ], "DAY 1": { title: "Eastern Kyoto Wonders", stops: [ { lat: 34.9671, lon: 135.7727, category: "Shrine", name: "Fushimi Inari Shrine", description: "Famous for its thousands of vibrant orange torii gates winding through the hills.", image: "images/Fushimi.jpg", travel_from_previous: null }, { lat: 34.9949, lon: 135.7850, category: "Temple", name: "Kiyomizu-dera", description: "A historic temple best known for its wooden stage that juts out from its main hall.", image: "images/kiyomizu-dera.jpg", travel_from_previous: "Approx. 2.5km · 20 min bus" }, { lat: 35.0037, lon: 135.7784, category: "Historic", name: "Gion District", description: "Kyoto's most famous geisha district, known for its traditional wooden machiya houses.", image: "images/gion.jpg", travel_from_previous: "Approx. 1.5km · 15 min walk" } ] }, "DAY 2": { title: "Iconic Sights", stops: [ { lat: 35.0394, lon: 135.7292, category: "Temple", name: "Kinkaku-ji (Golden Pavilion)", description: "A stunning Zen Buddhist temple completely covered in gold leaf.", image: "images/kinkakuji.jpg", travel_from_previous: null, detailContent: { video: "videos/Kinkaku-ji Video.mp4", text: "Literally 'Temple of the Golden Pavilion,' this Zen Buddhist temple is one of the most popular buildings in Japan." } }, { lat: 35.0173, lon: 135.6737, category: "Nature", name: "Arashiyama Bamboo Grove", description: "Walk through the otherworldly, towering stalks of the bamboo forest.", image: "images/arashiyama.jpg", travel_from_previous: "Approx. 8km · 40 min bus" } ] } }
                 }
             };
             
@@ -93,18 +100,50 @@
             L.control.zoom({ position: 'topright' }).addTo(map);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' }).addTo(map);
             let markerLayer = L.layerGroup().addTo(map); let routeLayer = L.layerGroup().addTo(map);
+            
+            // --- This section contains the complete JavaScript functions ---
+            
             const drawRoute = async (stops, dayKey) => { if (stops.length < 2) return; const coordinates = stops.map(stop => `${stop.lon},${stop.lat}`).join(';'); const url = `https://router.project-osrm.org/route/v1/driving/${coordinates}?overview=full&geometries=geojson`; try { const response = await fetch(url); const data = await response.json(); if (data.routes && data.routes.length > 0) { const routeGeometry = data.routes[0].geometry; const dayColor = dayKey.replace(' ', '').toLowerCase() === 'day1' ? '#00AFFF' : '#FF9800'; L.geoJSON(routeGeometry, { style: { color: dayColor, weight: 6, opacity: 0.85 } }).addTo(routeLayer); } } catch (error) { console.error("Could not fetch route data:", error); } };
             const renderDayDetailView = (dayKey) => { const dayData = cityData.itinerary[dayKey]; let dayHTML = `<div class="day-detail-title">${dayKey}: ${dayData.title}</div>`; dayData.stops.forEach((stop, stopIndex) => { if (stop.travel_from_previous) { dayHTML += `<div class="travel-info"><svg viewBox="0 0 24 24"><path d="M14.5,4.08L14,3.5V5.5H9.5V3.5L9,4.08L6.4,2.5L7,1H16.5L17.1,2.5L14.5,4.08M13,11.5H10.5V17.5H12V14.5H13V17.5H14.5V11.5M12,6A2,2 0 0,0 10,8A2,2 0 0,0 12,10A2,2 0 0,0 14,8A2,2 0 0,0 12,6M5,22V9.5H7.5V22H5Z"></path></svg><span>${stop.travel_from_previous}</span></div>`; } const clickableClass = stop.detailContent ? 'clickable' : ''; dayHTML += `<div class="stop-card ${clickableClass}" data-day="${dayKey}" data-stop-index="${stopIndex}"><img src="${stop.image}" alt="${stop.name}" class="stop-card-image"><div class="stop-card-content"><p class="stop-category">${stop.category}</p><p class="stop-title">${stopIndex + 1}. ${stop.name}</p><p class="stop-description">${stop.description}</p></div></div>`; }); contentContainer.innerHTML = dayHTML; };
             const renderStopDetailView = (dayKey, stopIndex) => { const stop = cityData.itinerary[dayKey].stops[stopIndex]; const detail = stop.detailContent; if (!detail) return; contentContainer.innerHTML = `<div class="panel-detail-view"><a href="#" id="panel-back-button" data-day="${dayKey}">← Back to Itinerary</a><h2>${stop.name}</h2><video src="${detail.video}" controls autoplay muted loop></video><p>${detail.text}</p></div>`; };
             const updateMapMarkers = (selectedDayKey) => { markerLayer.clearLayers(); routeLayer.clearLayers(); const pointsToShow = []; const createMarker = (stop, index, dayKey) => { const colorClass = `marker-color-${dayKey.replace(' ', '').toLowerCase()}`; const numberIcon = L.divIcon({ className: `number-icon ${colorClass}`, html: `<b>${index + 1}</b>`, iconSize: [42, 42], iconAnchor: [21, 48], popupAnchor: [0, -48] }); const marker = L.marker([stop.lat, stop.lon], { icon: numberIcon }).bindPopup(`<b>${dayKey} - ${index + 1}. ${stop.name}</b>`); marker.addTo(markerLayer); pointsToShow.push([stop.lat, stop.lon]); }; if (selectedDayKey === "Overview") { Object.keys(cityData.itinerary).forEach(dayKey => { if (dayKey !== "Overview" && cityData.itinerary[dayKey].stops) { cityData.itinerary[dayKey].stops.forEach((stop, index) => { createMarker(stop, index, dayKey); }); } }); } else { const dayData = cityData.itinerary[selectedDayKey]; if (dayData && dayData.stops) { dayData.stops.forEach((stop, index) => { createMarker(stop, index, selectedDayKey); }); drawRoute(dayData.stops, selectedDayKey); } } if (pointsToShow.length > 0) { const bounds = L.latLngBounds(pointsToShow); map.fitBounds(bounds.pad(0.25)); } };
-            const pageContainer = document.getElementById('page-container'); const toggleButton = document.getElementById('panel-toggle-button');
-            toggleButton.addEventListener('click', () => { pageContainer.classList.toggle('panel-collapsed'); setTimeout(() => { map.invalidateSize(); }, 350); });
+            
+            // --- This is the new, more reliable toggle logic ---
+            const pageContainer = document.getElementById('page-container');
+            const panelContainer = document.getElementById('panel-container');
+            const toggleButton = document.getElementById('panel-toggle-button');
+            toggleButton.addEventListener('click', () => {
+                pageContainer.classList.toggle('panel-collapsed');
+            });
+            panelContainer.addEventListener('transitionend', () => {
+                map.invalidateSize();
+            });
+
+            // --- The rest of the logic remains correct ---
             const tabsContainer = document.getElementById('panel-tabs');
             const contentContainer = document.getElementById('panel-content');
             const activateTab = (targetTabLink) => { if (!targetTabLink) return; const dayKey = targetTabLink.textContent; tabsContainer.querySelectorAll('a').forEach(t => t.classList.remove('active')); contentContainer.innerHTML = ''; targetTabLink.classList.add('active'); if (dayKey === "Overview") { const overviewData = cityData.itinerary[dayKey]; overviewData.forEach(daySummary => { const card = document.createElement('div'); card.className = 'day-summary-card'; card.dataset.targetTab = daySummary.day; card.innerHTML = `<h3>${daySummary.day} <span style="font-weight: 400;">${daySummary.title}</span></h3><h4>${city}</h4><p>${daySummary.route}</p>`; contentContainer.appendChild(card); }); } else { renderDayDetailView(dayKey); } updateMapMarkers(dayKey); };
             Object.keys(cityData.itinerary).forEach((dayKey, index) => { const tabLink = document.createElement('a'); tabLink.href = '#'; tabLink.textContent = dayKey; if (index === 0) { tabLink.classList.add('active'); } tabsContainer.appendChild(tabLink); });
             tabsContainer.addEventListener('click', (e) => { e.preventDefault(); activateTab(e.target.closest('a')); });
-            contentContainer.addEventListener('click', (e) => { const clickedCard = e.target.closest('.day-summary-card'); const clickedStop = e.target.closest('.stop-card.clickable'); const clickedBackButton = e.target.closest('#panel-back-button'); if (clickedCard) { const targetTabName = clickedCard.dataset.targetTab; const targetTabLink = Array.from(tabsContainer.querySelectorAll('a')).find(a => a.textContent === targetTabName); activateTab(targetTabLink); } else if (clickedStop) { const dayKey = clickedStop.dataset.day; const stopIndex = clickedStop.dataset.stopIndex; renderStopDetailView(dayKey, stopIndex); } else if (clickedBackButton) { e.preventDefault(); const dayKey = clickedBackButton.dataset.day; const targetTabLink = Array.from(tabsContainer.querySelectorAll('a')).find(a => a.textContent === dayKey); activateTab(targetTabLink); } });
+            contentContainer.addEventListener('click', (e) => {
+                const clickedCard = e.target.closest('.day-summary-card');
+                const clickedStop = e.target.closest('.stop-card.clickable');
+                const clickedBackButton = e.target.closest('#panel-back-button');
+                if (clickedCard) {
+                    const targetTabName = clickedCard.dataset.targetTab;
+                    const targetTabLink = Array.from(tabsContainer.querySelectorAll('a')).find(a => a.textContent === targetTabName);
+                    activateTab(targetTabLink);
+                } else if (clickedStop) {
+                    const dayKey = clickedStop.dataset.day;
+                    const stopIndex = clickedStop.dataset.stopIndex;
+                    renderStopDetailView(dayKey, stopIndex);
+                } else if (clickedBackButton) {
+                    e.preventDefault();
+                    const dayKey = clickedBackButton.dataset.day;
+                    const targetTabLink = Array.from(tabsContainer.querySelectorAll('a')).find(a => a.textContent === dayKey);
+                    activateTab(targetTabLink);
+                }
+            });
             activateTab(tabsContainer.querySelector('a'));
         });
     </script>
