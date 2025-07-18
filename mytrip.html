@@ -180,37 +180,36 @@
     const daysTabs = document.getElementById('days-tabs');
     const dayContent = document.getElementById('day-content');
     let currentDay = '';
+    // --------- tabs 渲染 ---------
     function renderTabs() {
         daysTabs.innerHTML = '';
-        daysArr.forEach(date => {
+        daysArr.forEach(dayKey => {
             const tab = document.createElement('div');
-            tab.className = 'day-tab' + (date===currentDay?' active':'');
-            tab.innerHTML = `<b>${formatDate(date)}</b> <span style="color:#888;">${getWeekday(date)}</span>`;
+            tab.className = 'day-tab' + (dayKey === currentDay ? ' active' : '');
+            tab.innerHTML = `<b>${dayKey}</b>`;
             tab.onclick = () => {
-                currentDay = date;
+                currentDay = dayKey;
                 renderTabs();
                 renderDayContent();
             };
             daysTabs.appendChild(tab);
         });
     }
+    // --------- summary ---------
     function renderSummary() {
-        const d1 = new Date(from), d2 = new Date(to);
-        const days = Math.max(1, Math.round((d2-d1)/86400000)+1);
-        const nights = Math.max(0, days-1);
-        tripSummary.innerHTML = `${formatDate(from)} ~ ${formatDate(to)} &nbsp; ${days} days ${nights} nights &nbsp; <span style="color:#4a90e2;">${city}</span>`;
+        const days = daysArr.length;
+        const nights = Math.max(0, days - 1);
+        tripSummary.innerHTML = `${from} ~ ${to} &nbsp; ${days} days ${nights} nights &nbsp; <span style="color:#4a90e2;">${city}</span>`;
     }
     // --------- Itinerary Overview ---------
     function renderItineraryOverview() {
         const container = document.getElementById('itinerary-overview');
         let html = '<div style="font-weight:600;font-size:1.05rem;margin-bottom:4px;">Itinerary Overview</div>';
         html += '<div style="background:#f7f7fa;border-radius:12px;padding:10px 10px 6px 10px;">';
-        daysArr.forEach(date=>{
-            const pois = tripData.dailyDetails[date]?.pois||[];
-            const weekdayArr = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-            const dateStr = `<b>${formatDate(date)}</b> ${weekdayArr[new Date(date).getDay()]}`;
-            const poiNames = pois.length ? pois.map(p=>p.name.split(',')[0]).join(' → ') : '<span style="color:#bbb;">No itinerary</span>';
-            html += `<div style="margin-bottom:7px;"><span style="color:#4a90e2;">${dateStr}</span> &nbsp; ${poiNames}</div>`;
+        daysArr.forEach(dayKey => {
+            const pois = tripData.dailyDetails[dayKey]?.pois || [];
+            const poiNames = pois.length ? pois.map(p => p.name.split(',')[0]).join(' → ') : '<span style="color:#bbb;">No itinerary</span>';
+            html += `<div style="margin-bottom:7px;"><span style="color:#4a90e2;">${dayKey}</span> &nbsp; ${poiNames}</div>`;
         });
         html += '</div>';
         container.innerHTML = html;
@@ -320,18 +319,21 @@
         city = tripData.city;
         from = tripData.dateFrom;
         to = tripData.dateTo;
-        daysArr = getDaysArr(from, to);
+
+        // 支持 DAY 1, DAY 2 作为 key
+        daysArr = Object.keys(tripData.dailyDetails);
+
         // 初始化 dailyDetails
         if (!tripData.dailyDetails) {
             tripData.dailyDetails = {};
-            daysArr.forEach(date => {
-                tripData.dailyDetails[date] = { pois: [], remark: "" };
+            daysArr.forEach(dayKey => {
+                tripData.dailyDetails[dayKey] = { pois: [], remark: "" };
             });
             await saveTripDataToFirestore();
         } else {
             // 补全新加的天
-            daysArr.forEach(date => {
-                if (!tripData.dailyDetails[date]) tripData.dailyDetails[date] = { pois: [], remark: "" };
+            daysArr.forEach(dayKey => {
+                if (!tripData.dailyDetails[dayKey]) tripData.dailyDetails[dayKey] = { pois: [], remark: "" };
             });
         }
         currentDay = daysArr[0];
