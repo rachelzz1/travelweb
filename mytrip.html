@@ -1,4 +1,3 @@
-<!-- mytrip.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,10 +11,10 @@
         .container { max-width: 700px; margin: 0 auto; padding: 0 0 32px 0; }
         #map { width: 100vw; max-width: 700px; height: 260px; margin: 0 auto; border-radius: 0 0 18px 18px; }
         .trip-overview { background: #fff; border-radius: 18px; margin: -24px 12px 0 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 18px 12px 12px 12px; }
-        .days-tabs { display: flex; gap: 8px; margin-bottom: 10px; overflow-x: auto; }
+        .days-tabs { display: flex; gap: 8px; margin-bottom: 10px; overflow-x: auto; padding-bottom: 5px; }
         .day-tab {
             background: #f3f6fa; border-radius: 12px; padding: 8px 16px; font-size: 1rem; cursor: pointer;
-            border: 2px solid transparent; transition: border 0.2s;
+            border: 2px solid transparent; transition: border 0.2s; white-space: nowrap;
         }
         #back-button {
             position: absolute; top: 18px; left: 18px; z-index: 1001;
@@ -31,15 +30,10 @@
         .remove-poi { color: #e74c3c; cursor: pointer; font-size: 1.1rem; }
         .add-poi-btn { margin: 12px 0 0 0; background: #4a90e2; color: #fff; border: none; border-radius: 8px; padding: 8px 18px; font-size: 1rem; cursor: pointer; }
         .remark-box { margin-top: 10px; }
-        .remark-input { width: 100%; border-radius: 8px; border: 1px solid #ddd; padding: 8px; font-size: 1rem; }
+        .remark-input { width: 100%; border-radius: 8px; border: 1px solid #ddd; padding: 8px; font-size: 1rem; box-sizing: border-box; }
         .save-remark-btn { margin-top: 6px; background: #eee; border: none; border-radius: 8px; padding: 6px 14px; font-size: 0.95rem; cursor: pointer; }
-        .search-modal-bg {
-            display: none; position: fixed; left: 0; top: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.18); z-index: 3000; align-items: center; justify-content: center;
-        }
-        .search-modal {
-            background: #fff; border-radius: 18px; width: 90vw; max-width: 340px; padding: 22px 18px 18px 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-        }
+        .search-modal-bg { display: none; position: fixed; left: 0; top: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.18); z-index: 3000; align-items: center; justify-content: center; }
+        .search-modal { background: #fff; border-radius: 18px; width: 90vw; max-width: 340px; padding: 22px 18px 18px 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); }
         .search-bar { display: flex; align-items: center; gap: 8px; background: #f7f7f7; border-radius: 12px; padding: 8px 12px; }
         .search-bar input { border: none; background: transparent; outline: none; font-size: 1rem; flex: 1; }
         .search-results { margin-top: 12px; max-height: 180px; overflow-y: auto; }
@@ -48,6 +42,9 @@
         .search-result-title { font-weight: bold; }
         .search-result-desc { color: #888; font-size: 0.95rem; }
         .close-modal { position: absolute; right: 16px; top: 12px; font-size: 1.3rem; color: #aaa; cursor: pointer; }
+        #date-range-display { cursor: pointer; text-decoration: underline; text-decoration-style: dashed; }
+        #edit-date-modal input[type="date"] { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; }
+        #edit-date-modal button { padding: 6px 14px; border-radius: 6px; border: 1px solid #ccc; cursor: pointer; }
         @media (max-width: 700px) {
             #map { width: 100vw; }
             .container { max-width: 100vw; }
@@ -57,23 +54,23 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <!-- Firebase SDK -->
     <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    window.firebaseConfig = {
-      apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
-      authDomain: "roamark-web.firebaseapp.com",
-      projectId: "roamark-web",
-      storageBucket: "roamark-web.appspot.com",
-      messagingSenderId: "226236070878",
-      appId: "1:226236070878:web:f551ac673b1749e72e3b4f"
-    };
-    window.firebaseApp = initializeApp(window.firebaseConfig);
-    window.db = getFirestore(window.firebaseApp);
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        window.firebaseConfig = {
+          apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
+          authDomain: "roamark-web.firebaseapp.com",
+          projectId: "roamark-web",
+          storageBucket: "roamark-web.appspot.com",
+          messagingSenderId: "226236070878",
+          appId: "1:226236070878:web:f551ac673b1749e72e3b4f"
+        };
+        window.firebaseApp = initializeApp(window.firebaseConfig);
+        window.db = getFirestore(window.firebaseApp);
     </script>
 </head>
 <body>
     <div class="container">
-        <!--<a href="index.html" id="back-button">← Back</a>--> 
+        <!--<a href="index.html" id="back-button">← Back</a>-->
         <div id="map"></div>
         <div class="trip-overview">
             <div style="font-size:1.2rem;font-weight:600;margin-bottom:8px;">Trip Overview</div>
@@ -86,275 +83,323 @@
     <!-- 搜索地点弹窗 -->
     <div class="search-modal-bg" id="search-modal-bg">
         <div class="search-modal">
-            <span class="close-modal" id="close-search-modal">&times;</span>
+            <span class="close-modal" id="close-search-modal">×</span>
             <div class="search-bar">
-                <span style="font-size:1.2rem;color:#888;">&#128269;</span>
+                <span style="font-size:1.2rem;color:#888;"></span>
                 <input id="search-input" type="text" placeholder="Search place">
             </div>
             <div class="search-results" id="search-results"></div>
         </div>
     </div>
-    <script type="module">
-    import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    // --------- Utility Functions ---------
-    function getTripId() {
-        const url = new URL(window.location.href);
-        return url.searchParams.get('tripId') || '';
-    }
-    function formatDate(dateStr) {
-        const d = new Date(dateStr);
-        if (isNaN(d)) return '';
-        return `${d.getMonth()+1}.${('0'+d.getDate()).slice(-2)}`;
-    }
-    function getWeekday(dateStr) {
-        const d = new Date(dateStr);
-        return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
-    }
-    function getDaysArr(from, to) {
-        const arr = [];
-        let d = new Date(from);
-        const end = new Date(to);
-        while (d <= end) {
-            arr.push(d.toISOString().slice(0,10));
-            d.setDate(d.getDate()+1);
-        }
-        return arr;
-    }
-    // --------- Firestore 相关 ---------
-    const db = window.db;
-    const tripId = getTripId();
-    if (!tripId) {
-        alert('未找到行程ID，无法加载行程。');
-        throw new Error('No tripId in URL');
-    }
-    const tripDocRef = doc(db, "trips", tripId);
-    let tripData = null;
-    let daysArr = [];
-    let city = '';
-    let from = '';
-    let to = '';
-    // --------- 地图 ---------
-    let map = L.map('map', { zoomControl: false });
-    let markers = [];
-    let polyline = null;
-    function fitMapToPOIs(pois) {
-        if (!pois.length) {
-            // 定位到城市
-            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}`)
-            .then(r=>r.json()).then(res=>{
-                if(res[0]) map.setView([res[0].lat, res[0].lon], 12);
-                else map.setView([35.6895,139.6917], 5); // fallback: Japan
-            });
-        } else {
-            const group = L.featureGroup(markers);
-            map.fitBounds(group.getBounds().pad(0.2));
-        }
-    }
-    function updateMap(pois) {
-        markers.forEach(m=>map.removeLayer(m));
-        markers = [];
-        if (polyline) { map.removeLayer(polyline); polyline = null; }
-        if (!pois.length) {
-            fitMapToPOIs([]);
-            return;
-        }
-        let latlngs = [];
-        pois.forEach((poi, idx) => {
-            const marker = L.marker([poi.lat, poi.lon], {
-                icon: L.icon({
-                    iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-                    iconSize: [25,41], iconAnchor: [12,41]
-                })
-            }).addTo(map);
-            marker.bindPopup(`<b>${poi.name}</b>`);
-            markers.push(marker);
-            latlngs.push([poi.lat, poi.lon]);
-        });
-        if (latlngs.length > 1) {
-            polyline = L.polyline(latlngs, {color: "#4a90e2", weight: 4}).addTo(map);
-        }
-        fitMapToPOIs(pois);
-    }
-    // --------- Trip Overview & Day Tabs ---------
-    const tripSummary = document.getElementById('trip-summary');
-    const daysTabs = document.getElementById('days-tabs');
-    const dayContent = document.getElementById('day-content');
-    let currentDay = '';
-    // --------- tabs 渲染 ---------
-    function renderTabs() {
-        daysTabs.innerHTML = '';
-        daysArr.forEach(dayKey => {
-            const tab = document.createElement('div');
-            tab.className = 'day-tab' + (dayKey === currentDay ? ' active' : '');
-            tab.innerHTML = `<b>${dayKey}</b>`;
-            tab.onclick = () => {
-                currentDay = dayKey;
-                renderTabs();
-                renderDayContent();
-            };
-            daysTabs.appendChild(tab);
-        });
-    }
-    // --------- summary ---------
-    function renderSummary() {
-        const days = daysArr.length;
-        const nights = Math.max(0, days - 1);
-        tripSummary.innerHTML = `${from} ~ ${to} &nbsp; ${days} days ${nights} nights &nbsp; <span style="color:#4a90e2;">${city}</span>`;
-    }
-    // --------- Itinerary Overview ---------
-    function renderItineraryOverview() {
-        const container = document.getElementById('itinerary-overview');
-        let html = '<div style="font-weight:600;font-size:1.05rem;margin-bottom:4px;">Itinerary Overview</div>';
-        html += '<div style="background:#f7f7fa;border-radius:12px;padding:10px 10px 6px 10px;">';
-        daysArr.forEach(dayKey => {
-            const pois = tripData.dailyDetails[dayKey]?.pois || [];
-            const poiNames = pois.length ? pois.map(p => p.name.split(',')[0]).join(' → ') : '<span style="color:#bbb;">No itinerary</span>';
-            html += `<div style="margin-bottom:7px;"><span style="color:#4a90e2;">${dayKey}</span> &nbsp; ${poiNames}</div>`;
-        });
-        html += '</div>';
-        container.innerHTML = html;
-    }
-    // --------- 每天内容 ---------
-    function renderDayContent() {
-        const data = tripData.dailyDetails[currentDay];
-        dayContent.innerHTML = `
-            <ul class="poi-list" id="poi-list"></ul>
-            <button class="add-poi-btn" id="add-poi-btn">+ Add Place/Activity</button>
-            <div class="remark-box">
-                <textarea class="remark-input" id="remark-input" placeholder="Add remark...">${data.remark||''}</textarea>
-                <button class="save-remark-btn" id="save-remark-btn">Save Remark</button>
+    <!-- 编辑日期弹窗 -->
+    <div id="edit-date-modal" style="display:none;position:fixed;left:0;top:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,0.18);align-items:center;justify-content:center;">
+        <div style="background:#fff;border-radius:18px;max-width:340px;width:90vw;padding:22px 18px 18px 18px;box-shadow:0 4px 24px rgba(0,0,0,0.15);position:relative;">
+            <div style="font-size:1.15rem;font-weight:600;margin-bottom:10px;">Edit Trip Dates</div>
+            <label for="edit-date-from" style="display:block;margin-bottom:6px;">Departure date</label>
+            <input id="edit-date-from" type="date">
+            <label for="edit-date-to" style="display:block;margin:12px 0 6px 0;">Return date</label>
+            <input id="edit-date-to" type="date">
+            <div style="text-align:right; margin-top: 18px;">
+                <button id="edit-date-cancel">Cancel</button>
+                <button id="edit-date-confirm" style="margin-left:8px;background:#4a90e2;color:#fff;">Confirm</button>
             </div>
-        `;
-        // 渲染POI
-        const poiList = document.getElementById('poi-list');
-        data.pois.forEach((poi, idx) => {
-            const li = document.createElement('li');
-            li.className = 'poi-item';
-            li.innerHTML = `
-                <span class="poi-icon">&#128205;</span>
-                <span class="poi-name">${poi.name}</span>
-                <span class="remove-poi" title="Remove" data-idx="${idx}">&#10006;</span>
-            `;
-            poiList.appendChild(li);
-        });
-        // 删除POI
-        poiList.querySelectorAll('.remove-poi').forEach(btn=>{
-            btn.onclick = async function() {
-                data.pois.splice(this.dataset.idx,1);
-                await saveTripDataToFirestore();
-                renderDayContent();
-                if(currentDay===daysArr[0]) updateMap(data.pois);
-            };
-        });
-        // 添加POI
-        document.getElementById('add-poi-btn').onclick = function() {
-            openSearchModal();
-        };
-        // 备注
-        document.getElementById('save-remark-btn').onclick = async function() {
-            data.remark = document.getElementById('remark-input').value;
-            await saveTripDataToFirestore();
-            alert('Remark saved!');
-        };
-        // 更新地图
-        if(currentDay===daysArr[0]) updateMap(data.pois);
-        // Sync itinerary overview
-        renderItineraryOverview();
-    }
-    // --------- 搜索地点弹窗 ---------
-    const searchModalBg = document.getElementById('search-modal-bg');
-    const searchInput = document.getElementById('search-input');
-    const searchResults = document.getElementById('search-results');
-    const closeSearchModal = document.getElementById('close-search-modal');
-    function openSearchModal() {
-        searchModalBg.style.display = 'flex';
-        searchInput.value = '';
-        searchResults.innerHTML = '';
-        searchInput.focus();
-    }
-    closeSearchModal.onclick = ()=>{ searchModalBg.style.display='none'; };
-    searchModalBg.onclick = (e)=>{ if(e.target===searchModalBg) searchModalBg.style.display='none'; };
-    searchInput.oninput = function() {
-        const q = this.value.trim();
-        if(!q) { searchResults.innerHTML=''; return; }
-        searchResults.innerHTML = '<div style="color:#888;padding:10px;">Searching...</div>';
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`)
-        .then(r=>r.json()).then(res=>{
-            if(!res.length) {
-                searchResults.innerHTML = '<div style="color:#888;padding:10px;">No results</div>';
+        </div>
+    </div>
+
+    <script type="module">
+        import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        
+        // --------- Utility Functions ---------
+        function getTripId() { return new URL(window.location.href).searchParams.get('tripId') || ''; }
+        function getDaysBetween(from, to) { return Math.ceil((new Date(to) - new Date(from)) / 86400000) + 1; }
+
+        // --------- Firestore & State ---------
+        const tripId = getTripId();
+        if (!tripId) { alert('Trip ID not found.'); throw new Error('No tripId'); }
+        const tripDocRef = doc(window.db, "trips", tripId);
+        let tripData = null;
+        let currentDay = '';
+
+        // --------- DOM Elements ---------
+        const tripSummaryEl = document.getElementById('trip-summary');
+        const daysTabsEl = document.getElementById('days-tabs');
+        const dayContentEl = document.getElementById('day-content');
+        const itineraryOverviewEl = document.getElementById('itinerary-overview');
+        const editDateModalEl = document.getElementById('edit-date-modal');
+        const editDateFromInput = document.getElementById('edit-date-from');
+        const editDateToInput = document.getElementById('edit-date-to');
+        const searchModalBg = document.getElementById('search-modal-bg');
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        
+        // --------- Map Logic (Unchanged) ---------
+        let map = L.map('map', { zoomControl: false });
+        let markers = [];
+        let polyline = null;
+
+        function fitMapToPOIs(pois) {
+            if (!pois || !pois.length) {
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(tripData.city)}`)
+                .then(r=>r.json()).then(res=>{
+                    if(res[0]) map.setView([res[0].lat, res[0].lon], 12);
+                    else map.setView([35.6895,139.6917], 5); // Fallback
+                });
+            } else {
+                const group = L.featureGroup(markers);
+                map.fitBounds(group.getBounds().pad(0.2));
+            }
+        }
+
+        function updateMap(pois) {
+            markers.forEach(m=>map.removeLayer(m));
+            markers = [];
+            if (polyline) { map.removeLayer(polyline); polyline = null; }
+            if (!pois || !pois.length) {
+                fitMapToPOIs([]);
                 return;
             }
-            searchResults.innerHTML = res.slice(0,8).map(item=>`
-                <div class="search-result-item" data-lat="${item.lat}" data-lon="${item.lon}" data-name="${item.display_name.replace(/"/g,'&quot;')}">
-                    <div class="search-result-title">${item.display_name.split(',')[0]}</div>
-                    <div class="search-result-desc">${item.display_name}</div>
+            let latlngs = [];
+            pois.forEach((poi, idx) => {
+                const marker = L.marker([poi.lat, poi.lon], {
+                    icon: L.icon({
+                        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+                        iconSize: [25,41], iconAnchor: [12,41]
+                    })
+                }).addTo(map);
+                marker.bindPopup(`<b>${poi.name}</b>`);
+                markers.push(marker);
+                latlngs.push([poi.lat, poi.lon]);
+            });
+            if (latlngs.length > 1) {
+                polyline = L.polyline(latlngs, {color: "#4a90e2", weight: 4}).addTo(map);
+            }
+            fitMapToPOIs(pois);
+        }
+
+        // --------- UI Rendering ---------
+        function renderAllUI() {
+            renderSummary();
+            renderTabs();
+            renderItineraryOverview();
+            renderDayContent();
+        }
+
+        function renderSummary() {
+            const { dateFrom, dateTo, city } = tripData;
+            const days = getDaysBetween(dateFrom, dateTo);
+            const nights = Math.max(0, days - 1);
+            tripSummaryEl.innerHTML = `
+                <span id="date-range-display">${dateFrom} ~ ${dateTo}</span>   
+                ${days} days ${nights} nights   
+                <span style="color:#4a90e2;">${city}</span>`;
+            
+            document.getElementById('date-range-display').onclick = () => {
+                editDateFromInput.value = tripData.dateFrom;
+                editDateToInput.value = tripData.dateTo;
+                editDateModalEl.style.display = 'flex';
+            };
+        }
+
+        function renderTabs() {
+            daysTabsEl.innerHTML = '';
+            // ▼▼▼ KEY CHANGE: Sort the keys numerically before rendering ▼▼▼
+            const dayKeys = Object.keys(tripData.dailyDetails).sort((a, b) => {
+                return parseInt(a.split(' ')[1]) - parseInt(b.split(' ')[1]);
+            });
+            dayKeys.forEach(dayKey => {
+                const tab = document.createElement('div');
+                tab.className = 'day-tab' + (dayKey === currentDay ? ' active' : '');
+                tab.textContent = dayKey;
+                tab.onclick = () => {
+                    currentDay = dayKey;
+                    renderAllUI(); // Re-render everything to update the 'active' class
+                };
+                daysTabsEl.appendChild(tab);
+            });
+        }
+        
+        function renderItineraryOverview() {
+            let html = '<div style="font-weight:600;font-size:1.05rem;margin-bottom:4px;">Itinerary Overview</div>';
+            html += '<div style="background:#f7f7fa;border-radius:12px;padding:10px 10px 6px 10px;">';
+            // ▼▼▼ KEY CHANGE: Sort the keys numerically here as well ▼▼▼
+            const dayKeys = Object.keys(tripData.dailyDetails).sort((a, b) => {
+                return parseInt(a.split(' ')[1]) - parseInt(b.split(' ')[1]);
+            });
+            dayKeys.forEach(dayKey => {
+                const pois = tripData.dailyDetails[dayKey]?.pois || [];
+                const poiNames = pois.length ? pois.map(p => p.name.split(',')[0]).join(' → ') : '<span style="color:#bbb;">No itinerary</span>';
+                html += `<div style="margin-bottom:7px;"><span style="color:#4a90e2;">${dayKey}</span>   ${poiNames}</div>`;
+            });
+            html += '</div>';
+            itineraryOverviewEl.innerHTML = html;
+        }
+
+        function renderDayContent() {
+            const data = tripData.dailyDetails[currentDay];
+            if (!data) {
+                dayContentEl.innerHTML = '<p style="color:#888; text-align:center;">Select a day to view its itinerary.</p>';
+                updateMap([]);
+                return;
+            }
+
+            dayContentEl.innerHTML = `
+                <ul class="poi-list" id="poi-list"></ul>
+                <button class="add-poi-btn" id="add-poi-btn">+ Add Place/Activity</button>
+                <div class="remark-box">
+                    <textarea class="remark-input" id="remark-input" placeholder="Add remark...">${data.remark||''}</textarea>
+                    <button class="save-remark-btn" id="save-remark-btn">Save Remark</button>
                 </div>
-            `).join('');
-            // Select POI
-            searchResults.querySelectorAll('.search-result-item').forEach(item=>{
-                item.onclick = async function() {
-                    const name = this.dataset.name;
-                    const lat = parseFloat(this.dataset.lat);
-                    const lon = parseFloat(this.dataset.lon);
-                    tripData.dailyDetails[currentDay].pois.push({ name, lat, lon });
-                    await saveTripDataToFirestore();
+            `;
+            const poiList = document.getElementById('poi-list');
+            (data.pois || []).forEach((poi, idx) => {
+                const li = document.createElement('li');
+                li.className = 'poi-item';
+                li.innerHTML = `
+                    <span class="poi-icon">&#128205</span>
+                    <span class="poi-name">${poi.name}</span>
+                    <span class="remove-poi" title="Remove" data-idx="${idx}">✖</span>
+                `;
+                poiList.appendChild(li);
+            });
+
+            poiList.querySelectorAll('.remove-poi').forEach(btn => {
+                btn.onclick = async function() {
+                    tripData.dailyDetails[currentDay].pois.splice(this.dataset.idx, 1);
+                    await updateDoc(tripDocRef, { dailyDetails: tripData.dailyDetails });
                     renderDayContent();
-                    searchModalBg.style.display = 'none';
+                    renderItineraryOverview();
                 };
             });
-        });
-    };
-    // --------- Firestore 持久化 ---------
-    async function saveTripDataToFirestore() {
-        await updateDoc(tripDocRef, { dailyDetails: tripData.dailyDetails });
-    }
-    // --------- 初始化 ---------
-    async function loadTripDataFromFirestore() {
-        const docSnap = await getDoc(tripDocRef);
-        if (!docSnap.exists()) {
-            alert('未找到该行程，可能已被删除。');
-            return;
-        }
-        tripData = docSnap.data();
-        city = tripData.city;
-        from = tripData.dateFrom;
-        to = tripData.dateTo;
+            
+            document.getElementById('add-poi-btn').onclick = () => {
+                searchModalBg.style.display = 'flex';
+                searchInput.value = '';
+                searchResults.innerHTML = '';
+                searchInput.focus();
+            };
+            
+            document.getElementById('save-remark-btn').onclick = async function() {
+                tripData.dailyDetails[currentDay].remark = document.getElementById('remark-input').value;
+                await updateDoc(tripDocRef, { dailyDetails: tripData.dailyDetails });
+                alert('Remark saved!');
+            };
 
-        // 支持 DAY 1, DAY 2 作为 key
-        daysArr = Object.keys(tripData.dailyDetails);
+            updateMap(data.pois);
+        }
 
-        // 初始化 dailyDetails
-        if (!tripData.dailyDetails) {
-            tripData.dailyDetails = {};
-            daysArr.forEach(dayKey => {
-                tripData.dailyDetails[dayKey] = { pois: [], remark: "" };
+        // --------- Search Modal Logic (Unchanged) ---------
+        document.getElementById('close-search-modal').onclick = () => { searchModalBg.style.display='none'; };
+        searchModalBg.onclick = (e) => { if (e.target === searchModalBg) searchModalBg.style.display = 'none'; };
+        searchInput.oninput = function() {
+            const q = this.value.trim();
+            if(!q) { searchResults.innerHTML=''; return; }
+            searchResults.innerHTML = '<div style="color:#888;padding:10px;">Searching...</div>';
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`)
+            .then(r=>r.json()).then(res=>{
+                if(!res.length) { searchResults.innerHTML = '<div style="color:#888;padding:10px;">No results</div>'; return; }
+                searchResults.innerHTML = res.slice(0,8).map(item=>`
+                    <div class="search-result-item" data-lat="${item.lat}" data-lon="${item.lon}" data-name="${item.display_name.replace(/"/g,'"')}">
+                        <div class="search-result-title">${item.display_name.split(',')[0]}</div>
+                        <div class="search-result-desc">${item.display_name}</div>
+                    </div>
+                `).join('');
+                searchResults.querySelectorAll('.search-result-item').forEach(item => {
+                    item.onclick = async function() {
+                        const poi = {
+                            name: this.dataset.name,
+                            lat: parseFloat(this.dataset.lat),
+                            lon: parseFloat(this.dataset.lon)
+                        };
+                        tripData.dailyDetails[currentDay].pois.push(poi);
+                        await updateDoc(tripDocRef, { dailyDetails: tripData.dailyDetails });
+                        renderDayContent();
+                        renderItineraryOverview();
+                        searchModalBg.style.display = 'none';
+                    };
+                });
             });
-            await saveTripDataToFirestore();
-        } else {
-            // 补全新加的天
-            daysArr.forEach(dayKey => {
-                if (!tripData.dailyDetails[dayKey]) tripData.dailyDetails[dayKey] = { pois: [], remark: "" };
-            });
+        };
+        
+        // --------- Date Editing & Main Logic ---------
+        async function handleDateUpdate() {
+            const newFrom = editDateFromInput.value;
+            const newTo = editDateToInput.value;
+
+            if (!newFrom || !newTo || new Date(newTo) < new Date(newFrom)) {
+                alert('Invalid date range.');
+                return;
+            }
+
+            const oldDaysCount = Object.keys(tripData.dailyDetails).length;
+            const newDaysCount = getDaysBetween(newFrom, newTo);
+            const newDailyDetails = {};
+            // ▼▼▼ KEY CHANGE: Sort the old keys before using them to preserve order ▼▼▼
+            const oldDayKeys = Object.keys(tripData.dailyDetails).sort((a, b) => parseInt(a.split(' ')[1]) - parseInt(b.split(' ')[1]));
+
+            if (newDaysCount < oldDaysCount) {
+                if (!confirm(`This will shorten your trip and remove data for Day ${newDaysCount + 1} and beyond. Are you sure?`)) {
+                    return;
+                }
+            }
+
+            for (let i = 1; i <= newDaysCount; i++) {
+                const dayKey = `DAY ${i}`;
+                newDailyDetails[dayKey] = (i <= oldDaysCount) ? tripData.dailyDetails[oldDayKeys[i-1]] : { pois: [], remark: "" };
+            }
+            
+            try {
+                await updateDoc(tripDocRef, {
+                    dateFrom: newFrom,
+                    dateTo: newTo,
+                    dailyDetails: newDailyDetails
+                });
+
+                tripData.dateFrom = newFrom;
+                tripData.dateTo = newTo;
+                tripData.dailyDetails = newDailyDetails;
+                
+                if (!tripData.dailyDetails[currentDay] || parseInt(currentDay.split(' ')[1]) > newDaysCount) {
+                    currentDay = `DAY 1`;
+                }
+
+                alert('Trip dates updated successfully!');
+                editDateModalEl.style.display = 'none';
+                renderAllUI();
+            } catch (error) {
+                console.error("Error updating trip:", error);
+                alert("Failed to update trip dates.");
+            }
         }
-        currentDay = daysArr[0];
-        renderSummary();
-        renderTabs();
-        renderDayContent();
-        renderItineraryOverview();
-    }
-    window.onload = function() {
-        map.setView([35.6895,139.6917], 5); // Default: Japan
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
-        // Geolocation
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(pos){
-                map.setView([pos.coords.latitude, pos.coords.longitude], 12);
-            });
+
+        async function initializePage() {
+            try {
+                const docSnap = await getDoc(tripDocRef);
+                if (!docSnap.exists()) {
+                    alert('This trip could not be found.');
+                    return;
+                }
+                tripData = docSnap.data();
+                if (!tripData.dailyDetails) tripData.dailyDetails = {};
+
+                const dayKeys = Object.keys(tripData.dailyDetails);
+                currentDay = dayKeys.length > 0 ? dayKeys.sort((a, b) => parseInt(a.split(' ')[1]) - parseInt(b.split(' ')[1]))[0] : '';
+                
+                renderAllUI();
+                map.setView([35.6895,139.6917], 5); // Fallback
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
+                updateMap(tripData.dailyDetails[currentDay]?.pois || []);
+            } catch (error) {
+                console.error("Failed to load trip data:", error);
+                document.body.innerHTML = "<h1>Error loading trip data. Please try again later.</h1>";
+            }
         }
-        loadTripDataFromFirestore();
-    };
+
+        // Bind events once
+        document.getElementById('edit-date-cancel').onclick = () => { editDateModalEl.style.display = 'none'; };
+        document.getElementById('edit-date-confirm').onclick = handleDateUpdate;
+        
+        // Start the app
+        initializePage();
     </script>
 </body>
 </html>
