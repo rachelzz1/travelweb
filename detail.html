@@ -1,3 +1,4 @@
+<!-- detail.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,7 +94,22 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// 初始化 Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
+  authDomain: "roamark-web.firebaseapp.com",
+  projectId: "roamark-web",
+  storageBucket: "roamark-web.appspot.com",
+  messagingSenderId: "226236070878",
+  appId: "1:226236070878:web:f551ac673b1749e72e3b4f"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
         document.addEventListener('DOMContentLoaded', function () {
             
             const poiData = {
@@ -126,12 +142,83 @@
             const favoriteBtn = document.getElementById('favorite-btn');
             const favoriteIcon = document.getElementById('favorite-icon');
             let isFavorited = false;
-            favoriteBtn.addEventListener('click', () => {
-                isFavorited = !isFavorited;
+
+            // 检查是否已收藏
+            async function checkFavoriteStatus() {
+                const userStr = localStorage.getItem('loggedInUser');
+                if (!userStr) return;
+                try {
+                    const user = JSON.parse(userStr);
+                    const tripsRef = collection(db, "trips");
+                    const q = query(tripsRef, where("userEmail", "==", user.email), where("city", "==", city));
+                    const querySnapshot = await getDocs(q);
+                    if (!querySnapshot.empty) {
+                        isFavorited = true;
+                        favoriteIcon.setAttribute('fill', '#f39c12');
+                    } else {
+                        isFavorited = false;
+                        favoriteIcon.setAttribute('fill', 'none');
+                    }
+                } catch (error) {
+                    console.error("Error checking favorite status: ", error);
+                }
+            }
+
+            // 页面加载时检查收藏状态
+            checkFavoriteStatus();
+
+            favoriteBtn.addEventListener('click', async () => {
                 if (isFavorited) {
+                    alert('You have already saved this itinerary to My Trips.');
+                    return;
+                }
+
+                const userStr = localStorage.getItem('loggedInUser');
+                if (!userStr) {
+                    alert('Please log in to save this itinerary.');
+                    return;
+                }
+
+                try {
+                    const user = JSON.parse(userStr);
+
+                    // 构造 dailyDetails
+                    const itinerary = cityData.itinerary;
+                    let dailyDetails = {};
+                    Object.keys(itinerary).forEach(dayKey => {
+                        if (dayKey === "Overview") return;
+                        const stops = itinerary[dayKey].stops || [];
+                        dailyDetails[dayKey] = {
+                            pois: stops.map(stop => ({ name: stop.name, lat: stop.lat, lon: stop.lon })),
+                            remark: ""
+                        };
+                    });
+                    const dayKeys = Object.keys(dailyDetails);
+                    const dateFrom = "2025-07-25";
+                    const dateTo = (() => {
+                        const from = new Date(dateFrom);
+                        from.setDate(from.getDate() + dayKeys.length - 1);
+                        return from.toISOString().slice(0, 10);
+                    })();
+
+                    await addDoc(collection(db, "trips"), {
+                        userEmail: user.email,
+                        city: city,
+                        dateFrom: dateFrom,
+                        dateTo: dateTo,
+                        dailyDetails: dailyDetails,
+                        createdAt: new Date()
+                    });
+
+                    // 收藏成功后更新状态和UI
+                    isFavorited = true;
                     favoriteIcon.setAttribute('fill', '#f39c12');
-                } else {
-                    favoriteIcon.setAttribute('fill', 'none');
+                    alert('Itinerary saved to My Trips!');
+                    window.location.href = 'index.html';
+
+                } catch (error) {
+                    console.error("Error saving trip:", error);
+                    alert("Failed to save the itinerary. Please try again.");
                 }
             });
 
