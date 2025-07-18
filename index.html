@@ -1,93 +1,22 @@
 <!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Japan Travel</title>
     <!-- 引入 Swiper 的 CSS -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <!-- 引用我们自己的外部样式表 -->
-    <link rel="stylesheet" href="styleForIndex.css">
-    <style>
-        /* ADDED: Basic styling for the trip card to match the screenshot */
-        .trip-card-container {
-            background-color: #f6f0ff; /* Light purple background */
-            border-radius: 22px;
-            padding: 20px;
-            margin-bottom: 16px;
-            position: relative;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            color: #333;
-            border: 1px solid #eadeff;
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-        }
-        .trip-card-container:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-        }
-        .trip-card-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background-color: rgba(128, 128, 128, 0.1);
-            color: #555;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            margin-bottom: 12px;
-        }
-        .trip-card-title {
-            font-size: 1.6rem;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        .trip-card-details {
-            font-size: 1rem;
-            color: #5c5c5c;
-            line-height: 1.5;
-        }
-        .trip-card-footer {
-            display: flex;
-            align-items: center;
-            margin-top: 15px;
-        }
-        .trip-card-add-user {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            color: #aaa;
-            cursor: pointer;
-            border: 1px solid #e0e0e0;
-        }
-        .trip-card-image-placeholder {
-            position: absolute;
-            right: 25px;
-            bottom: 25px;
-            width: 90px;
-            height: 70px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #ffffff;
-        }
-         /* Simple SVG for the placeholder */
-        .trip-card-image-placeholder svg {
-            width: 80%;
-            height: 80%;
-            stroke: #d1d1d1;
-            stroke-width: 0.5;
-            fill: none;
-        }
-    </style>
+    <link rel="stylesheet" href="Index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
+
 <body>
 
     <!-- ======== 导航栏 (HTML Unchanged) ======== -->
@@ -99,7 +28,6 @@
                 <a href="#exhibition">Home</a>
                 <a href="#slider-container">Featured Topics</a>
                 <a href="#my-trips">My Trips</a>
-                </a>
                 <a href="#site-footer">Contact Us</a>
             </nav>
             <div class="nav-auth">
@@ -115,10 +43,11 @@
     <!-- ======== 展示区 (HTML Unchanged) ======== -->
     <section id="exhibition" class="exhibition-section">
         <div class="exhibition-content">
-            <h1>Explore the Beauty of the World with Roamark</h1>
-            <p>Roamark is your personal travel curator — 
-                    helping you plan unforgettable journeys while leaving your mark on the world. From iconic landmarks to hidden gems, 
-                    we empower explorers to map, save, and share every step of their adventures.</p>
+            <h1>Explore the Beauty of the World with Roamark ✈️</h1>
+            <p>Roamark is your personal travel curator —
+                helping you plan unforgettable journeys while leaving your mark on the world. From iconic landmarks to
+                hidden gems,
+                we empower explorers to map, save, and share every step of their adventures.</p>
             <a href="#slider-container" class="btn-explore">Start Exploring</a>
         </div>
     </section>
@@ -127,19 +56,38 @@
     <main>
         <div id="slider-container" class="container">
             <div class="section-header-interactive">
-                <h2>Featured Topics</h2>
-                <div class="search-container">
-                    <input type="search" id="city-search-input" placeholder="Search for a city..."><button id="city-search-btn" aria-label="Search">🔍</button>
+                <h2><span class="icon">🌍</span> Featured Topics</h2>
+                <div class="search-box">
+                    <input type="text" id="city-search-input" placeholder="e.g. Kyoto, Sapporo, Nara" />
+                    <button id="city-search-btn">🔍</button>
                 </div>
             </div>
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917" data-zoom="12"><img src="images/tokyo.png" alt="Tokyo"><div class="slide-caption">Tokyo</div></div>
-                    <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023" data-zoom="12"><img src="images/osaka.png" alt="Osaka"><div class="slide-caption">Osaka</div></div>
-                    <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681" data-zoom="12"><img src="images/kyoto.png" alt="Kyoto"><div class="slide-caption">Kyoto</div></div>
-                    <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917" data-zoom="12"><img src="images/tokyo.png" alt="Tokyo"><div class="slide-caption">Tokyo</div></div>
-                    <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023" data-zoom="12"><img src="images/osaka.png" alt="Osaka"><div class="slide-caption">Osaka</div></div>
-                    <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681" data-zoom="12"><img src="images/kyoto.png" alt="Kyoto"><div class="slide-caption">Kyoto</div></div>
+                    <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917" data-zoom="12">
+                        <img src="images/tokyo.png" alt="Tokyo">
+                        <div class="slide-caption">Tokyo</div>
+                    </div>
+                    <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023" data-zoom="12">
+                        <img src="images/osaka.png" alt="Osaka">
+                        <div class="slide-caption">Osaka</div>
+                    </div>
+                    <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681" data-zoom="12">
+                        <img src="images/kyoto.png" alt="Kyoto">
+                        <div class="slide-caption">Kyoto</div>
+                    </div>
+                    <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917" data-zoom="12">
+                        <img src="images/tokyo.png" alt="Tokyo">
+                        <div class="slide-caption">Tokyo</div>
+                    </div>
+                    <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023" data-zoom="12">
+                        <img src="images/osaka.png" alt="Osaka">
+                        <div class="slide-caption">Osaka</div>
+                    </div>
+                    <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681" data-zoom="12">
+                        <img src="images/kyoto.png" alt="Kyoto">
+                        <div class="slide-caption">Kyoto</div>
+                    </div>
                 </div>
                 <div class="swiper-pagination"></div>
                 <div class="swiper-button-next"></div>
@@ -148,11 +96,12 @@
         </div>
         <div id="my-trips" class="container">
             <div class="my-trips-header">
-                <h2>My Trips</h2>
+                <h2><span class="icon">🗺️</span>My Trips</h2>
                 <button id="add-trip-btn" title="Create a new trip">+</button>
             </div>
             <div id="my-trips-list">
-                <p class="empty-trips-message" id="trips-empty-message">You have no trips yet. Click the '+' to add one!</p>
+                <p class="empty-trips-message" id="trips-empty-message">You have no trips yet. Click the '+' to add one!
+                </p>
             </div>
         </div>
     </main>
@@ -163,35 +112,49 @@
             <div class="footer-content">
                 <div class="footer-column about-us">
                     <h3>About us</h3>
-                    <p>Roamark is your personal travel curator — 
-                    helping you plan unforgettable journeys while leaving your mark on the world. From iconic landmarks to hidden gems, we empower explorers to map, save, and share every step of their adventures.</p></div>
+                    <p>Roamark is your personal travel curator —
+                        helping you plan unforgettable journeys while leaving your mark on the world. From iconic
+                        landmarks to hidden gems, we empower explorers to map, save, and share every step of their
+                        adventures.</p>
+                </div>
                 <div class="footer-column quick-links">
                     <h3>Quick links</h3>
                     <ul>
                         <li><a href="#exhibition">Home</a></li>
                         <li><a href="#slider-container">Featured Topics</a></li>
-                        <li><a href="#">FAQs</a></li></ul></div>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
                 <div class="footer-column contact-us">
                     <h3>Contact Us</h3>
                     <ul>
                         <li>Tel:400-123-4567</li>
-                        <li>Email:rqztian041007@gmai.com, alicestar1218@gmail.com, tcm2109570@gmail.com, yyu973542@gmail.com</li>
-                        <li>Address: XMUM, 43900 Dengkil Selangor</li></ul></div>
+                        <li>Email:rqztian041007@gmai.com, alicestar1218@gmail.com, tcm2109570@gmail.com,
+                            yyu973542@gmail.com</li>
+                        <li>Address: XMUM, 43900 Dengkil Selangor</li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-bottom"><p>© 2025 Roamark Travel Agency. All rights reserved.</p></div>
+            <div class="footer-bottom">
+                <p>© 2025 Roamark Travel Agency. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
     <!-- ======== 行程弹窗 (HTML Unchanged) ======== -->
-    <div id="trip-modal">
+    <div id="trip-modal" style="display: none;">
         <div class="modal-content">
-            <div class="modal-title">Create My Trip</div>
+            <div class="modal-title"><span class="icon">🧳</span> My Trip</div>
             <label>Where do you want to go?</label>
             <input id="trip-city" type="text" placeholder="Enter city">
             <label>How long do you want to go?</label>
             <div class="date-picker-group">
-                <div class="date-picker-item"><div class="date-label">Departure date</div><input id="trip-date-from" type="date"></div>
-                <div class="date-picker-item"><div class="date-label">Return date</div><input id="trip-date-to" type="date"></div>
+                <div class="date-picker-item">
+                    <div class="date-label">Departure date</div><input id="trip-date-from" type="date">
+                </div>
+                <div class="date-picker-item">
+                    <div class="date-label">Return date</div><input id="trip-date-to" type="date">
+                </div>
             </div>
             <div class="modal-actions">
                 <button id="trip-cancel">Cancel</button>
@@ -205,25 +168,25 @@
 
     <!-- ALL JAVASCRIPT IS NOW IN THIS SINGLE MODULE SCRIPT -->
     <script type="module">
-        // Step 1: Import all necessary functions from the Firebase SDK
+        // Import all necessary functions from the Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, doc as firestoreDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        // Step 2: Your Firebase project configuration
+        // Your Firebase project configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
-          authDomain: "roamark-web.firebaseapp.com",
-          projectId: "roamark-web",
-          storageBucket: "roamark-web.appspot.com",
-          messagingSenderId: "226236070878",
-          appId: "1:226236070878:web:f551ac673b1749e72e3b4f"
+            apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
+            authDomain: "roamark-web.firebaseapp.com",
+            projectId: "roamark-web",
+            storageBucket: "roamark-web.appspot.com",
+            messagingSenderId: "226236070878",
+            appId: "1:226236070878:web:f551ac673b1749e72e3b4f"
         };
 
-        // Step 3: Initialize Firebase and Firestore
+        // Initialize Firebase and Firestore
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- Trip Management Helper Functions (Unchanged) ---
+        // --- Trip Management Helper Functions ---
         function calculateDateDifference(dateFrom, dateTo) {
             const from = new Date(dateFrom);
             const to = new Date(dateTo);
@@ -242,12 +205,12 @@
             if (from > today) return 'Trip not started.';
             return 'Trip in progress.';
         }
-        
-        // --- MODIFIED: Renders all trips from FIRESTORE ---
+
+        // --- Renders all trips from FIRESTORE ---
         async function loadAndRenderTrips() {
             const tripsListContainer = document.getElementById('my-trips-list');
             const emptyMsg = document.getElementById('trips-empty-message');
-            tripsListContainer.innerHTML = ''; // Clear previous list
+            tripsListContainer.innerHTML = '';
 
             const userStr = localStorage.getItem('loggedInUser');
             if (!userStr) {
@@ -258,12 +221,11 @@
             const user = JSON.parse(userStr);
 
             try {
-                // Create a query to get trips where 'userEmail' matches the logged-in user's email
                 const tripsRef = collection(db, "trips");
                 const q = query(tripsRef, where("userEmail", "==", user.email));
-                
+
                 const querySnapshot = await getDocs(q);
-                
+
                 if (querySnapshot.empty) {
                     tripsListContainer.appendChild(emptyMsg);
                     emptyMsg.style.display = 'block';
@@ -271,42 +233,53 @@
                     emptyMsg.style.display = 'none';
                     querySnapshot.forEach((doc) => {
                         const trip = doc.data();
-                        const tripId = doc.id; // Get the unique Firestore document ID
+                        const tripId = doc.id;
                         const { days, nights } = calculateDateDifference(trip.dateFrom, trip.dateTo);
                         const status = getTripStatus(trip.dateFrom, trip.dateTo);
                         const fromDate = new Date(trip.dateFrom);
                         const toDate = new Date(trip.dateTo);
-                        
-                        const card = document.createElement('div');
-                        card.className = 'trip-card-container';
-                        card.setAttribute('data-trip-id', tripId); // Store the ID on the element
 
-                        // Calculate total POIs if available
                         let poiCount = 0;
                         if (trip.dailyDetails) {
                             Object.values(trip.dailyDetails).forEach(day => {
                                 poiCount += day.pois.length;
                             });
                         }
-                        
+
+                        const card = document.createElement('div');
+                        card.className = 'trip-card-container';
+                        card.setAttribute('data-trip-id', tripId);
                         card.innerHTML = `
-                            <div class="trip-card-status"> ● ${status}</div>
-                            <h3 class="trip-card-title">${trip.city} ${days} Days Trip</h3>
-                            <div class="trip-card-details">
-                                ${String(fromDate.getMonth() + 1).padStart(2, '0')}.${String(fromDate.getDate()).padStart(2, '0')} to ${String(toDate.getMonth() + 1).padStart(2, '0')}.${String(toDate.getDate()).padStart(2, '0')} ${days} days ${nights} nights <br>
-                                ${poiCount} places
-                            </div>
-                            <div class="trip-card-footer">
-                                <div class="trip-card-add-user">+</div>
-                            </div>
-                            <div class="trip-card-image-placeholder">
-                               <svg viewBox="0 0 100 80"><circle cx="75" cy="20" r="10" /><path d="M 0 70 L 30 40 L 50 60 L 80 30 L 100 50 L 100 80 L 0 80 Z" /></svg>
-                            </div>
+                            <div class="trip-card-delete-wrapper">
+                      <button class="trip-card-delete-btn"><i class="fa-regular fa-trash-can" style="margin-right:6px;"></i>Delete</button>
+    </div>
+    <div class="trip-card-status"> ● ${status}</div>
+    <h3 class="trip-card-title">${trip.city} ${days} Days Trip</h3>
+    <div class="trip-card-details">
+        ${String(fromDate.getMonth() + 1).padStart(2, '0')}.${String(fromDate.getDate()).padStart(2, '0')} to ${String(toDate.getMonth() + 1).padStart(2, '0')} ${days} days ${nights} nights <br>
+        ${poiCount} places
+    </div>
+    <div class="trip-card-image-placeholder">
+       <svg viewBox="0 0 100 80"><circle cx="75" cy="20" r="10" /><path d="M 0 70 L 30 40 L 50 60 L 80 30 L 100 50 L 100 80 L 0 80 Z" /></svg>
+    </div>
                         `;
 
-                        // Add a click event to the entire card to navigate to the trip details page
-                        card.addEventListener('click', () => {
+                        card.addEventListener('click', (e) => {
+                            if (e.target.classList.contains('trip-card-delete-btn')) return;
                             window.location.href = `mytrip.html?tripId=${tripId}`;
+                        });
+
+                        card.querySelector('.trip-card-delete-btn').addEventListener('click', async (e) => {
+                            e.stopPropagation();
+                            if (confirm('Are you sure you want to delete this trip?')) {
+                                try {
+                                    await deleteDoc(firestoreDoc(db, "trips", tripId));
+                                    card.remove();
+                                } catch (err) {
+                                    console.error("Failed to delete trip:", err);
+                                    alert('Failed to delete trip.');
+                                }
+                            }
                         });
 
                         tripsListContainer.appendChild(card);
@@ -320,7 +293,7 @@
 
         // --- All remaining code runs after the DOM is loaded ---
         document.addEventListener('DOMContentLoaded', function () {
-            // --- Navigation bar logic (Unchanged) ---
+            // --- Navigation bar logic ---
             const hamburger = document.querySelector('.hamburger-menu');
             const navLinks = document.querySelector('.nav-links');
             const navAuth = document.querySelector('.nav-auth');
@@ -330,7 +303,7 @@
                 navAuth.classList.toggle('active');
             });
 
-            // --- Login status check and UI update (Unchanged) ---
+            // --- Login status check and UI update ---
             const loginBtn = document.getElementById('nav-login-btn');
             const userInfoDiv = document.getElementById('nav-user-info');
             const userNameSpan = document.getElementById('nav-user-name');
@@ -350,7 +323,7 @@
                     userInfoDiv.style.display = 'none';
                     tripsEmptyMsg.textContent = "You haven't logged in yet. Please log in to create and view your trips.";
                 }
-                loadAndRenderTrips(); // THIS NOW LOADS FROM FIRESTORE
+                loadAndRenderTrips();
             }
             updateAuthAndTrips();
 
@@ -360,21 +333,40 @@
                 updateAuthAndTrips();
             });
 
+            // --- Swiper logic ---
             // --- Swiper logic (Unchanged) ---
             const swiper = new Swiper('.swiper-container', {
-                loop: true, loopedSlides: 3, slidesPerView: 1.5, spaceBetween: 10, centeredSlides: true,
-                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-                pagination: { el: '.swiper-pagination', clickable: true },
-                breakpoints: { 768: { slidesPerView: 3, spaceBetween: 30 } }
-            });
+                slidesPerView: 1,
+                centeredSlides: false,
+                spaceBetween: 16,
+                loop: true,
+                breakpoints: {
+                    // 小于等于 480px 宽度的手机视图
+                    768: {
 
+                        slidesPerView: 3,
+                        spaceBetween: 24,
+                        loop: true, // ✅ 启用循环滑动
+                        centeredSlides: false,
+                    }
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev'
+                }
+            });
             document.querySelectorAll('.swiper-slide').forEach(slide => {
                 slide.addEventListener('click', function () {
                     window.location.href = `detail.html?city=${encodeURIComponent(this.dataset.city)}&lat=${this.dataset.lat}&lon=${this.dataset.lon}&zoom=${this.dataset.zoom}`;
                 });
             });
-            
-            // --- MODIFIED: Trip Creation Modal Logic to use FIRESTORE ---
+
+
+            // --- Trip Creation Modal Logic ---
             const addTripBtn = document.getElementById('add-trip-btn');
             const tripModal = document.getElementById('trip-modal');
             const tripCancel = document.getElementById('trip-cancel');
@@ -382,7 +374,7 @@
             const tripCity = document.getElementById('trip-city');
             const tripDateFrom = document.getElementById('trip-date-from');
             const tripDateTo = document.getElementById('trip-date-to');
-            
+
             addTripBtn.onclick = () => {
                 const user = localStorage.getItem('loggedInUser');
                 if (!user) {
@@ -393,8 +385,8 @@
                 tripCity.value = ''; tripDateFrom.value = ''; tripDateTo.value = '';
             };
             tripCancel.onclick = () => { tripModal.style.display = 'none'; };
-            
-            // This function is now ASYNC to handle the database operation
+
+            // ▼▼▼ THIS IS THE CORRECTED LOGIC ▼▼▼
             tripConfirm.onclick = async () => {
                 const city = tripCity.value.trim();
                 const dateFrom = tripDateFrom.value;
@@ -402,30 +394,37 @@
                 if (!city || !dateFrom || !dateTo) { alert('Please fill in all fields'); return; }
                 if (new Date(dateFrom) > new Date(dateTo)) { alert('Return date must be after departure date'); return; }
 
-                const user = JSON.parse(localStorage.getItem('loggedInUser'));
-                if (!user) { alert('Authentication error. Please log in again.'); return; }
+                const userStr = localStorage.getItem('loggedInUser');
+                if (!userStr) { alert('Authentication error. Please log in again.'); return; }
+                const user = JSON.parse(userStr);
+
+                // 1. Create the initial dailyDetails structure
+                const daysCount = calculateDateDifference(dateFrom, dateTo).days;
+                const initialDailyDetails = {};
+                for (let i = 1; i <= daysCount; i++) {
+                    initialDailyDetails[`DAY ${i}`] = { pois: [], remark: "" };
+                }
 
                 try {
-                    // Create a new trip document in the "trips" collection
+                    // 2. Add the new trip document to Firestore
                     const docRef = await addDoc(collection(db, "trips"), {
-                        userEmail: user.email, // Link the trip to the logged-in user
+                        userEmail: user.email,
                         city: city,
                         dateFrom: dateFrom,
                         dateTo: dateTo,
-                        createdAt: new Date() // Add a timestamp for when it was created
+                        dailyDetails: initialDailyDetails,
+                        createdAt: new Date()
                     });
 
-                    console.log("Trip created with Firestore ID: ", docRef.id);
-
-                    // Redirect to the mytrip page, passing the NEW unique trip ID from Firestore
+                    // 3. Redirect to mytrip.html with the new tripId
                     window.location.href = `mytrip.html?tripId=${docRef.id}`;
 
                 } catch (error) {
-                    console.error("Error adding document to Firestore: ", error);
+                    console.error("Error creating trip in Firestore: ", error);
                     alert("Failed to create the trip. Please check your connection and try again.");
                 }
             };
-            
+
             tripModal.onclick = (e) => { if (e.target === tripModal) tripModal.style.display = 'none'; };
 
             // --- Search logic (Unchanged) ---
@@ -439,9 +438,9 @@
                     const slide = swiper.slides[i];
                     const city = slide.dataset.city;
                     if (city && city.toLowerCase() === searchTerm) {
-                        swiper.slideToLoop(parseInt(slide.dataset.swiperSlideIndex, 10));
+                        swiper.slideToLoop(parseInt(slide.dataset.swiperSlideIndex - 1, 10));
                         foundSlide = true;
-                        break; 
+                        break;
                     }
                 }
                 if (!foundSlide) alert('City not found in featured topics.');
@@ -449,6 +448,59 @@
             searchBtn.addEventListener('click', performSearch);
             searchInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); performSearch(); } });
         });
+        // 添加在 document.addEventListener('DOMContentLoaded', function () { ... }) 内部
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar'); // 获取导航栏元素
+
+            if (window.scrollY > 50) { // 如果页面垂直滚动距离大于50像素
+                navbar.classList.add('scrolled'); // 添加类 .scrolled
+            } else {
+                navbar.classList.remove('scrolled'); // 否则移除类 .scrolled
+            }
+        });
+
+        const text = "Start Exploring";
+        const container = document.querySelector(".btn-explore");
+        container.innerHTML = "";
+
+        text.split("").forEach((char, i) => {
+            const span = document.createElement("span");
+            span.textContent = char === " " ? "\u00A0" : char; // 空格使用 &nbsp;
+            span.style.animationDelay = `${i * 50}ms`;
+            container.appendChild(span);
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const h1 = document.querySelector("#exhibition h1");
+            const p = document.querySelector(".exhibition-content p");
+            const btn = document.querySelector(".btn-explore");
+
+            // 动态生成 span 字
+            const text = h1.textContent;
+            h1.innerHTML = "";
+
+            text.split("").forEach((char, i) => {
+                const span = document.createElement("span");
+                span.textContent = char === " " ? "\u00A0" : char;
+                span.style.animationDelay = `${i * 50}ms`;
+                span.classList.add("fade-in-letter");
+                h1.appendChild(span);
+            });
+
+            const totalDuration = text.length * 50 + 400; // 字符动画结束时间
+
+            // 副标题淡入
+            setTimeout(() => {
+                p.style.opacity = 1;
+                p.style.transform = "translateY(0)";
+            }, totalDuration);
+
+            // 按钮再延迟 800ms 显现
+            setTimeout(() => {
+                btn.classList.add("visible");
+            }, totalDuration + 800);
+        });
     </script>
 </body>
+
 </html>
