@@ -1,0 +1,733 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap");
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+    background: #f7faff;
+    color: #333;
+}
+
+.main-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 32px 40px;
+    gap: 36px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.left-panel {
+    flex: 1 1 0;
+    max-width: 720px;
+}
+
+.right-panel {
+    flex: 0 0 700px;
+    position: sticky;
+    top: 32px;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 0 32px 0;
+}
+
+#map {
+    width: 100%;
+    height: 650px;
+    /* 提高高度 */
+    border-radius: 22px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+}
+
+.trip-overview {
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px 24px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    margin-bottom: 24px;
+    justify-content: center;
+    /* border-left: 6px solid #5f9fff; ← 删除或注释 */
+}
+
+.trip-header-animated {
+    background: linear-gradient(135deg, #8f7cff, #5f9fff);
+    color: white;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 40px;
+    display: inline-block;
+    /* 让它尺寸根据内容自动 */
+    margin: 20px auto;
+    /* 上下留白、左右自动居中 */
+    text-align: center;
+    justify-content: center;
+    width: 92.4%;
+}
+
+@keyframes shimmerBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.trip-overview h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+}
+
+#trip-summary {
+    font-size: 0.95rem;
+    color: #444;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin: 10px 0 14px;
+    padding-left: 16px;
+}
+
+#trip-summary span {
+    font-weight: 600;
+}
+
+.itinerary-card {
+    background: #f9fbff;
+    border-radius: 16px;
+    padding: 16px 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    transition: transform 0.2s ease;
+    border-left: 5px solid #5f9fff;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.itinerary-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.itinerary-day-label {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #5f9fff;
+    margin-bottom: 4px;
+}
+
+.itinerary-route {
+    color: #444;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+
+#itinerary-overview {
+    border-radius: 20px;
+    padding: 3px;
+    background: linear-gradient(to right, #5f9fff, #8f7cff);
+    /* 外圈渐变 */
+    margin-bottom: 24px;
+}
+
+.itinerary-inner {
+    background: linear-gradient(270deg, #ffffff, #f7faff, #ffffff);
+    /* 内层背景 */
+    border-radius: 17px;
+    padding: 20px 24px;
+    animation: shimmerBG 6s ease infinite;
+    background-size: 400% 400%;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+@keyframes shimmerBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#itinerary-overview .itinerary-item {
+    background: white;
+    border-radius: 14px;
+    padding: 14px 18px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+}
+
+#itinerary-overview .itinerary-item:hover {
+    transform: translateY(-2px);
+}
+
+#itinerary-overview .day-label {
+    font-weight: bold;
+    color: #5f9fff;
+    margin-bottom: 6px;
+}
+
+#itinerary-overview .day-content {
+    color: #333;
+    line-height: 1.4;
+}
+
+.days-tabs {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 18px;
+    padding: 10px 0;
+    scroll-behavior: smooth;
+
+    /* Firefox 滚动条设置：细+自定义颜色（只能纯色）*/
+    scrollbar-width: thin;
+    scrollbar-color: #dfd8fa transparent;
+}
+
+/* Chrome/Safari 滚动条样式 */
+.days-tabs::-webkit-scrollbar {
+    height: 8px;
+}
+
+.days-tabs::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+.days-tabs::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #5f9fff, #8f7cff);
+    border-radius: 10px;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
+}
+
+.days-tabs::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to right, #8f7cff, #5f9fff);
+}
+
+.day-tab {
+    flex: 0 0 auto;
+    padding: 8px 18px;
+    background: #f3f6fa;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    color: #333;
+}
+
+#back-button {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 1001;
+    background: #fff;
+    color: #333;
+    border: 1px solid #eee;
+    border-radius: 30px;
+    padding: 8px 15px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #eee;
+    text-decoration: none;
+}
+
+.day-tab.active {
+    background: linear-gradient(to right, #5f9fff, #8f7cff);
+    color: #fff;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.day-content {
+    margin-top: 10px;
+}
+
+.poi-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.poi-item {
+    background: linear-gradient(135deg, #eaf2ff, #f1edff);
+    padding: 10px 14px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.poi-icon {
+    background: #d2e6ff;
+    color: #3268b8;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.poi-name {
+    flex: 1;
+    margin-left: 12px;
+    font-size: 1rem;
+}
+
+.remove-poi {
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 4px;
+    background: linear-gradient(to right, #5f9fff, #8f7cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.2s ease;
+}
+
+.remove-poi:hover {
+    transform: scale(1.2);
+}
+
+
+.save-remark-btn {
+    display: block;
+    margin: 12px auto 16px auto;
+    /* 上中下边距 */
+    padding: 10px 24px;
+    font-weight: bold;
+    /* 加粗文字 */
+    background: linear-gradient(to right, #5f9fff, #8f7cff);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.save-remark-btn:hover {
+    transform: scale(1.03);
+}
+
+.add-poi-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    padding: 0;
+    font-size: 1.5rem;
+    display: block;
+    /* 关键点 */
+    margin: 20px auto;
+    /* 水平居中 + 顶部间距 */
+    background: linear-gradient(to right, #5f9fff, #8f7cff);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.add-poi-btn:hover {
+    transform: scale(1.1);
+}
+
+
+.remark-box {
+    margin-top: 10px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.remark-input {
+    width: 100%;
+    padding: 14px 16px;
+    padding-left: 16px;
+    /* 明确指定左边距 */
+    font-size: 1rem;
+    border-radius: 12px;
+    border: none;
+    background: #f1f4fc;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-top: 12px;
+    min-height: 80px;
+    resize: none;
+    /* 禁止右下角拉伸角标 */
+    box-sizing: border-box;
+}
+
+
+.remark-input:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 2px transparent;
+    border: 2px solid transparent;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    background-image: linear-gradient(#f1f4fc, #f1f4fc),
+        linear-gradient(to right, #5f9fff, #8f7cff);
+}
+
+.search-modal {
+    background: transparent !important;
+    /* 不再设置背景色 */
+    border-radius: 16px;
+    position: relative;
+}
+
+.search-bar {
+    background: #f9fbff;
+    padding: 8px 12px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-modal-bg {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.18);
+    z-index: 3000;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f7f7f7;
+    border-radius: 12px;
+    padding: 8px 12px;
+}
+
+.search-results {
+    margin-top: 12px;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.search-result-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-title {
+    font-weight: bold;
+}
+
+.search-result-desc {
+    color: #888;
+    font-size: 0.95rem;
+}
+
+.close-modal {
+    position: absolute;
+    right: 16px;
+    top: 8px;
+    font-size: 1.3rem;
+    color: #aaa;
+    cursor: pointer;
+}
+
+#date-range-display {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+}
+
+.search-modal button,
+.confirm-button {
+    background: linear-gradient(to right, #5f9fff, #8f7cff);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#edit-date-modal button:hover,
+.search-modal button:hover,
+.confirm-button:hover {
+    transform: scale(1.05);
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+    width: 100%;
+    color: #333;
+}
+
+#edit-date-modal input[type="date"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+#edit-date-modal input[type="date"]:focus,
+.search-bar input:focus {
+    border-color: #8f7cff;
+    outline: none;
+}
+
+/* 渐变边框通用类 */
+.gradient-border-box {
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    border-radius: 24px;
+    padding: 4px;
+    /* 原来可能是2px，加大它！ */
+    display: inline-block;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    /* 提升立体感 */
+}
+
+.gradient-border-inner {
+    background: white;
+    border-radius: 20px;
+    /* 明显小于外层，形成“边缘”视觉 */
+    padding: 24px;
+    /* 保证内部空间宽敞 */
+}
+
+/* 美化按钮 */
+.gradient-button {
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.gradient-button:hover {
+    transform: scale(1.05);
+}
+
+
+/* 灰色 Cancel 按钮 */
+.cancel-btn {
+    background-color: #e0e0e0 !important;
+    color: #333;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #d0d0d0;
+}
+
+/* 渐变 Confirm 按钮 */
+.confirm-btn {
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    color: white;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.confirm-btn:hover {
+    transform: scale(1.02);
+}
+
+/* 将以下内容加入你的 mytrip.css 文件中，用于美化 Trip Overview 部分的日期显示 */
+
+#trip-summary {
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+#trip-summary #date-range-display {
+    cursor: pointer;
+    position: relative;
+    padding-bottom: 2px;
+    text-decoration: none;
+    color: #5f5f5f;
+    font-weight: 500;
+    background-image: linear-gradient(to right, #5f9fff, #8f7cff);
+    background-repeat: no-repeat;
+    background-size: 100% 2px;
+    background-position: 0 100%;
+    transition: background-size 0.3s ease;
+}
+
+#trip-summary #date-range-display:hover {
+    background-size: 100% 2px;
+    filter: brightness(1.1);
+}
+
+/* 可选：给 Trip Overview 整体更多余白和美感 */
+.trip-overview h2 {
+    margin-bottom: 8px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #222;
+}
+
+/* 城市名称颜色不变，但也可增强效果 */
+#trip-summary span:last-child {
+    font-weight: 500;
+    color: #5f9fff;
+}
+
+.custom-gradient-pin {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.custom-gradient-pin::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.drag-handle {
+    display: none;
+}
+
+
+@media (max-width: 768px) {
+    .main-wrapper {
+        flex-direction: column;
+        padding: 0;
+        gap: 0;
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .right-panel {
+        width: 100%;
+        height: 50vh;
+        flex: none;
+        position: relative;
+        z-index: 1;
+        top: 0 !important;
+    }
+
+    #map {
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    .left-panel {
+        position: absolute;
+        top: 50vh;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: white;
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+        box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+        transition: top 0.3s ease;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        touch-action: none;
+    }
+
+    .drag-handle {
+        display: block;
+        width: 48px;
+        height: 6px;
+        background: #bbb;
+        border-radius: 4px;
+        margin: 12px auto 4px auto;
+    }
+
+    .trip-overview {
+        padding-top: 10px;
+        /* 留点空间给 drag handle */
+    }
+}

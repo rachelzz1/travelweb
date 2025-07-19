@@ -1,55 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Edit My Trip</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-    <style>
-        body { font-family: sans-serif; margin: 0; padding: 0; background: #f7faff; }
-        .container { max-width: 700px; margin: 0 auto; padding: 0 0 32px 0; }
-        #map { width: 100vw; max-width: 700px; height: 260px; margin: 0 auto; border-radius: 0 0 18px 18px; }
-        .trip-overview { background: #fff; border-radius: 18px; margin: -24px 12px 0 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 18px 12px 12px 12px; }
-        .days-tabs { display: flex; gap: 8px; margin-bottom: 10px; overflow-x: auto; padding-bottom: 5px; }
-        .day-tab {
-            background: #f3f6fa; border-radius: 12px; padding: 8px 16px; font-size: 1rem; cursor: pointer;
-            border: 2px solid transparent; transition: border 0.2s; white-space: nowrap;
-        }
-        #back-button {
-            position: absolute; top: 18px; left: 18px; z-index: 1001;
-            background: #fff; color: #333; border: 1px solid #eee; border-radius: 30px;
-            padding: 8px 15px; font-size: 1.1rem; cursor: pointer; box-shadow: 0 2px 8px #eee; text-decoration: none;
-        }
-        .day-tab.active { border: 2px solid #4a90e2; background: #eaf4ff; }
-        .day-content { margin-top: 10px; }
-        .poi-list { margin: 0; padding: 0; list-style: none; }
-        .poi-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-        .poi-icon { width: 28px; height: 28px; border-radius: 8px; background: #eaf4ff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-        .poi-name { flex: 1; font-size: 1rem; }
-        .remove-poi { color: #e74c3c; cursor: pointer; font-size: 1.1rem; }
-        .add-poi-btn { margin: 12px 0 0 0; background: #4a90e2; color: #fff; border: none; border-radius: 8px; padding: 8px 18px; font-size: 1rem; cursor: pointer; }
-        .remark-box { margin-top: 10px; }
-        .remark-input { width: 100%; border-radius: 8px; border: 1px solid #ddd; padding: 8px; font-size: 1rem; box-sizing: border-box; }
-        .save-remark-btn { margin-top: 6px; background: #eee; border: none; border-radius: 8px; padding: 6px 14px; font-size: 0.95rem; cursor: pointer; }
-        .search-modal-bg { display: none; position: fixed; left: 0; top: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.18); z-index: 3000; align-items: center; justify-content: center; }
-        .search-modal { background: #fff; border-radius: 18px; width: 90vw; max-width: 340px; padding: 22px 18px 18px 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); }
-        .search-bar { display: flex; align-items: center; gap: 8px; background: #f7f7f7; border-radius: 12px; padding: 8px 12px; }
-        .search-bar input { border: none; background: transparent; outline: none; font-size: 1rem; flex: 1; }
-        .search-results { margin-top: 12px; max-height: 180px; overflow-y: auto; }
-        .search-result-item { padding: 10px 0; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
-        .search-result-item:last-child { border-bottom: none; }
-        .search-result-title { font-weight: bold; }
-        .search-result-desc { color: #888; font-size: 0.95rem; }
-        .close-modal { position: absolute; right: 16px; top: 12px; font-size: 1.3rem; color: #aaa; cursor: pointer; }
-        #date-range-display { cursor: pointer; text-decoration: underline; text-decoration-style: dashed; }
-        #edit-date-modal input[type="date"] { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; }
-        #edit-date-modal button { padding: 6px 14px; border-radius: 6px; border: 1px solid #ccc; cursor: pointer; }
-        @media (max-width: 700px) {
-            #map { width: 100vw; }
-            .container { max-width: 100vw; }
-        }
-    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="mytrip.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <!-- Firebase SDK -->
@@ -57,58 +16,87 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
         window.firebaseConfig = {
-          apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
-          authDomain: "roamark-web.firebaseapp.com",
-          projectId: "roamark-web",
-          storageBucket: "roamark-web.appspot.com",
-          messagingSenderId: "226236070878",
-          appId: "1:226236070878:web:f551ac673b1749e72e3b4f"
+            apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
+            authDomain: "roamark-web.firebaseapp.com",
+            projectId: "roamark-web",
+            storageBucket: "roamark-web.appspot.com",
+            messagingSenderId: "226236070878",
+            appId: "1:226236070878:web:f551ac673b1749e72e3b4f"
         };
         window.firebaseApp = initializeApp(window.firebaseConfig);
         window.db = getFirestore(window.firebaseApp);
     </script>
 </head>
+
 <body>
-    <div class="container">
-        <!--<a href="index.html" id="back-button">← Back</a>-->
-        <div id="map"></div>
-        <div class="trip-overview">
-            <div style="font-size:1.2rem;font-weight:600;margin-bottom:8px;">Trip Overview</div>
-            <div id="trip-summary" style="color:#555;font-size:1rem;margin-bottom:8px;"></div>
-            <div id="itinerary-overview" style="margin-bottom:12px;"></div>
-            <div class="days-tabs" id="days-tabs"></div>
-            <div class="day-content" id="day-content"></div>
-        </div>
-    </div>
-    <!-- 搜索地点弹窗 -->
-    <div class="search-modal-bg" id="search-modal-bg">
-        <div class="search-modal">
-            <span class="close-modal" id="close-search-modal">×</span>
-            <div class="search-bar">
-                <span style="font-size:1.2rem;color:#888;"></span>
-                <input id="search-input" type="text" placeholder="Search place">
+    <div class="main-wrapper">
+        <!-- 左侧内容区域 -->
+        <div class="left-panel">
+            <div class="trip-overview">
+                <div class="drag-handle"></div>
+                <div class="trip-header-animated">Trip Overview</div>
+
+                <div id="trip-summary"></div>
+                <div id="itinerary-overview">
+                    <div class="itinerary-inner">
+
+                    </div>
+                </div>
+                <div class="days-tabs" id="days-tabs"></div>
+                <div class="day-content" id="day-content"></div>
             </div>
-            <div class="search-results" id="search-results"></div>
+        </div>
+
+        <!-- 右侧地图区域 -->
+        <div class="right-panel">
+            <div id="map"></div>
         </div>
     </div>
-    <!-- 编辑日期弹窗 -->
-    <div id="edit-date-modal" style="display:none;position:fixed;left:0;top:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,0.18);align-items:center;justify-content:center;">
-        <div style="background:#fff;border-radius:18px;max-width:340px;width:90vw;padding:22px 18px 18px 18px;box-shadow:0 4px 24px rgba(0,0,0,0.15);position:relative;">
-            <div style="font-size:1.15rem;font-weight:600;margin-bottom:10px;">Edit Trip Dates</div>
-            <label for="edit-date-from" style="display:block;margin-bottom:6px;">Departure date</label>
-            <input id="edit-date-from" type="date">
-            <label for="edit-date-to" style="display:block;margin:12px 0 6px 0;">Return date</label>
-            <input id="edit-date-to" type="date">
-            <div style="text-align:right; margin-top: 18px;">
-                <button id="edit-date-cancel">Cancel</button>
-                <button id="edit-date-confirm" style="margin-left:8px;background:#4a90e2;color:#fff;">Confirm</button>
+
+    <!-- 搜索弹窗 -->
+    <div class="search-modal-bg" id="search-modal-bg">
+        <div class="gradient-border-box"> <!-- 外圈蓝紫边框 -->
+            <div class="gradient-border-inner"> <!-- 白色背景 -->
+                <div class="search-modal"> <!-- 内容容器，可不要设置背景 -->
+                    <span class="close-modal" id="close-search-modal">×</span>
+                    <div class="search-bar">
+                        <span style="font-size:1.2rem;color:#888;">🔍</span>
+                        <input id="search-input" type="text" placeholder="Search place">
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
             </div>
         </div>
     </div>
 
+
+
+    <!-- 日期弹窗 -->
+    <div id="edit-date-modal"
+        style="display:none;position:fixed;left:0;top:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,0.18);align-items:center;justify-content:center;">
+        <div class="gradient-border-box" style="max-width:360px;width:90vw;">
+            <div class="gradient-border-inner">
+                <div style="text-align:center;font-size:1.5rem;font-weight:600;margin-bottom:10px;">Edit Trip Dates
+                </div>
+                <label for="edit-date-from" style="display:block;margin-bottom:6px;">Departure date</label>
+                <input id="edit-date-from" type="date"
+                    style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;">
+                <label for="edit-date-to" style="display:block;margin:12px 0 6px 0;">Return date</label>
+                <input id="edit-date-to" type="date"
+                    style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;">
+                <div style="text-align:center; margin-top: 18px;">
+                    <button id="edit-date-cancel" class="cancel-btn">Cancel</button>
+                    <button id="edit-date-confirm" class="confirm-btn" style="margin-left:8px;">Confirm</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
     <script type="module">
         import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-        
+
         // --------- Utility Functions ---------
         function getTripId() { return new URL(window.location.href).searchParams.get('tripId') || ''; }
         function getDaysBetween(from, to) { return Math.ceil((new Date(to) - new Date(from)) / 86400000) + 1; }
@@ -131,7 +119,7 @@
         const searchModalBg = document.getElementById('search-modal-bg');
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
-        
+
         // --------- Map Logic (Unchanged) ---------
         let map = L.map('map', { zoomControl: false });
         let markers = [];
@@ -140,10 +128,10 @@
         function fitMapToPOIs(pois) {
             if (!pois || !pois.length) {
                 fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(tripData.city)}`)
-                .then(r=>r.json()).then(res=>{
-                    if(res[0]) map.setView([res[0].lat, res[0].lon], 12);
-                    else map.setView([35.6895,139.6917], 5); // Fallback
-                });
+                    .then(r => r.json()).then(res => {
+                        if (res[0]) map.setView([res[0].lat, res[0].lon], 12);
+                        else map.setView([35.6895, 139.6917], 5); // Fallback
+                    });
             } else {
                 const group = L.featureGroup(markers);
                 map.fitBounds(group.getBounds().pad(0.2));
@@ -151,7 +139,7 @@
         }
 
         function updateMap(pois) {
-            markers.forEach(m=>map.removeLayer(m));
+            markers.forEach(m => map.removeLayer(m));
             markers = [];
             if (polyline) { map.removeLayer(polyline); polyline = null; }
             if (!pois || !pois.length) {
@@ -161,17 +149,20 @@
             let latlngs = [];
             pois.forEach((poi, idx) => {
                 const marker = L.marker([poi.lat, poi.lon], {
-                    icon: L.icon({
-                        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-                        iconSize: [25,41], iconAnchor: [12,41]
+                    icon: L.divIcon({
+                        className: '', // 清除默认类名
+                        html: `<div class="custom-gradient-pin"></div>`,
+                        iconSize: [28, 36],
+                        iconAnchor: [14, 36] // 图钉底部对准地理点
                     })
                 }).addTo(map);
+
                 marker.bindPopup(`<b>${poi.name}</b>`);
                 markers.push(marker);
                 latlngs.push([poi.lat, poi.lon]);
             });
             if (latlngs.length > 1) {
-                polyline = L.polyline(latlngs, {color: "#4a90e2", weight: 4}).addTo(map);
+                polyline = L.polyline(latlngs, { color: "#4a90e2", weight: 4 }).addTo(map);
             }
             fitMapToPOIs(pois);
         }
@@ -192,7 +183,7 @@
                 <span id="date-range-display">${dateFrom} ~ ${dateTo}</span>   
                 ${days} days ${nights} nights   
                 <span style="color:#4a90e2;">${city}</span>`;
-            
+
             document.getElementById('date-range-display').onclick = () => {
                 editDateFromInput.value = tripData.dateFrom;
                 editDateToInput.value = tripData.dateTo;
@@ -217,21 +208,23 @@
                 daysTabsEl.appendChild(tab);
             });
         }
-        
+
         function renderItineraryOverview() {
-            let html = '<div style="font-weight:600;font-size:1.05rem;margin-bottom:4px;">Itinerary Overview</div>';
-            html += '<div style="background:#f7f7fa;border-radius:12px;padding:10px 10px 6px 10px;">';
+            let html = '<div style="font-weight:700;font-size:1.3rem;color:#333;margin-bottom:10px;">Itinerary Overview</div>';
+
+            html += '<div style="background: linear-gradient(135deg, #eaf2ff, #f1edff);border-radius:12px;padding:10px 10px 6px 10px;">';
             // ▼▼▼ KEY CHANGE: Sort the keys numerically here as well ▼▼▼
             const dayKeys = Object.keys(tripData.dailyDetails).sort((a, b) => {
                 return parseInt(a.split(' ')[1]) - parseInt(b.split(' ')[1]);
             });
             dayKeys.forEach(dayKey => {
                 const pois = tripData.dailyDetails[dayKey]?.pois || [];
-                const poiNames = pois.length ? pois.map(p => p.name.split(',')[0]).join(' → ') : '<span style="color:#bbb;">No itinerary</span>';
+                const poiNames = pois.length ? pois.map(p => p.name.split(',')[0]).join(' → ') : '<span style="color: #7f7e7e;">No itinerary</span>';
                 html += `<div style="margin-bottom:7px;"><span style="color:#4a90e2;">${dayKey}</span>   ${poiNames}</div>`;
             });
             html += '</div>';
-            itineraryOverviewEl.innerHTML = html;
+            document.querySelector('.itinerary-inner').innerHTML = html;
+
         }
 
         function renderDayContent() {
@@ -244,9 +237,9 @@
 
             dayContentEl.innerHTML = `
                 <ul class="poi-list" id="poi-list"></ul>
-                <button class="add-poi-btn" id="add-poi-btn">+ Add Place/Activity</button>
+                <button class="add-poi-btn" id="add-poi-btn">+</button>
                 <div class="remark-box">
-                    <textarea class="remark-input" id="remark-input" placeholder="Add remark...">${data.remark||''}</textarea>
+                    <textarea class="remark-input" id="remark-input" placeholder="Add remark...">${data.remark || ''}</textarea>
                     <button class="save-remark-btn" id="save-remark-btn">Save Remark</button>
                 </div>
             `;
@@ -257,28 +250,31 @@
                 li.innerHTML = `
                     <span class="poi-icon">&#128205</span>
                     <span class="poi-name">${poi.name}</span>
-                    <span class="remove-poi" title="Remove" data-idx="${idx}">✖</span>
+                    <span class="remove-poi" title="Remove" data-idx="${idx}">
+                        <i class="fa-regular fa-trash-can" style="margin-right:6px;"></i>
+                    </span>
+
                 `;
                 poiList.appendChild(li);
             });
 
             poiList.querySelectorAll('.remove-poi').forEach(btn => {
-                btn.onclick = async function() {
+                btn.onclick = async function () {
                     tripData.dailyDetails[currentDay].pois.splice(this.dataset.idx, 1);
                     await updateDoc(tripDocRef, { dailyDetails: tripData.dailyDetails });
                     renderDayContent();
                     renderItineraryOverview();
                 };
             });
-            
+
             document.getElementById('add-poi-btn').onclick = () => {
                 searchModalBg.style.display = 'flex';
                 searchInput.value = '';
                 searchResults.innerHTML = '';
                 searchInput.focus();
             };
-            
-            document.getElementById('save-remark-btn').onclick = async function() {
+
+            document.getElementById('save-remark-btn').onclick = async function () {
                 tripData.dailyDetails[currentDay].remark = document.getElementById('remark-input').value;
                 await updateDoc(tripDocRef, { dailyDetails: tripData.dailyDetails });
                 alert('Remark saved!');
@@ -288,38 +284,38 @@
         }
 
         // --------- Search Modal Logic (Unchanged) ---------
-        document.getElementById('close-search-modal').onclick = () => { searchModalBg.style.display='none'; };
+        document.getElementById('close-search-modal').onclick = () => { searchModalBg.style.display = 'none'; };
         searchModalBg.onclick = (e) => { if (e.target === searchModalBg) searchModalBg.style.display = 'none'; };
-        searchInput.oninput = function() {
+        searchInput.oninput = function () {
             const q = this.value.trim();
-            if(!q) { searchResults.innerHTML=''; return; }
+            if (!q) { searchResults.innerHTML = ''; return; }
             searchResults.innerHTML = '<div style="color:#888;padding:10px;">Searching...</div>';
             fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`)
-            .then(r=>r.json()).then(res=>{
-                if(!res.length) { searchResults.innerHTML = '<div style="color:#888;padding:10px;">No results</div>'; return; }
-                searchResults.innerHTML = res.slice(0,8).map(item=>`
-                    <div class="search-result-item" data-lat="${item.lat}" data-lon="${item.lon}" data-name="${item.display_name.replace(/"/g,'"')}">
+                .then(r => r.json()).then(res => {
+                    if (!res.length) { searchResults.innerHTML = '<div style="color:#888;padding:10px;">No results</div>'; return; }
+                    searchResults.innerHTML = res.slice(0, 8).map(item => `
+                    <div class="search-result-item" data-lat="${item.lat}" data-lon="${item.lon}" data-name="${item.display_name.replace(/"/g, '"')}">
                         <div class="search-result-title">${item.display_name.split(',')[0]}</div>
                         <div class="search-result-desc">${item.display_name}</div>
                     </div>
                 `).join('');
-                searchResults.querySelectorAll('.search-result-item').forEach(item => {
-                    item.onclick = async function() {
-                        const poi = {
-                            name: this.dataset.name,
-                            lat: parseFloat(this.dataset.lat),
-                            lon: parseFloat(this.dataset.lon)
+                    searchResults.querySelectorAll('.search-result-item').forEach(item => {
+                        item.onclick = async function () {
+                            const poi = {
+                                name: this.dataset.name,
+                                lat: parseFloat(this.dataset.lat),
+                                lon: parseFloat(this.dataset.lon)
+                            };
+                            tripData.dailyDetails[currentDay].pois.push(poi);
+                            await updateDoc(tripDocRef, { dailyDetails: tripData.dailyDetails });
+                            renderDayContent();
+                            renderItineraryOverview();
+                            searchModalBg.style.display = 'none';
                         };
-                        tripData.dailyDetails[currentDay].pois.push(poi);
-                        await updateDoc(tripDocRef, { dailyDetails: tripData.dailyDetails });
-                        renderDayContent();
-                        renderItineraryOverview();
-                        searchModalBg.style.display = 'none';
-                    };
+                    });
                 });
-            });
         };
-        
+
         // --------- Date Editing & Main Logic ---------
         async function handleDateUpdate() {
             const newFrom = editDateFromInput.value;
@@ -344,9 +340,9 @@
 
             for (let i = 1; i <= newDaysCount; i++) {
                 const dayKey = `DAY ${i}`;
-                newDailyDetails[dayKey] = (i <= oldDaysCount) ? tripData.dailyDetails[oldDayKeys[i-1]] : { pois: [], remark: "" };
+                newDailyDetails[dayKey] = (i <= oldDaysCount) ? tripData.dailyDetails[oldDayKeys[i - 1]] : { pois: [], remark: "" };
             }
-            
+
             try {
                 await updateDoc(tripDocRef, {
                     dateFrom: newFrom,
@@ -357,7 +353,7 @@
                 tripData.dateFrom = newFrom;
                 tripData.dateTo = newTo;
                 tripData.dailyDetails = newDailyDetails;
-                
+
                 if (!tripData.dailyDetails[currentDay] || parseInt(currentDay.split(' ')[1]) > newDaysCount) {
                     currentDay = `DAY 1`;
                 }
@@ -383,9 +379,9 @@
 
                 const dayKeys = Object.keys(tripData.dailyDetails);
                 currentDay = dayKeys.length > 0 ? dayKeys.sort((a, b) => parseInt(a.split(' ')[1]) - parseInt(b.split(' ')[1]))[0] : '';
-                
+
                 renderAllUI();
-                map.setView([35.6895,139.6917], 5); // Fallback
+                map.setView([35.6895, 139.6917], 5); // Fallback
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
                 updateMap(tripData.dailyDetails[currentDay]?.pois || []);
             } catch (error) {
@@ -397,9 +393,64 @@
         // Bind events once
         document.getElementById('edit-date-cancel').onclick = () => { editDateModalEl.style.display = 'none'; };
         document.getElementById('edit-date-confirm').onclick = handleDateUpdate;
-        
+
         // Start the app
         initializePage();
+
+        // 移动端拖拽逻辑
+        // 移动端拖拽逻辑（触摸 + 鼠标双支持）
+        const leftPanel = document.querySelector('.left-panel');
+        const dragHandle = document.querySelector('.drag-handle');
+
+        let startY = 0;
+        let startTop = 0;
+        let isDragging = false;
+
+        function onStart(y) {
+            startY = y;
+            startTop = leftPanel.getBoundingClientRect().top;
+            isDragging = true;
+        }
+
+        function onMove(y) {
+            if (!isDragging) return;
+            const dy = y - startY;
+            let newTop = startTop + dy;
+            const minTop = 0;
+            const maxTop = window.innerHeight * 0.5;
+            newTop = Math.max(minTop, Math.min(maxTop, newTop));
+            leftPanel.style.top = `${newTop}px`;
+        }
+
+        function onEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+
+            const currentTop = leftPanel.getBoundingClientRect().top;
+            const threshold = window.innerHeight * 0.3;
+            if (currentTop < threshold) {
+                leftPanel.style.top = '0';
+            } else {
+                leftPanel.style.top = '50vh';
+            }
+        }
+
+        // ✅ Touch 事件支持手机
+        dragHandle.addEventListener('touchstart', e => onStart(e.touches[0].clientY));
+        dragHandle.addEventListener('touchmove', e => {
+            e.preventDefault();
+            onMove(e.touches[0].clientY);
+        }, { passive: false });
+        dragHandle.addEventListener('touchend', onEnd);
+
+        // ✅ 鼠标事件支持电脑
+        dragHandle.addEventListener('mousedown', e => onStart(e.clientY));
+        window.addEventListener('mousemove', e => onMove(e.clientY));
+        window.addEventListener('mouseup', onEnd);
+
+
+
     </script>
 </body>
+
 </html>

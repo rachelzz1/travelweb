@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap");
+
 :root {
     --primary-color: #5f9fff;
     --secondary-color: #8f7cff;
@@ -12,7 +14,7 @@ html,
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    font-family: 'Outfit', 'Noto Sans JP', sans-serif;
     overflow: hidden;
     height: 100%;
     background: var(--background);
