@@ -32,9 +32,9 @@
             </nav>
             <div class="nav-auth">
                 <a href="login.html" class="login" id="nav-login-btn">Log in</a>
-                <div id="nav-user-info" style="display:none;">
+                <div id="nav-user-info">
                     <span id="nav-user-name"></span>
-                    <a href="#" id="logout-btn" style="margin-left:10px;">Log out</a>
+                    <a href="#" id="logout-btn">Log out</a>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
     <!-- ======== 展示区 (HTML Unchanged) ======== -->
     <section id="exhibition" class="exhibition-section">
         <div class="exhibition-content">
-            <h1>Explore the Beauty of the World with Roamark ✈️</h1>
+            <h1>✈ Explore the Beauty of the World with Roamark</h1>
             <p>Roamark is your personal travel curator —
                 helping you plan unforgettable journeys while leaving your mark on the world. From iconic landmarks to
                 hidden gems,
@@ -56,47 +56,58 @@
     <main>
         <div id="slider-container" class="container">
             <div class="section-header-interactive">
-                <h2><span class="icon">🌍</span> Featured Topics</h2>
+                <h2 class="section-title"><i class="fa-solid fa-earth-americas"></i>
+                    Featured Topics</h2>
                 <div class="search-box">
                     <input type="text" id="city-search-input" placeholder="e.g. Kyoto, Sapporo, Nara" />
-                    <button id="city-search-btn">🔍</button>
+                    <button id="city-search-btn"><i class="fa-solid fa-magnifying-glass"></i>
+
+                    </button>
                 </div>
             </div>
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917" data-zoom="12">
-                        <img src="images/tokyo.png" alt="Tokyo">
-                        <div class="slide-caption">Tokyo</div>
+            <div class="swiper-controls-outside">
+                <div class="swiper-button-prev"><i class="fa-solid fa-chevron-left"></i></div>
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917"
+                            data-zoom="12">
+                            <img src="images/tokyo.png" alt="Tokyo">
+                            <div class="slide-caption">Tokyo</div>
+                        </div>
+                        <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023"
+                            data-zoom="12">
+                            <img src="images/osaka.png" alt="Osaka">
+                            <div class="slide-caption">Osaka</div>
+                        </div>
+                        <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681"
+                            data-zoom="12">
+                            <img src="images/kyoto.png" alt="Kyoto">
+                            <div class="slide-caption">Kyoto</div>
+                        </div>
+                        <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917"
+                            data-zoom="12">
+                            <img src="images/tokyo.png" alt="Tokyo">
+                            <div class="slide-caption">Tokyo</div>
+                        </div>
+                        <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023"
+                            data-zoom="12">
+                            <img src="images/osaka.png" alt="Osaka">
+                            <div class="slide-caption">Osaka</div>
+                        </div>
+                        <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681"
+                            data-zoom="12">
+                            <img src="images/kyoto.png" alt="Kyoto">
+                            <div class="slide-caption">Kyoto</div>
+                        </div>
                     </div>
-                    <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023" data-zoom="12">
-                        <img src="images/osaka.png" alt="Osaka">
-                        <div class="slide-caption">Osaka</div>
-                    </div>
-                    <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681" data-zoom="12">
-                        <img src="images/kyoto.png" alt="Kyoto">
-                        <div class="slide-caption">Kyoto</div>
-                    </div>
-                    <div class="swiper-slide" data-city="Tokyo" data-lat="35.6895" data-lon="139.6917" data-zoom="12">
-                        <img src="images/tokyo.png" alt="Tokyo">
-                        <div class="slide-caption">Tokyo</div>
-                    </div>
-                    <div class="swiper-slide" data-city="Osaka" data-lat="34.6937" data-lon="135.5023" data-zoom="12">
-                        <img src="images/osaka.png" alt="Osaka">
-                        <div class="slide-caption">Osaka</div>
-                    </div>
-                    <div class="swiper-slide" data-city="Kyoto" data-lat="35.0116" data-lon="135.7681" data-zoom="12">
-                        <img src="images/kyoto.png" alt="Kyoto">
-                        <div class="slide-caption">Kyoto</div>
-                    </div>
+                    <div class="swiper-pagination"></div>
                 </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"><i class="fa-solid fa-chevron-right"></i></div>
             </div>
         </div>
         <div id="my-trips" class="container">
             <div class="my-trips-header">
-                <h2><span class="icon">🗺️</span>My Trips</h2>
+                <h2 class="section-title"><span class="icon"><i class="fa-regular fa-map"></i></span>My Trips</h2>
                 <button id="add-trip-btn" title="Create a new trip">+</button>
             </div>
             <div id="my-trips-list">
@@ -144,7 +155,7 @@
     <!-- ======== 行程弹窗 (HTML Unchanged) ======== -->
     <div id="trip-modal" style="display: none;">
         <div class="modal-content">
-            <div class="modal-title"><span class="icon">🧳</span> My Trip</div>
+            <div class="modal-title">My Trip</div>
             <label>Where do you want to go?</label>
             <input id="trip-city" type="text" placeholder="Enter city">
             <label>How long do you want to go?</label>

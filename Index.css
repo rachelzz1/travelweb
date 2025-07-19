@@ -1,5 +1,6 @@
 /* styleForIndex.css */
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
 
 /* ======== 通用和基础样式 ======== */
 html {
@@ -32,6 +33,7 @@ h2 {
 
 main {
     padding: 40px 0;
+    margin-top: 60px;
 }
 
 /* ======== 导航栏样式 ======== */
@@ -55,11 +57,13 @@ main {
 }
 
 .logo {
-    font-size: 1.6em;
+    font-size: 1.8em;
+    font-family: 'Berkshire Swash', cursive;
     font-weight: 700;
-    color: #007aff;
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-decoration: none;
-    font-family: 'Outfit', 'Noto Sans JP', sans-serif;
     transition: transform 0.3s ease;
 }
 
@@ -79,45 +83,122 @@ main {
     text-decoration: none;
     color: #333;
     font-weight: 500;
+    display: inline-block;
+    padding: 4px 0;
+    transition: color 0.3s ease;
+    background: none;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .nav-links a::after {
     content: '';
     position: absolute;
-    bottom: -5px;
-    left: 0;
+    left: 50%;
+    bottom: -6px;
+    transform: translateX(-50%);
     width: 0%;
-    height: 2px;
-    background-color: #007aff;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
     transition: width 0.3s ease;
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.nav-links a.active::after {
     width: 100%;
 }
 
 #nav-user-info {
-    font-weight: 500;
-    color: #333;
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
 }
 
+
 #logout-btn {
-    color: #007aff;
+    display: inline-block;
+    padding: 8px 16px;
     font-weight: 500;
+    font-size: 0.95rem;
+    color: #fff;
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-image: linear-gradient(135deg, #5f9fff, #8f7cff);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    cursor: pointer;
+    transition: all 0.3s ease;
     text-decoration: none;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+#logout-btn::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+    border-radius: inherit;
+}
+
+#logout-btn:hover::before {
+    transform: scaleX(1);
 }
 
 #logout-btn:hover {
-    text-decoration: underline;
+    color: white;
+    text-decoration: none;
 }
 
 .nav-auth a.login {
-    margin-left: 15px;
-    text-decoration: none;
-    padding: 8px 15px;
-    border-radius: 20px;
+    display: inline-block;
+    padding: 8px 16px;
+    font-weight: 500;
+    font-size: 0.95rem;
     color: #fff;
-    background-color: #007aff;
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-image: linear-gradient(135deg, #5f9fff, #8f7cff);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.nav-auth a.login::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(135deg, #8f7cff, #5f9fff);
+    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+    border-radius: inherit;
+}
+
+.nav-auth a.login:hover::before {
+    transform: scaleX(1);
+}
+
+.nav-auth a.login:hover {
+    color: white;
+    text-decoration: none;
 }
 
 .hamburger-menu {
@@ -170,6 +251,7 @@ main {
 }
 
 .exhibition-content h1 {
+    font-family: 'Berkshire Swash', cursive;
     font-size: 3.2rem;
     font-weight: 800;
     line-height: 1.3;
@@ -191,7 +273,8 @@ main {
     transform: translateY(20px);
     transition: opacity 5s ease-out, transform 5s ease-out;
     display: inline-block;
-    background-color: #f39c12;
+    background-image: linear-gradient(135deg, #8fb9ff, #b39cff);
+    /* 正常背景 */
     color: white;
     font-weight: 600;
     font-size: 1rem;
@@ -199,7 +282,7 @@ main {
     border-radius: 999px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
     text-decoration: none;
     overflow: hidden;
 }
@@ -210,9 +293,19 @@ main {
 }
 
 .btn-explore:hover {
-    background-color: #fff;
-    color: #f39c12;
-    text-decoration: none;
+    background-color: white;
+    background-image: none;
+    color: #6a7eff;
+    /* 蓝紫纯色文字 */
+}
+
+.btn-explore:hover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: white;
+    border-radius: inherit;
+    z-index: -1;
 }
 
 .btn-explore span {
@@ -326,6 +419,19 @@ main {
     gap: 1rem;
 }
 
+.section-title {
+    font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    display: inline-block;
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    padding-bottom: 7px;
+    /* 让标题和下划线稍微分开 */
+}
+
 .search-container {
     display: flex;
     align-items: center;
@@ -346,6 +452,7 @@ main {
 }
 
 .search-box {
+    margin-right: 52px;
     display: flex;
     align-items: center;
     background: #fff;
@@ -357,31 +464,34 @@ main {
 }
 
 #city-search-btn {
-    background-color: #007bff;
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    /* 蓝紫渐变背景 */
     border: none;
     color: white;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    /* 完全圆形 */
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     margin-left: 8px;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s ease;
     padding: 0;
-    /* 移除原来的 padding 以防撑大 */
 }
 
 #city-search-btn i,
 #city-search-btn img {
     width: 20px;
     height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #city-search-btn:hover {
-    background-color: #0056b3;
+    background: linear-gradient(135deg, #8fb9ff, #c9aaff);
+    /* 浅一点的渐变 */
 }
 
 
@@ -436,12 +546,13 @@ main {
 }
 
 .slide-caption {
+    font-family: 'Berkshire Swash', cursive;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 2rem;
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
@@ -474,23 +585,61 @@ main {
     background: #333;
 }
 
-.swiper-button-next,
-.swiper-button-prev {
-    background: rgba(255, 255, 255, 0.8);
-    color: #333;
-    width: 40px;
-    height: 40px;
+.swiper-controls-outside {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    position: static;
+    /* ← 必须设置为 static，否则默认会 absolute 叠在图片上 */
+    width: 44px;
+    height: 44px;
+    background-color: white;
     border-radius: 50%;
-    backdrop-filter: blur(6px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    top: 50%;
-    transform: translateY(-50%);
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    transform: scale(1.1);
+}
+
+/* 隐藏 Swiper 默认的 icon content */
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    display: none;
 }
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
     font-size: 16px;
     font-weight: bold;
+}
+
+.swiper-button-prev i,
+.swiper-button-next i {
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 20px;
+    /* 可根据需要调整大小 */
+}
+
+.swiper-pagination-bullet-active {
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
 }
 
 /* ======== My Trips 样式 ======== */
@@ -504,7 +653,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 48px;
 }
 
 .my-trips-header span {
@@ -610,20 +759,22 @@ main {
     width: 54px;
     height: 54px;
     border-radius: 50%;
-    background-color: #007aff;
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    /* 蓝紫渐变 */
     color: #fff;
     font-size: 30px;
     font-weight: bold;
     line-height: 54px;
     text-align: center;
     border: none;
-    box-shadow: 0 6px 18px rgba(0, 122, 255, 0.3);
+    box-shadow: 0 6px 18px rgba(95, 159, 255, 0.3);
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background 0.3s, transform 0.2s;
 }
 
 #add-trip-btn:hover {
-    background-color: #0056b3;
+    background: linear-gradient(135deg, #4f89e6, #7d6de6);
+    /* hover 时稍深一点 */
     transform: scale(1.05);
 }
 
@@ -651,13 +802,30 @@ main {
     max-width: 480px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
     animation: fadeIn 0.3s ease-in-out;
+
+    /* 新增边框渐变 */
+    border: 6px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: border-box;
+    background-image:
+        linear-gradient(white, white),
+        linear-gradient(135deg, #5f9fff, #8f7cff);
 }
 
 .modal-title {
-    font-size: 1.6rem;
+    font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+    font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 25px;
-    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    padding-bottom: 7px;
 }
 
 .modal-content label {
@@ -730,12 +898,13 @@ main {
 }
 
 #trip-confirm {
-    background-color: #5f8eff;
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
     color: white;
+    border: none;
 }
 
 #trip-confirm:hover {
-    background-color: #457df2;
+    filter: brightness(1.05);
     transform: scale(1.02);
 }
 
@@ -754,31 +923,31 @@ main {
 
 /* ======== Trip card styles from index.html ======== */
 .trip-card-container {
-    background: linear-gradient(135deg, #f9f5ff, #f3ecff);
+    background: linear-gradient(135deg, #e4efff, #efe4ff);
     /* 柔和渐变背景 */
     border-radius: 20px;
     padding: 20px 24px;
-    margin-bottom: 20px;
+    margin-bottom: 32px;
     position: relative;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     /* 更柔和阴影 */
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border-left: 6px solid #7e64ff;
     padding-left: 20px;
 }
 
 .trip-card-container:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #d5e9ff, #e9dcff);
 }
 
 .trip-card-status {
     display: inline-block;
     padding: 5px 12px;
     font-size: 0.75rem;
-    font-weight: 500;
-    background-color: #eee8ff;
-    color: #6b4fbb;
+    font-weight: 600;
+    background-color: #ffffff;
+    color: #76aadc;
     border-radius: 20px;
     margin-bottom: 12px;
 }
@@ -888,13 +1057,19 @@ main {
     }
 
     .hamburger-menu span {
-        display: block;
-        width: 25px;
+        background-image: linear-gradient(135deg, #5f9fff, #8f7cff);
+        background-clip: padding-box;
+        -webkit-background-clip: padding-box;
+        color: transparent;
         height: 3px;
-        background-color: #333;
         margin: 4px 0;
         border-radius: 2px;
+        width: 25px;
         transition: all 0.3s ease;
+    }
+
+    .hamburger-menu:hover span {
+        filter: brightness(1.2);
     }
 
     .hamburger-menu.active span:nth-child(1) {
@@ -949,21 +1124,25 @@ main {
         color: #333;
         border-bottom: 1px solid #eee;
         transition: all 0.3s ease;
+        background: none;
+        /* 确保初始无渐变干扰 */
     }
 
     .nav-links a:hover {
-        background-color: #e6f0ff;
-        color: #007aff;
-    }
-
-    /* 移除之前的蓝色下划线 */
-    .nav-links a::after {
-        display: none;
+        background: #f4f4f4;
+        /* 浅蓝紫背景 */
+        color: black !important;
+        /* 设定文字为白色 */
+        -webkit-text-fill-color: black !important;
+        /* 彻底取消渐变文字 */
+        -webkit-background-clip: initial !important;
+        background-clip: initial !important;
+        text-decoration: none;
     }
 
     .nav-auth {
         border-top: 1px solid #eee;
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     #nav-user-info {
@@ -974,13 +1153,21 @@ main {
     }
 
     #logout-btn {
-        color: #007aff;
-        margin-left: 5px;
+        display: inline-block;
+        padding: 6px 16px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: white;
+        background: linear-gradient(135deg, #5f9fff, #8f7cff);
+        border-radius: 20px;
         text-decoration: none;
+        transition: all 0.3s ease;
     }
 
     #logout-btn:hover {
-        text-decoration: underline;
+        filter: brightness(1.1);
+        text-decoration: none;
+        /* 取消下划线 */
     }
 
     .navbar {
@@ -993,7 +1180,7 @@ main {
     }
 
     .exhibition-content h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
 
     .exhibition-content p {
