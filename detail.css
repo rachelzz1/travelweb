@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
 
 :root {
     --primary-color: #5f9fff;
@@ -145,20 +146,25 @@ body {
 #panel-header h1 {
     font-size: 22px;
     font-weight: 700;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.6px;
     margin: 0;
 }
 
 .panel-header-title {
-    font-size: 22px;
-    font-weight: bold;
-    background-image: linear-gradient(to right, #ffffff, #8f7cff);
-    background-size: 20% 3px;
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    padding-bottom: 6px;
-    color: white;
-    text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+    position: relative;
+    display: inline-block;
+    padding-bottom: 12px;
+}
+
+.panel-header-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 4px;
+    width: 20%;
+    height: 4px;
+    background: linear-gradient(to right, #ffffff, #ffffff);
+    border-radius: 4px;
 }
 
 #favorite-btn {
@@ -200,7 +206,7 @@ body {
     padding: 12px 20px;
     margin: 0 4px;
     color: #666;
-    font-weight: 500;
+    font-weight: 700;
     text-decoration: none;
     border-bottom: 2px solid transparent;
     transition: all 0.2s ease;
@@ -339,8 +345,15 @@ body {
 }
 
 .day-detail-title {
+    position: relative;
+    display: inline-block;
     font-size: 22px;
     font-weight: 700;
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 25px;
 }
 
