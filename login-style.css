@@ -1,5 +1,6 @@
 /* ========= Google Font ========= */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
 
 /* ========= Global Reset & Base ========== */
 * {
@@ -9,8 +10,9 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #74b9ff, #55efc4);
+    font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+    background: linear-gradient(135deg, #5f9fff, #8f7cff);
+    /* 原为青蓝 */
     color: #333;
     display: flex;
     justify-content: center;
@@ -62,10 +64,123 @@ body {
 
 /* ========= Typography ========== */
 h1 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    background: linear-gradient(90deg, #5f9fff, #8f7cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    width: 75px;
+    height: 4px;
+    background: linear-gradient(90deg, #5f9fff, #8f7cff);
+    border-radius: 2px;
+}
+
+.main-title {
+    font-family: 'Poppins', sans-serif;
     font-size: 2rem;
     font-weight: 600;
-    color: #2d3436;
+    color: #555;
+    /* 原来是 #2d3436，太黑了，改淡一点 */
     margin-bottom: 25px;
+}
+
+.main-title .brand-text {
+    font-family: 'Berkshire Swash', cursive;
+    font-weight: normal;
+    background: linear-gradient(90deg, #5f9fff, #8f7cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 1.3em;
+    vertical-align: middle;
+    margin-bottom: 25px;
+}
+
+.brand-animated::after {
+    display: none;
+}
+
+.brand-animated {
+    text-align: center;
+    font-family: 'Berkshire Swash', cursive;
+    font-size: 2.4rem;
+    font-weight: normal;
+    margin-bottom: 10px;
+    padding-right: 8px;
+}
+
+.brand-animated span:last-child {
+    padding-right: 5px;
+    /* 给 k 一点空间 */
+}
+
+.brand-animated span {
+    display: inline-block;
+    animation: bounceIn 0.6s ease-out both;
+    background: linear-gradient(90deg, #5f9fff, #8f7cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.brand-animated span:nth-child(1) {
+    animation-delay: 0.55s;
+}
+
+.brand-animated span:nth-child(2) {
+    animation-delay: 0.6s;
+}
+
+.brand-animated span:nth-child(3) {
+    animation-delay: 0.65s;
+}
+
+.brand-animated span:nth-child(4) {
+    animation-delay: 0.7s;
+}
+
+.brand-animated span:nth-child(5) {
+    animation-delay: 0.75s;
+}
+
+.brand-animated span:nth-child(6) {
+    animation-delay: 0.8s;
+}
+
+.brand-animated span:nth-child(7) {
+    animation-delay: 0.85s;
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.8);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(-10px) scale(1.05);
+    }
+
+    80% {
+        transform: translateY(5px) scale(0.97);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
 }
 
 label {
@@ -97,31 +212,35 @@ input[type="text"] {
 }
 
 input:focus {
-    border-color: #00cec9;
+    border-color: #8f7cff;
+    /* ← 蓝紫色，与按钮一致 */
     background-color: #fff;
     outline: none;
 }
 
 /* ========= Button ========= */
 .btn-primary {
-    background: linear-gradient(to right, #00cec9, #81ecec);
+    background: linear-gradient(to right, #5f9fff, #8f7cff);
     color: #fff;
     border: none;
     padding: 14px;
-    border-radius: 10px;
+    border-radius: 999px;
+    /* 变为两边圆角 */
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
     margin: 0 auto;
     display: block;
     width: 100%;
     max-width: 300px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transform: scale(1.03);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(to right, #6fbfff, #9f8cff);
 }
 
 /* ========= Form Links ========= */
@@ -135,17 +254,20 @@ input:focus {
 .form-links a,
 .new-user-link a,
 .privacy-policy a {
-    color: #00b894;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
+    color: #5f9fff;
+    /* 或者你也可以改成 #8f7cff */
 }
+
+a {
+    text-decoration: none;
+}
+
 
 .form-links a:hover,
 .new-user-link a:hover,
 .privacy-policy a:hover {
-    text-decoration: underline;
-    color: #00cec9;
+    text-decoration: none;
+    color: #8f7cff;
 }
 
 .new-user-link {
