@@ -11,24 +11,29 @@
 
 body {
     font-family: 'Outfit', 'Noto Sans JP', sans-serif;
-    background: linear-gradient(135deg, #5f9fff, #8f7cff);
-    /* 原为青蓝 */
+    background: linear-gradient(-45deg, #5f9fff, #8f7cff, #5f9fff, #8f7cff);
+    background-size: 300% 300%;
+    animation: animatedGradient 8s ease-in-out infinite;
+
     color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
-    animation: bgFloat 20s infinite alternate ease-in-out;
 }
 
-@keyframes bgFloat {
+@keyframes animatedGradient {
     0% {
         background-position: 0% 50%;
     }
 
-    100% {
+    50% {
         background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
     }
 }
 
@@ -251,9 +256,17 @@ input:focus {
     text-align: center;
 }
 
+.form-links p,
+.new-user-link p,
+.privacy-policy p {
+    font-weight: 500;
+    /* 或者你也可以改成 #8f7cff */
+}
+
 .form-links a,
 .new-user-link a,
 .privacy-policy a {
+    font-weight: 600;
     color: #5f9fff;
     /* 或者你也可以改成 #8f7cff */
 }
@@ -266,7 +279,7 @@ a {
 .form-links a:hover,
 .new-user-link a:hover,
 .privacy-policy a:hover {
-    text-decoration: none;
+    text-decoration: underline;
     color: #8f7cff;
 }
 
@@ -307,6 +320,12 @@ a {
     text-align: left;
     font-size: 0.95rem;
     line-height: 1.6;
+}
+
+.help-section h2 {
+    background: linear-gradient(90deg, #5f9fff, #8f7cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /* ========= Responsive ========= */

@@ -258,6 +258,17 @@
                             });
                         }
 
+                        let statusClass = "";
+
+                        if (status === "Trip in progress.") {
+                            statusClass = "trip-status-progress";
+                        } else if (status === "Trip not started.") {
+                            statusClass = "trip-status-upcoming";
+                        } else {
+                            statusClass = "trip-status-ended";
+                        }
+
+
                         const card = document.createElement('div');
                         card.className = 'trip-card-container';
                         card.setAttribute('data-trip-id', tripId);
@@ -265,7 +276,8 @@
                             <div class="trip-card-delete-wrapper">
                       <button class="trip-card-delete-btn"><i class="fa-regular fa-trash-can" style="margin-right:6px;"></i>Delete</button>
     </div>
-    <div class="trip-card-status"> ● ${status}</div>
+    <div class="trip-card-status ${statusClass}"> ● ${status}</div>
+
     <h3 class="trip-card-title">${trip.city} ${days} Days Trip</h3>
     <div class="trip-card-details">
         ${String(fromDate.getMonth() + 1).padStart(2, '0')}.${String(fromDate.getDate()).padStart(2, '0')} to ${String(toDate.getMonth() + 1).padStart(2, '0')} ${days} days ${nights} nights <br>
