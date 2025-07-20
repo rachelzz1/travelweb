@@ -450,7 +450,9 @@ body {
 .panel-detail-view h2 {
     font-size: 28px;
     font-weight: 800;
-    color: var(--primary-color);
+    background: linear-gradient(90deg, #5f9fff, #8f7cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-align: center;
     position: relative;
     margin-bottom: 24px;
