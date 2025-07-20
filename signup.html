@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up for Roamark</title>
     <!-- 引用样式文件 -->
-    <link rel="stylesheet" href="login-style.css">
+    <link rel="stylesheet" href="style/login-style.css">
 </head>
+
 <body>
     <div class="form-container">
         <div class="form-box">
             <h1>Create Your Account</h1>
-            
+
             <!-- 为表单添加ID，方便在JS中获取 -->
             <form id="signup-form">
                 <label for="fullname">Full Name</label>
@@ -24,7 +26,8 @@
                 <input type="password" id="password" name="password" placeholder="Create a password" required>
 
                 <label for="confirm-password">Confirm Password</label>
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password"
+                    required>
 
                 <!-- 将按钮类型改为 type="submit" 以触发表单提交事件 -->
                 <button type="submit" class="btn-primary">Create Account</button>
@@ -47,12 +50,12 @@
         // 步骤 2: 您的 Web 应用的 Firebase 配置
         // 这段代码是您项目的唯一“钥匙”，它告诉您的网站要连接到哪个 Firebase 项目
         const firebaseConfig = {
-          apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
-          authDomain: "roamark-web.firebaseapp.com",
-          projectId: "roamark-web",
-          storageBucket: "roamark-web.appspot.com", 
-          messagingSenderId: "226236070878",
-          appId: "1:226236070878:web:f551ac673b1749e72e3b4f"
+            apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
+            authDomain: "roamark-web.firebaseapp.com",
+            projectId: "roamark-web",
+            storageBucket: "roamark-web.appspot.com",
+            messagingSenderId: "226236070878",
+            appId: "1:226236070878:web:f551ac673b1749e72e3b4f"
         };
 
         // 步骤 3: 初始化 Firebase 服务
@@ -96,7 +99,7 @@
                 // 如果数据成功写入...
                 console.log("Document successfully written with ID: ", docRef.id);
                 alert("Account created successfully! You can now log in.");
-                
+
                 // ...将用户重定向到登录页面
                 window.location.href = 'login.html';
 
@@ -109,4 +112,5 @@
     </script>
 
 </body>
+
 </html>
