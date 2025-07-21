@@ -294,7 +294,6 @@ main {
     transition: transform 0.3s ease;
 }
 
-/* 弹跳动画 */
 @keyframes bounceLetters {
     0% {
         transform: translateY(0);
@@ -445,7 +444,6 @@ main {
 
 #city-search-btn {
     background: linear-gradient(135deg, #5f9fff, #8f7cff);
-    /* 蓝紫渐变背景 */
     border: none;
     color: white;
     width: 40px;
@@ -652,10 +650,8 @@ main {
 }
 
 
-/* ======== 页脚样式 ======== */
 .site-footer {
     background: linear-gradient(to right, #5f9fff, #8f7cff);
-    /* 更柔和渐变蓝紫 */
     color: #f2f4f8;
     padding: 60px 0;
     font-family: 'Segoe UI', sans-serif;
@@ -758,7 +754,6 @@ main {
     transform: scale(1.05);
 }
 
-/* 创建行程弹窗的样式 */
 #trip-modal {
     display: none;
     position: fixed;
@@ -782,8 +777,6 @@ main {
     max-width: 480px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
     animation: fadeIn 0.3s ease-in-out;
-
-    /* 新增边框渐变 */
     border: 6px solid transparent;
     background-clip: padding-box, border-box;
     background-origin: border-box;
@@ -905,13 +898,11 @@ main {
 /* ======== Trip card styles from index.html ======== */
 .trip-card-container {
     background: linear-gradient(135deg, #e4efff, #efe4ff);
-    /* 柔和渐变背景 */
     border-radius: 20px;
     padding: 20px 24px;
     margin-bottom: 32px;
     position: relative;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-    /* 更柔和阴影 */
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     padding-left: 20px;
 }
