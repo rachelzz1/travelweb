@@ -266,7 +266,7 @@ input:focus {
 .form-links a,
 .new-user-link a,
 .privacy-policy a {
-    font-weight: 600;
+    font-weight: 500;
     color: #5f9fff;
     /* 或者你也可以改成 #8f7cff */
 }
@@ -290,6 +290,11 @@ a {
 .privacy-policy {
     font-size: 0.8rem;
     color: #b2bec3;
+}
+
+/* 加粗 "New user?" 提示 */
+#new-user-prompt {
+    font-weight: 600;
 }
 
 /* ========= Help Page ========= */

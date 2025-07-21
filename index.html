@@ -11,7 +11,7 @@
     <title>Japan Travel</title>
     <!-- 引入 Swiper 的 CSS -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <!-- 引用我们自己的外部样式表 -->
+    <!-- 引用外部样式表 -->
     <link rel="stylesheet" href="style/Index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -19,7 +19,7 @@
 
 <body>
 
-    <!-- ======== 导航栏 (HTML Unchanged) ======== -->
+    <!-- ======== 导航栏  ======== -->
     <header class="navbar">
         <div class="container">
             <a href="#" class="logo">Roamark</a>
@@ -41,7 +41,7 @@
         </div>
     </header>
 
-    <!-- ======== 展示区 (HTML Unchanged) ======== -->
+    <!-- ======== 展示区  ======== -->
     <section id="exhibition" class="exhibition-section">
         <div class="exhibition-content">
             <h1>✈ Explore the Beauty of the World with Roamark</h1>
@@ -53,7 +53,7 @@
         </div>
     </section>
 
-    <!-- ======== 主内容区 (HTML Unchanged) ======== -->
+    <!-- ======== 主内容区  ======== -->
     <main>
         <div id="slider-container" class="container">
             <div class="section-header-interactive">
@@ -118,7 +118,7 @@
         </div>
     </main>
 
-    <!-- ======== 页脚 (HTML Unchanged) ======== -->
+    <!-- ======== 页脚======== -->
     <footer id="site-footer" class="site-footer">
         <div class="container">
             <div class="footer-content">
@@ -153,7 +153,7 @@
         </div>
     </footer>
 
-    <!-- ======== 行程弹窗 (HTML Unchanged) ======== -->
+    <!-- ======== 行程弹窗  ======== -->
     <div id="trip-modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-title">My Trip</div>
@@ -178,13 +178,13 @@
     <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-    <!-- ALL JAVASCRIPT IS NOW IN THIS SINGLE MODULE SCRIPT -->
+    
     <script type="module">
-        // Import all necessary functions from the Firebase SDK
+       
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, doc as firestoreDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        // Your Firebase project configuration
+       // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
             authDomain: "roamark-web.firebaseapp.com",
@@ -198,7 +198,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- Trip Management Helper Functions ---
+       // --- 行程管理辅助功能 ---
         function calculateDateDifference(dateFrom, dateTo) {
             const from = new Date(dateFrom);
             const to = new Date(dateTo);
@@ -218,7 +218,7 @@
             return 'Trip in progress.';
         }
 
-        // --- Renders all trips from FIRESTORE ---
+       // --- 呈现来自 FIRESTORE 的所有行程 ---
         async function loadAndRenderTrips() {
             const tripsListContainer = document.getElementById('my-trips-list');
             const emptyMsg = document.getElementById('trips-empty-message');
@@ -314,9 +314,9 @@
             }
         }
 
-        // --- All remaining code runs after the DOM is loaded ---
+        
         document.addEventListener('DOMContentLoaded', function () {
-            // --- Navigation bar logic ---
+            // --- 导航栏逻辑 ---
             const hamburger = document.querySelector('.hamburger-menu');
             const navLinks = document.querySelector('.nav-links');
             const navAuth = document.querySelector('.nav-auth');
@@ -357,7 +357,7 @@
             });
 
             // --- Swiper logic ---
-            // --- Swiper logic (Unchanged) ---
+            
             const swiper = new Swiper('.swiper-container', {
                 slidesPerView: 1,
                 centeredSlides: false,
@@ -369,7 +369,7 @@
 
                         slidesPerView: 3,
                         spaceBetween: 24,
-                        loop: true, // ✅ 启用循环滑动
+                        loop: true, //  启用循环滑动
                         centeredSlides: false,
                     }
                 },
@@ -389,7 +389,7 @@
             });
 
 
-            // --- Trip Creation Modal Logic ---
+            // --- 行程创建模态逻辑 ---
             const addTripBtn = document.getElementById('add-trip-btn');
             const tripModal = document.getElementById('trip-modal');
             const tripCancel = document.getElementById('trip-cancel');
@@ -409,7 +409,7 @@
             };
             tripCancel.onclick = () => { tripModal.style.display = 'none'; };
 
-            // ▼▼▼ THIS IS THE CORRECTED LOGIC ▼▼▼
+            // --- 行程创建逻辑 ---
             tripConfirm.onclick = async () => {
                 const city = tripCity.value.trim();
                 const dateFrom = tripDateFrom.value;
@@ -421,7 +421,7 @@
                 if (!userStr) { alert('Authentication error. Please log in again.'); return; }
                 const user = JSON.parse(userStr);
 
-                // 1. Create the initial dailyDetails structure
+                // 1. 创建初始 dailyDetails 结构
                 const daysCount = calculateDateDifference(dateFrom, dateTo).days;
                 const initialDailyDetails = {};
                 for (let i = 1; i <= daysCount; i++) {
@@ -429,7 +429,7 @@
                 }
 
                 try {
-                    // 2. Add the new trip document to Firestore
+                  // 2. 将新的行程文档添加到 Firestore
                     const docRef = await addDoc(collection(db, "trips"), {
                         userEmail: user.email,
                         city: city,
@@ -439,7 +439,7 @@
                         createdAt: new Date()
                     });
 
-                    // 3. Redirect to mytrip.html with the new tripId
+                   // 3. 使用新的 tripId 重定向到 mytrip.html
                     window.location.href = `mytrip.html?tripId=${docRef.id}`;
 
                 } catch (error) {
@@ -450,7 +450,7 @@
 
             tripModal.onclick = (e) => { if (e.target === tripModal) tripModal.style.display = 'none'; };
 
-            // --- Search logic (Unchanged) ---
+            // --- 搜索逻辑 ---
             const searchInput = document.getElementById('city-search-input');
             const searchBtn = document.getElementById('city-search-btn');
             const performSearch = () => {
@@ -471,7 +471,7 @@
             searchBtn.addEventListener('click', performSearch);
             searchInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); performSearch(); } });
         });
-        // 添加在 document.addEventListener('DOMContentLoaded', function () { ... }) 内部
+        
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar'); // 获取导航栏元素
 

@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log in to Roamark</title>
     <link rel="stylesheet" href="style/login-style.css">
-    <!-- 引入Google字体图标库 (用于按钮图标) -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
 </head>
 
 <body>
@@ -42,7 +40,7 @@
             </div>
 
             <div class="new-user-link">
-                <p>New user? <a href="signup.html">Click here</a>.</p>
+                 <p id="new-user-prompt">New user? <a href="signup.html">Click here</a>.</p>
             </div>
 
             <div class="privacy-policy">
@@ -58,12 +56,11 @@
 
     <!--  Firebase 连接和登录验证脚本 -->
     <script type="module">
-        // 步骤 1: 导入 Firebase SDK 中我们需要的功能
-        // 除了初始化，我们还需要 query, where, getDocs 来查询数据
+      
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        // 步骤 2: 您的 Firebase 项目配置 (请确保与 signup.html 中的一致)
+        // 步骤 2:  Firebase 项目配置 
         const firebaseConfig = {
             apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
             authDomain: "roamark-web.firebaseapp.com",
