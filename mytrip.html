@@ -398,8 +398,6 @@
         // Start the app
         initializePage();
 
-        // 移动端拖拽逻辑
-        // 移动端拖拽逻辑（触摸 + 鼠标双支持）
         const leftPanel = document.querySelector('.left-panel');
         const dragHandle = document.querySelector('.drag-handle');
 
@@ -436,7 +434,6 @@
             }
         }
 
-        // ✅ Touch 事件支持手机
         dragHandle.addEventListener('touchstart', e => onStart(e.touches[0].clientY));
         dragHandle.addEventListener('touchmove', e => {
             e.preventDefault();
@@ -444,7 +441,6 @@
         }, { passive: false });
         dragHandle.addEventListener('touchend', onEnd);
 
-        // ✅ 鼠标事件支持电脑
         dragHandle.addEventListener('mousedown', e => onStart(e.clientY));
         window.addEventListener('mousemove', e => onMove(e.clientY));
         window.addEventListener('mouseup', onEnd);

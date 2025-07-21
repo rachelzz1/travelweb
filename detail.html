@@ -192,7 +192,6 @@
                 contentContainer.appendChild(titleEl);
 
                 dayData.stops.forEach((stop, stopIndex) => {
-                    // 添加 travel 信息
                     if (stop.travel_from_previous) {
                         const travelEl = document.createElement('div');
                         travelEl.className = 'travel-info';
@@ -202,7 +201,6 @@
                         contentContainer.appendChild(travelEl);
                     }
 
-                    // 创建 stop-card
                     const stopCard = document.createElement('div');
                     const clickableClass = stop.detailContent ? 'clickable' : '';
                     stopCard.className = `stop-card ${clickableClass} animated-card`;
@@ -251,7 +249,7 @@
                     overviewData.forEach((daySummary, index) => {
                         const card = document.createElement('div');
                         card.className = 'day-summary-card animated-card';
-                        card.dataset.targetTab = daySummary.day; // ✅ 添加这行代码，能让点击后知道跳去哪
+                        card.dataset.targetTab = daySummary.day;
 
                         if (!card.classList.contains('animated')) {
                             card.style.animationName = index % 2 === 0 ? 'slideInLeft' : 'slideInRight';
@@ -312,7 +310,6 @@
                 }
             });
 
-            // 初始激活第一个 tab
             activateTab(tabsContainer.querySelector('a'));
 
 
@@ -323,16 +320,13 @@
         let handle = document.getElementById("drag-handle");
         let isDragging = false;
 
-        // 通用拖动函数
         function handleMove(currentY) {
             const delta = currentY - lastY;
             if (Math.abs(delta) > 30) {
                 if (delta > 0) {
-                    // 向下拖动 → 收起
                     panel.classList.remove("expanded");
                     panel.classList.add("collapsed");
                 } else {
-                    // 向上拖动 → 展开
                     panel.classList.remove("collapsed");
                     panel.classList.add("expanded");
                 }

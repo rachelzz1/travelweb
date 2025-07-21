@@ -97,7 +97,6 @@ h1::after {
     font-size: 2rem;
     font-weight: 600;
     color: #555;
-    /* 原来是 #2d3436，太黑了，改淡一点 */
     margin-bottom: 25px;
 }
 
@@ -257,7 +256,6 @@ input:focus {
 .new-user-link p,
 .privacy-policy p {
     font-weight: 500;
-    /* 或者你也可以改成 #8f7cff */
 }
 
 .form-links a,
@@ -265,7 +263,6 @@ input:focus {
 .privacy-policy a {
     font-weight: 500;
     color: #5f9fff;
-    /* 或者你也可以改成 #8f7cff */
 }
 
 a {
@@ -289,7 +286,6 @@ a {
     color: #b2bec3;
 }
 
-/* 加粗 "New user?" 提示 */
 #new-user-prompt {
     font-weight: 600;
 }

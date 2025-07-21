@@ -39,7 +39,6 @@ body {
 #map {
     width: 100%;
     height: 650px;
-    /* 提高高度 */
     border-radius: 22px;
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
 }
@@ -51,7 +50,6 @@ body {
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
     margin-bottom: 24px;
     justify-content: center;
-    /* border-left: 6px solid #5f9fff; ← 删除或注释 */
 }
 
 .trip-header-animated {
@@ -62,9 +60,7 @@ body {
     padding: 12px 24px;
     border-radius: 40px;
     display: inline-block;
-    /* 让它尺寸根据内容自动 */
     margin: 20px auto;
-    /* 上下留白、左右自动居中 */
     text-align: center;
     justify-content: center;
     width: 92.4%;
@@ -166,13 +162,11 @@ body {
     border-radius: 20px;
     padding: 3px;
     background: linear-gradient(to right, #5f9fff, #8f7cff);
-    /* 外圈渐变 */
     margin-bottom: 24px;
 }
 
 .itinerary-inner {
     background: linear-gradient(270deg, #ffffff, #f7faff, #ffffff);
-    /* 内层背景 */
     border-radius: 17px;
     padding: 20px 24px;
     animation: shimmerBG 6s ease infinite;
@@ -230,13 +224,10 @@ body {
     margin-bottom: 18px;
     padding: 10px 0;
     scroll-behavior: smooth;
-
-    /* Firefox 滚动条设置：细+自定义颜色（只能纯色）*/
     scrollbar-width: thin;
     scrollbar-color: #dfd8fa transparent;
 }
 
-/* Chrome/Safari 滚动条样式 */
 .days-tabs::-webkit-scrollbar {
     height: 8px;
 }
@@ -357,10 +348,8 @@ body {
 .save-remark-btn {
     display: block;
     margin: 12px auto 16px auto;
-    /* 上中下边距 */
     padding: 10px 24px;
     font-weight: bold;
-    /* 加粗文字 */
     background: linear-gradient(to right, #5f9fff, #8f7cff);
     color: white;
     border: none;
@@ -382,9 +371,7 @@ body {
     padding: 0;
     font-size: 1.5rem;
     display: block;
-    /* 关键点 */
     margin: 20px auto;
-    /* 水平居中 + 顶部间距 */
     background: linear-gradient(to right, #5f9fff, #8f7cff);
     color: #fff;
     border: none;
@@ -410,7 +397,6 @@ body {
     width: 100%;
     padding: 14px 16px;
     padding-left: 16px;
-    /* 明确指定左边距 */
     font-size: 1rem;
     border-radius: 12px;
     border: none;
@@ -419,7 +405,6 @@ body {
     margin-top: 12px;
     min-height: 80px;
     resize: none;
-    /* 禁止右下角拉伸角标 */
     box-sizing: border-box;
 }
 
@@ -436,7 +421,6 @@ body {
 
 .search-modal {
     background: transparent !important;
-    /* 不再设置背景色 */
     border-radius: 16px;
     position: relative;
 }
@@ -567,26 +551,20 @@ body {
     outline: none;
 }
 
-/* 渐变边框通用类 */
 .gradient-border-box {
     background: linear-gradient(135deg, #5f9fff, #8f7cff);
     border-radius: 24px;
     padding: 4px;
-    /* 原来可能是2px，加大它！ */
     display: inline-block;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-    /* 提升立体感 */
 }
 
 .gradient-border-inner {
     background: white;
     border-radius: 20px;
-    /* 明显小于外层，形成“边缘”视觉 */
     padding: 24px;
-    /* 保证内部空间宽敞 */
 }
 
-/* 美化按钮 */
 .gradient-button {
     background: linear-gradient(135deg, #5f9fff, #8f7cff);
     color: white;
@@ -603,8 +581,6 @@ body {
     transform: scale(1.05);
 }
 
-
-/* 灰色 Cancel 按钮 */
 .cancel-btn {
     background-color: #e0e0e0 !important;
     color: #333;
@@ -620,7 +596,6 @@ body {
     background-color: #d0d0d0;
 }
 
-/* 渐变 Confirm 按钮 */
 .confirm-btn {
     background: linear-gradient(135deg, #5f9fff, #8f7cff);
     color: white;
@@ -635,8 +610,6 @@ body {
 .confirm-btn:hover {
     transform: scale(1.02);
 }
-
-/* 将以下内容加入你的 mytrip.css 文件中，用于美化 Trip Overview 部分的日期显示 */
 
 #trip-summary {
     font-size: 0.95rem;
@@ -663,7 +636,6 @@ body {
     filter: brightness(1.1);
 }
 
-/* 可选：给 Trip Overview 整体更多余白和美感 */
 .trip-overview h2 {
     margin-bottom: 8px;
     font-size: 1.4rem;
@@ -671,7 +643,6 @@ body {
     color: #222;
 }
 
-/* 城市名称颜色不变，但也可增强效果 */
 #trip-summary span:last-child {
     font-weight: 500;
     color: #5f9fff;
@@ -759,6 +730,5 @@ body {
 
     .trip-overview {
         padding-top: 10px;
-        /* 留点空间给 drag handle */
     }
 }

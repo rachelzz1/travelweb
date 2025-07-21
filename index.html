@@ -178,13 +178,13 @@
     <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-    
+
     <script type="module">
-       
+
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, doc as firestoreDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-       // Firebase configuration
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyC3sKjdwDvlQnwDt7afXbbze6aRnQVjBv0",
             authDomain: "roamark-web.firebaseapp.com",
@@ -198,7 +198,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-       // --- 行程管理辅助功能 ---
+        // --- 行程管理辅助功能 ---
         function calculateDateDifference(dateFrom, dateTo) {
             const from = new Date(dateFrom);
             const to = new Date(dateTo);
@@ -218,7 +218,7 @@
             return 'Trip in progress.';
         }
 
-       // --- 呈现来自 FIRESTORE 的所有行程 ---
+        // --- 呈现来自 FIRESTORE 的所有行程 ---
         async function loadAndRenderTrips() {
             const tripsListContainer = document.getElementById('my-trips-list');
             const emptyMsg = document.getElementById('trips-empty-message');
@@ -272,7 +272,7 @@
                         const card = document.createElement('div');
                         card.className = 'trip-card-container';
                         card.setAttribute('data-trip-id', tripId);
-                       
+
                         card.innerHTML = `
                             <div class="trip-card-delete-wrapper">
                                 <button class="trip-card-delete-btn"><i class="fa-regular fa-trash-can" style="margin-right:6px;"></i>Delete</button>
@@ -285,7 +285,7 @@
                             </div>
                             <!-- Image placeholder has been removed -->
                         `;
-                        
+
 
                         card.addEventListener('click', (e) => {
                             if (e.target.classList.contains('trip-card-delete-btn')) return;
@@ -314,7 +314,7 @@
             }
         }
 
-        
+
         document.addEventListener('DOMContentLoaded', function () {
             // --- 导航栏逻辑 ---
             const hamburger = document.querySelector('.hamburger-menu');
@@ -357,19 +357,18 @@
             });
 
             // --- Swiper logic ---
-            
+
             const swiper = new Swiper('.swiper-container', {
                 slidesPerView: 1,
                 centeredSlides: false,
                 spaceBetween: 16,
                 loop: true,
                 breakpoints: {
-                    // 小于等于 480px 宽度的手机视图
                     768: {
 
                         slidesPerView: 3,
                         spaceBetween: 24,
-                        loop: true, //  启用循环滑动
+                        loop: true,
                         centeredSlides: false,
                     }
                 },
@@ -429,7 +428,7 @@
                 }
 
                 try {
-                  // 2. 将新的行程文档添加到 Firestore
+                    // 2. 将新的行程文档添加到 Firestore
                     const docRef = await addDoc(collection(db, "trips"), {
                         userEmail: user.email,
                         city: city,
@@ -439,7 +438,7 @@
                         createdAt: new Date()
                     });
 
-                   // 3. 使用新的 tripId 重定向到 mytrip.html
+                    // 3. 使用新的 tripId 重定向到 mytrip.html
                     window.location.href = `mytrip.html?tripId=${docRef.id}`;
 
                 } catch (error) {
@@ -471,14 +470,14 @@
             searchBtn.addEventListener('click', performSearch);
             searchInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); performSearch(); } });
         });
-        
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar'); // 获取导航栏元素
 
-            if (window.scrollY > 50) { // 如果页面垂直滚动距离大于50像素
-                navbar.classList.add('scrolled'); // 添加类 .scrolled
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
             } else {
-                navbar.classList.remove('scrolled'); // 否则移除类 .scrolled
+                navbar.classList.remove('scrolled');
             }
         });
 
@@ -488,7 +487,7 @@
 
         text.split("").forEach((char, i) => {
             const span = document.createElement("span");
-            span.textContent = char === " " ? "\u00A0" : char; // 空格使用 &nbsp;
+            span.textContent = char === " " ? "\u00A0" : char;
             span.style.animationDelay = `${i * 50}ms`;
             container.appendChild(span);
         });
@@ -498,7 +497,6 @@
             const p = document.querySelector(".exhibition-content p");
             const btn = document.querySelector(".btn-explore");
 
-            // 动态生成 span 字
             const text = h1.textContent;
             h1.innerHTML = "";
 
@@ -510,15 +508,13 @@
                 h1.appendChild(span);
             });
 
-            const totalDuration = text.length * 50 + 400; // 字符动画结束时间
+            const totalDuration = text.length * 50 + 400;
 
-            // 副标题淡入
             setTimeout(() => {
                 p.style.opacity = 1;
                 p.style.transform = "translateY(0)";
             }, totalDuration);
 
-            // 按钮再延迟 800ms 显现
             setTimeout(() => {
                 btn.classList.add("visible");
             }, totalDuration + 800);

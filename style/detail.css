@@ -118,13 +118,11 @@ body {
     align-items: center;
     justify-content: space-between;
     margin: 20px 0 10px 20px;
-    /* 让它不贴顶部和左边 */
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     width: fit-content;
-    /* 自动根据内容宽度 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     width: 91.5%;
 }
@@ -476,7 +474,6 @@ body {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     margin: 20px 0;
     background: #000;
-    /* 防止加载前闪白 */
 }
 
 .panel-detail-view p {
@@ -531,7 +528,6 @@ body {
     align-items: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     border: 3px solid white;
-    /* ✅ 外圈白色描边 */
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     animation: bounceIn 0.4s ease;
     z-index: 10;
@@ -553,7 +549,6 @@ body {
     height: 10px;
     background: linear-gradient(135deg, #5f9fff, #8f7cff);
     border: 3px solid white;
-    /* ✅ 小角也加白边 */
     z-index: 1;
     border-radius: 2px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
@@ -616,7 +611,6 @@ body {
     animation-timing-function: ease-out;
     animation-iteration-count: 1;
     animation-name: slideInLeft;
-    /* 明确绑定动画 */
 }
 
 .content-pane {
@@ -630,20 +624,17 @@ body {
 @media screen and (max-width: 768px) {
     #page-container {
         flex-direction: column;
-        /* 从横向布局变为纵向 */
     }
 
     #map-wrapper {
         order: 1;
         height: 300px;
-        /* 地图高度 */
     }
 
     #panel-container {
         order: 2;
         width: 100%;
         height: calc(100vh - 300px);
-        /* 剩余空间 */
         position: fixed;
         bottom: 0;
         left: 0;
@@ -652,7 +643,6 @@ body {
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;
         transform: translateY(60%);
-        /* 默认显示底部一点点 */
         transition: transform 0.3s ease;
         z-index: 999;
         box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
@@ -666,10 +656,8 @@ body {
 
     #panel-container.collapsed {
         transform: translateY(90%);
-        /* 最小收起 */
     }
 
-    /* 可选：添加手柄 */
     #drag-handle {
         width: 40px;
         height: 4px;
