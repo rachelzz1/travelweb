@@ -14,6 +14,9 @@
     <!-- 引用外部样式表 -->
     <link rel="stylesheet" href="style/Index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Flatpickr CSS & Plugins for ENGLISH calendar -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/confirmDate/confirmDate.css">
 
 </head>
 
@@ -153,32 +156,42 @@
         </div>
     </footer>
 
-    <!-- ======== 行程弹窗  ======== -->
+    <!-- ======== Trip Modal (ENGLISH, yyyy/mm/dd, calendar icon, clear/today) ======== -->
     <div id="trip-modal" style="display: none;">
         <div class="modal-content">
-            <div class="modal-title">My Trip</div>
-            <label>Where do you want to go?</label>
+            <div class="modal-title">Create a Trip</div>
+            <label for="trip-city">Destination City</label>
             <input id="trip-city" type="text" placeholder="Enter city">
-            <label>How long do you want to go?</label>
+            <label>Trip Duration</label>
             <div class="date-picker-group">
-                <div class="date-picker-item">
-                    <div class="date-label">Departure date</div><input id="trip-date-from" type="date">
+                <div class="date-picker-item" style="position:relative;">
+                    <div class="date-label">Departure date</div>
+                    <input id="trip-date-from" type="text" placeholder="YYYY/MM/DD" autocomplete="off" style="padding-right:32px;">
+                    <span class="calendar-icon" style="position:absolute;right:10px;top:36px;pointer-events:none;color:#888;">
+                        <i class="fa-regular fa-calendar"></i>
+                    </span>
                 </div>
-                <div class="date-picker-item">
-                    <div class="date-label">Return date</div><input id="trip-date-to" type="date">
+                <div class="date-picker-item" style="position:relative;">
+                    <div class="date-label">Return date</div>
+                    <input id="trip-date-to" type="text" placeholder="YYYY/MM/DD" autocomplete="off" style="padding-right:32px;">
+                    <span class="calendar-icon" style="position:absolute;right:10px;top:36px;pointer-events:none;color:#888;">
+                        <i class="fa-regular fa-calendar"></i>
+                    </span>
                 </div>
             </div>
             <div class="modal-actions">
-                <button id="trip-cancel">Cancel</button>
-                <button id="trip-confirm">Confirm</button>
+                <button id="trip-cancel" type="button">Cancel</button>
+                <button id="trip-confirm" type="button">Confirm</button>
             </div>
         </div>
     </div>
 
     <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/en.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/confirmDate/confirmDate.js"></script>
     <script type="module">
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -469,6 +482,32 @@
             };
             searchBtn.addEventListener('click', performSearch);
             searchInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); performSearch(); } });
+
+            // --- Flatpickr ENGLISH calendar, yyyy/mm/dd ---
+            flatpickr("#trip-date-from", {
+                locale: "en",
+                dateFormat: "Y/m/d",
+                allowInput: true,
+                plugins: [
+                    new confirmDatePlugin({
+                        confirmText: "OK",
+                        showAlways: false,
+                        theme: "light"
+                    })
+                ]
+            });
+            flatpickr("#trip-date-to", {
+                locale: "en",
+                dateFormat: "Y/m/d",
+                allowInput: true,
+                plugins: [
+                    new confirmDatePlugin({
+                        confirmText: "OK",
+                        showAlways: false,
+                        theme: "light"
+                    })
+                ]
+            });
         });
 
         window.addEventListener('scroll', () => {
@@ -522,4 +561,3 @@
     </script>
 </body>
 
-</html>
