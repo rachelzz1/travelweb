@@ -121,7 +121,7 @@
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
 
-        // --------- Map Logic (Unchanged) ---------
+        // --------- Map Logic ---------
         let map = L.map('map', { zoomControl: false });
         let markers = [];
         let polyline = null;
@@ -194,7 +194,7 @@
 
         function renderTabs() {
             daysTabsEl.innerHTML = '';
-            // ▼▼▼ KEY CHANGE: Sort the keys numerically before rendering ▼▼▼
+            
             const dayKeys = Object.keys(tripData.dailyDetails).sort((a, b) => {
                 return parseInt(a.split(' ')[1]) - parseInt(b.split(' ')[1]);
             });
@@ -214,7 +214,7 @@
             let html = '<div class="it-title gradient-text">Itinerary Overview</div>';
 
             html += '<div style="background: linear-gradient(135deg, #eaf2ff, #f1edff);border-radius:12px;padding:10px 10px 6px 10px;">';
-            // ▼▼▼ KEY CHANGE: Sort the keys numerically here as well ▼▼▼
+           
             const dayKeys = Object.keys(tripData.dailyDetails).sort((a, b) => {
                 return parseInt(a.split(' ')[1]) - parseInt(b.split(' ')[1]);
             });

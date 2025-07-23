@@ -92,8 +92,8 @@
                 const docRef = await addDoc(collection(db, "users"), {
                     fullName: fullName,
                     email: email,
-                    password: password, // 再次提醒：在真实项目中存储明文密码是极不安全的
-                    createdAt: new Date() // 记录下用户的注册时间
+                    password: password, 
+                    createdAt: new Date() 
                 });
 
                 // 如果数据成功写入...
