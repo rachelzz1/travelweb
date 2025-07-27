@@ -21,10 +21,10 @@ Roamark is a personal travel planning platform designed to help you plan unforge
 | Database Integration & User Auth | Responsible for user data storage, itinerary management, login registration, forgotten password and help center pages.| `@Ruan Qiuzi` |
 
 ##  Screenshots
-![Roamark App Screenshot] (assets/images/screenshots/图片1.png)
-![Roamark App Screenshot] (assets/images/screenshots/图片2.png)
-![Roamark App Screenshot] (assets/images/screenshots/图片3.png)
-![Roamark App Screenshot] (assets/images/screenshots/图片4.png)
-![Roamark App Screenshot] (assets/images/screenshots/图片7.png)
-![Roamark App Screenshot] (assets/images/screenshots/图片5.png)
-![Roamark App Screenshot] (assets/images/screenshots/图片6.png)
+![Roamark App Screenshot] (images/screenshots/图片1.png)
+![Roamark App Screenshot] (images/screenshots/图片2.png)
+![Roamark App Screenshot] (images/screenshots/图片3.png)
+![Roamark App Screenshot] (images/screenshots/图片4.png)
+![Roamark App Screenshot] (images/screenshots/图片7.png)
+![Roamark App Screenshot] (images/screenshots/图片5.png)
+![Roamark App Screenshot] (images/screenshots/图片6.png)
