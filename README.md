@@ -7,9 +7,9 @@ Roamark is a personal travel planning platform designed to help you plan unforge
 - Personalized Trip Planner (MyTrip): Allows users to create customized itineraries and provides an interactive map-based interface to visualize travel routes.
 
 ## Technology stack
-Front-end: HTML, CSS, JavaScript
-Map: OpenStreetMap Nominatim API
-Database: Firebase Firestore
+- **Frontend**: HTML, CSS, JavaScript
+- **Map**: OpenStreetMap Nominatim API
+- **Database**:  Firebase Firestore
 
 ##  Contributors & Responsibilities
 
